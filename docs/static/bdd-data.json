@@ -1,0 +1,75 @@
+{
+  "tests": [
+    {
+      "changeId": "CHANGE-039",
+      "roadId": "ROAD-039",
+      "title": "Agent Directory & Discovery",
+      "date": "2026-02-01",
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "status": "pass"
+    },
+    {
+      "changeId": "CHANGE-009",
+      "roadId": "ROAD-009",
+      "title": "Escrow System",
+      "date": "2026-01-31",
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "status": "pass"
+    },
+    {
+      "changeId": "CHANGE-008",
+      "roadId": "ROAD-006",
+      "title": "Bot Profile Management",
+      "date": "2026-01-31",
+      "total": 16,
+      "passed": 16,
+      "failed": 0,
+      "status": "pass"
+    },
+    {
+      "changeId": "CHANGE-007",
+      "roadId": "ROAD-007",
+      "title": "Reputation System",
+      "date": "2026-01-31",
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "status": "pass"
+    },
+    {
+      "changeId": "CHANGE-004",
+      "roadId": "ROAD-005",
+      "title": "Bot Authentication",
+      "date": "2026-01-31",
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "status": "pass"
+    },
+    {
+      "changeId": "CHANGE-002",
+      "roadId": "ROAD-004",
+      "title": "Bot Registration Feature",
+      "date": "2026-01-31",
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "status": "pass"
+    },
+    {
+      "changeId": "CHANGE-001",
+      "roadId": "ROAD-001",
+      "title": "Project Foundation Setup",
+      "date": "2026-01-31",
+      "total": 0,
+      "passed": 0,
+      "failed": 0,
+      "status": "pass"
+    }
+  ],
+  "generatedAt": "2026-02-01T15:31:13.413Z"
+}

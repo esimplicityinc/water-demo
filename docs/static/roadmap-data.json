@@ -1,0 +1,1579 @@
+{
+  "items": [
+    {
+      "id": "ROAD-001",
+      "title": "Project Setup",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-01-31",
+      "started": "2026-01-31",
+      "completed": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z",
+          "compliance_check": [
+            {
+              "adr": "ADR-001",
+              "compliant": true,
+              "notes": "Monorepo structure established"
+            },
+            {
+              "adr": "ADR-002",
+              "compliant": true,
+              "notes": "Bun runtime configured"
+            },
+            {
+              "adr": "ADR-003",
+              "compliant": true,
+              "notes": "Convex backend selected and configured"
+            }
+          ]
+        },
+        "bdd": {
+          "id": "BDD-001",
+          "status": "approved",
+          "file": "bdd/features/ui/project-setup.feature",
+          "approved_by": [
+            {
+              "agent": "@bdd-writer",
+              "timestamp": "2026-01-31T11:00:00Z"
+            },
+            {
+              "agent": "@bdd-runner",
+              "timestamp": "2026-01-31T11:05:00Z"
+            }
+          ],
+          "test_results": {
+            "total": 5,
+            "passed": 5,
+            "failed": 0
+          }
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pass",
+          "results": {
+            "NFR-PERF-001": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            },
+            "NFR-SEC-001": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-A11Y-001": {
+              "status": "pass",
+              "validated_by": "@a11y-agent"
+            }
+          }
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-001"
+    },
+    {
+      "id": "ROAD-002",
+      "title": "DDD Documentation",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-01-31",
+      "started": "2026-01-31",
+      "completed": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z",
+          "compliance_check": [
+            {
+              "adr": "ADR-001",
+              "compliant": true,
+              "notes": "Documentation structure aligned with architecture"
+            },
+            {
+              "adr": "ADR-004",
+              "compliant": true,
+              "notes": "DDD patterns documented"
+            },
+            {
+              "adr": "ADR-005",
+              "compliant": true,
+              "notes": "Hexagonal architecture reference documented"
+            }
+          ]
+        },
+        "bdd": {
+          "id": "BDD-002",
+          "status": "approved",
+          "file": "bdd/features/ui/documentation-validation.feature",
+          "approved_by": [
+            {
+              "agent": "@bdd-writer",
+              "timestamp": "2026-01-31T11:00:00Z"
+            },
+            {
+              "agent": "@bdd-runner",
+              "timestamp": "2026-01-31T11:05:00Z"
+            }
+          ],
+          "test_results": {
+            "total": 12,
+            "passed": 12,
+            "failed": 0
+          }
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-A11Y-001",
+            "NFR-DOC-001"
+          ],
+          "status": "pass",
+          "results": {
+            "NFR-A11Y-001": {
+              "status": "pass",
+              "validated_by": "@a11y-agent"
+            },
+            "NFR-DOC-001": {
+              "status": "pass",
+              "validated_by": "@doc-agent"
+            }
+          }
+        }
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-001"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-002"
+    },
+    {
+      "id": "ROAD-003",
+      "title": "Database Schema",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-01-31",
+      "started": "2026-01-31",
+      "completed": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z",
+          "compliance_check": [
+            {
+              "adr": "ADR-003",
+              "compliant": true,
+              "notes": "Convex schema properly designed"
+            },
+            {
+              "adr": "ADR-006",
+              "compliant": true,
+              "notes": "Event sourcing pattern implemented"
+            },
+            {
+              "adr": "ADR-007",
+              "compliant": true,
+              "notes": "Indexing strategy optimized"
+            }
+          ]
+        },
+        "bdd": {
+          "id": "BDD-003",
+          "status": "approved",
+          "file": "bdd/features/api/database-schema.feature",
+          "approved_by": [
+            {
+              "agent": "@bdd-writer",
+              "timestamp": "2026-01-31T11:00:00Z"
+            },
+            {
+              "agent": "@bdd-runner",
+              "timestamp": "2026-01-31T11:05:00Z"
+            }
+          ],
+          "test_results": {
+            "total": 8,
+            "passed": 8,
+            "failed": 0
+          }
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-PERF-002",
+            "NFR-SEC-002"
+          ],
+          "status": "pass",
+          "results": {
+            "NFR-PERF-001": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            },
+            "NFR-PERF-002": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            },
+            "NFR-SEC-002": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            }
+          }
+        }
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-001",
+        "ROAD-002"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-003"
+    },
+    {
+      "id": "ROAD-004",
+      "title": "Bot Registration",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-01-31",
+      "started": "2026-01-31",
+      "completed": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z",
+          "compliance_check": [
+            {
+              "adr": "ADR-004",
+              "compliant": true,
+              "notes": "BotAccount aggregate follows DDD patterns"
+            },
+            {
+              "adr": "ADR-005",
+              "compliant": true,
+              "notes": "Hexagonal architecture maintained"
+            },
+            {
+              "adr": "ADR-008",
+              "compliant": true,
+              "notes": "API key security implemented"
+            },
+            {
+              "adr": "ADR-009",
+              "compliant": true,
+              "notes": "UI form follows design patterns"
+            }
+          ]
+        },
+        "bdd": {
+          "id": "BDD-004",
+          "status": "approved",
+          "file": "bdd/features/ui/bot-registration.feature",
+          "approved_by": [
+            {
+              "agent": "@bdd-writer",
+              "timestamp": "2026-01-31T11:00:00Z"
+            },
+            {
+              "agent": "@bdd-runner",
+              "timestamp": "2026-01-31T11:05:00Z"
+            }
+          ],
+          "test_results": {
+            "total": 10,
+            "passed": 10,
+            "failed": 0
+          }
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-001",
+            "NFR-SEC-002",
+            "NFR-A11Y-001",
+            "NFR-PERF-001"
+          ],
+          "status": "pass",
+          "results": {
+            "NFR-SEC-001": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-SEC-002": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-A11Y-001": {
+              "status": "pass",
+              "validated_by": "@a11y-agent"
+            },
+            "NFR-PERF-001": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            }
+          }
+        },
+        "capabilities": [
+          "CAP-001",
+          "CAP-002"
+        ]
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-001",
+        "ROAD-002",
+        "ROAD-003"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-004"
+    },
+    {
+      "id": "ROAD-005",
+      "title": "Bot Authentication",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-01-31",
+      "started": "2026-01-31",
+      "completed": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z",
+          "compliance_check": [
+            {
+              "adr": "ADR-008",
+              "compliant": true,
+              "notes": "API key authentication implemented"
+            },
+            {
+              "adr": "ADR-010",
+              "compliant": true,
+              "notes": "Rate limiting configured"
+            },
+            {
+              "adr": "ADR-005",
+              "compliant": true,
+              "notes": "Hexagonal architecture maintained"
+            }
+          ]
+        },
+        "bdd": {
+          "id": "BDD-005",
+          "status": "approved",
+          "file": "bdd/features/api/bot-authentication.feature",
+          "approved_by": [
+            {
+              "agent": "@bdd-writer",
+              "timestamp": "2026-01-31T11:00:00Z"
+            },
+            {
+              "agent": "@bdd-runner",
+              "timestamp": "2026-01-31T11:05:00Z"
+            }
+          ],
+          "test_results": {
+            "total": 15,
+            "passed": 15,
+            "failed": 0
+          }
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-001",
+            "NFR-SEC-002",
+            "NFR-SEC-003",
+            "NFR-PERF-001"
+          ],
+          "status": "pass",
+          "results": {
+            "NFR-SEC-001": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-SEC-002": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-SEC-003": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-PERF-001": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            }
+          }
+        },
+        "capabilities": [
+          "CAP-001",
+          "CAP-002",
+          "CAP-004"
+        ]
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-003",
+        "ROAD-004"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-005"
+    },
+    {
+      "id": "ROAD-006",
+      "title": "Bot Profile Management",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-01-31",
+      "started": "2026-01-31",
+      "completed": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z",
+          "compliance_check": [
+            {
+              "adr": "ADR-004",
+              "compliant": true,
+              "notes": "Profile updates follow aggregate patterns"
+            },
+            {
+              "adr": "ADR-009",
+              "compliant": true,
+              "notes": "UI components follow design system"
+            },
+            {
+              "adr": "ADR-011",
+              "compliant": true,
+              "notes": "Email verification implemented"
+            }
+          ]
+        },
+        "bdd": {
+          "id": "BDD-006",
+          "status": "approved",
+          "file": "bdd/features/ui/bot-profile-management.feature",
+          "approved_by": [
+            {
+              "agent": "@bdd-writer",
+              "timestamp": "2026-01-31T11:00:00Z"
+            },
+            {
+              "agent": "@bdd-runner",
+              "timestamp": "2026-01-31T11:05:00Z"
+            }
+          ],
+          "test_results": {
+            "total": 12,
+            "passed": 12,
+            "failed": 0
+          }
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-002",
+            "NFR-A11Y-001",
+            "NFR-PERF-001"
+          ],
+          "status": "pass",
+          "results": {
+            "NFR-SEC-002": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-A11Y-001": {
+              "status": "pass",
+              "validated_by": "@a11y-agent"
+            },
+            "NFR-PERF-001": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            }
+          }
+        },
+        "capabilities": [
+          "CAP-001",
+          "CAP-002"
+        ]
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-004",
+        "ROAD-005"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-006"
+    },
+    {
+      "id": "ROAD-007",
+      "title": "Reputation System",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-01-31",
+      "started": "2026-01-31",
+      "completed": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z",
+          "compliance_check": [
+            {
+              "adr": "ADR-004",
+              "compliant": true,
+              "notes": "Reputation aggregate follows DDD patterns"
+            },
+            {
+              "adr": "ADR-012",
+              "compliant": true,
+              "notes": "Reputation calculation algorithm documented"
+            },
+            {
+              "adr": "ADR-005",
+              "compliant": true,
+              "notes": "Hexagonal architecture maintained"
+            }
+          ]
+        },
+        "bdd": {
+          "id": "BDD-007",
+          "status": "approved",
+          "file": "bdd/features/api/reputation-system.feature",
+          "approved_by": [
+            {
+              "agent": "@bdd-writer",
+              "timestamp": "2026-01-31T11:00:00Z"
+            },
+            {
+              "agent": "@bdd-runner",
+              "timestamp": "2026-01-31T11:05:00Z"
+            }
+          ],
+          "test_results": {
+            "total": 18,
+            "passed": 18,
+            "failed": 0
+          }
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-PERF-002",
+            "NFR-SEC-001"
+          ],
+          "status": "pass",
+          "results": {
+            "NFR-PERF-001": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            },
+            "NFR-PERF-002": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            },
+            "NFR-SEC-001": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            }
+          }
+        },
+        "capabilities": [
+          "CAP-006"
+        ]
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-003",
+        "ROAD-004"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-007"
+    },
+    {
+      "id": "ROAD-008",
+      "title": "Basic Token Operations",
+      "status": "proposed",
+      "phase": 2,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-008",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-008"
+    },
+    {
+      "id": "ROAD-009",
+      "title": "Escrow System",
+      "status": "nfr_validating",
+      "phase": 2,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "validated_by": "@arch-inspector",
+          "validated_at": "2026-01-31T10:00:00Z"
+        },
+        "bdd": {
+          "id": "BDD-009",
+          "status": "approved"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "validating",
+          "results": {
+            "NFR-PERF-001": {
+              "status": "pass",
+              "validated_by": "@performance-agent"
+            },
+            "NFR-SEC-001": {
+              "status": "pass",
+              "validated_by": "@security-agent"
+            },
+            "NFR-A11Y-001": {
+              "status": "pass",
+              "validated_by": "@a11y-agent"
+            }
+          }
+        }
+      },
+      "blocks": [
+        "ROAD-011",
+        "ROAD-016",
+        "ROAD-017",
+        "ROAD-019"
+      ],
+      "depends_on": [
+        "ROAD-001",
+        "ROAD-002",
+        "ROAD-003",
+        "ROAD-008"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-009"
+    },
+    {
+      "id": "ROAD-010",
+      "title": "Stake Management",
+      "status": "proposed",
+      "phase": 2,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-010",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-001",
+        "ROAD-002",
+        "ROAD-003",
+        "ROAD-008"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-010"
+    },
+    {
+      "id": "ROAD-011",
+      "title": "Crypto Bridge",
+      "status": "nfr_blocked",
+      "phase": 2,
+      "created": "2026-01-31",
+      "priority": "Low",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-011",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [
+        "ROAD-009"
+      ],
+      "filePath": "roads/ROAD-011"
+    },
+    {
+      "id": "ROAD-012",
+      "title": "Promise Creation",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-012",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [
+        "ROAD-013",
+        "ROAD-016"
+      ],
+      "depends_on": [
+        "ROAD-001",
+        "ROAD-002",
+        "ROAD-003",
+        "ROAD-004",
+        "ROAD-008"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-012"
+    },
+    {
+      "id": "ROAD-013",
+      "title": "Promise Listing",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-013",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [
+        "ROAD-014",
+        "ROAD-016"
+      ],
+      "depends_on": [
+        "ROAD-001",
+        "ROAD-002",
+        "ROAD-003",
+        "ROAD-012"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-013"
+    },
+    {
+      "id": "ROAD-014",
+      "title": "Order Book",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-014",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [
+        "ROAD-016",
+        "ROAD-023"
+      ],
+      "depends_on": [
+        "ROAD-001",
+        "ROAD-002",
+        "ROAD-003",
+        "ROAD-013"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-014"
+    },
+    {
+      "id": "ROAD-015",
+      "title": "Promise Discovery",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-015",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-015"
+    },
+    {
+      "id": "ROAD-016",
+      "title": "Promise Acceptance",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-016",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-016"
+    },
+    {
+      "id": "ROAD-017",
+      "title": "Promise Execution",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-017",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-017"
+    },
+    {
+      "id": "ROAD-018",
+      "title": "Oracle Verification",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-018",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-018"
+    },
+    {
+      "id": "ROAD-019",
+      "title": "Settlement Process",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-019",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-019"
+    },
+    {
+      "id": "ROAD-020",
+      "title": "Dispute Resolution",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-020",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-020"
+    },
+    {
+      "id": "ROAD-021",
+      "title": "Dashboard",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-021",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-SEC-001",
+            "NFR-A11Y-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-021"
+    },
+    {
+      "id": "ROAD-022",
+      "title": "shadcn/ui Components",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-022",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-A11Y-001",
+            "NFR-UX-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-022"
+    },
+    {
+      "id": "ROAD-023",
+      "title": "Real-Time Updates",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-023",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-UX-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-023"
+    },
+    {
+      "id": "ROAD-024",
+      "title": "Mobile Responsive",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-024",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-A11Y-001",
+            "NFR-UX-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-024"
+    },
+    {
+      "id": "ROAD-025",
+      "title": "Unit Tests",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-025",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-TEST-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-025"
+    },
+    {
+      "id": "ROAD-026",
+      "title": "Integration Tests",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-026",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-TEST-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-026"
+    },
+    {
+      "id": "ROAD-027",
+      "title": "E2E Tests",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-027",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-TEST-001",
+            "NFR-UX-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-027"
+    },
+    {
+      "id": "ROAD-028",
+      "title": "Security Hardening",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Critical",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-028",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-001",
+            "NFR-SEC-002",
+            "NFR-SEC-003"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-028"
+    },
+    {
+      "id": "ROAD-029",
+      "title": "Performance Optimization",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-029",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-PERF-002"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-029"
+    },
+    {
+      "id": "ROAD-030",
+      "title": "Deployment",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-030",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-OPS-001",
+            "NFR-OPS-002"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-030"
+    },
+    {
+      "id": "ROAD-031",
+      "title": "Documentation",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-031",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-DOC-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-031"
+    },
+    {
+      "id": "ROAD-032",
+      "title": "Advanced Analytics",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Low",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-032",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-UX-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-032"
+    },
+    {
+      "id": "ROAD-033",
+      "title": "DAO Governance",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Low",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-033",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-001",
+            "NFR-GOV-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [
+        "Future consideration"
+      ],
+      "filePath": "roads/ROAD-033"
+    },
+    {
+      "id": "ROAD-034",
+      "title": "Secondary Market",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Low",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-034",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-001",
+            "NFR-PERF-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [
+        "Future consideration"
+      ],
+      "filePath": "roads/ROAD-034"
+    },
+    {
+      "id": "ROAD-035",
+      "title": "OpenClaw Advertisement Bot",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-035",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-001",
+            "NFR-OPS-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-035"
+    },
+    {
+      "id": "ROAD-036",
+      "title": "Advertisement Campaign Tracker",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-036",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-001",
+            "NFR-UX-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-036"
+    },
+    {
+      "id": "ROAD-037",
+      "title": "Agent Task Bounty Marketplace",
+      "status": "proposed",
+      "phase": 3,
+      "created": "2026-01-31",
+      "priority": "Medium",
+      "governance": {
+        "adrs": {
+          "validated": false
+        },
+        "bdd": {
+          "id": "BDD-037",
+          "status": "draft"
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-SEC-001",
+            "NFR-PERF-001"
+          ],
+          "status": "pending"
+        }
+      },
+      "blocks": [],
+      "depends_on": [],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-037"
+    },
+    {
+      "id": "ROAD-039",
+      "title": "Agent Directory & Discovery",
+      "status": "complete",
+      "phase": 1,
+      "created": "2026-02-01",
+      "started": "2026-02-01",
+      "completed": "2026-02-01",
+      "priority": "High",
+      "governance": {
+        "adrs": {
+          "validated": true,
+          "references": [
+            "ADR-001",
+            "ADR-002",
+            "ADR-003"
+          ]
+        },
+        "bdd": {
+          "id": "BDD-039",
+          "status": "approved",
+          "scenarios_count": 7,
+          "scenarios_implemented": 7,
+          "step_definitions": 7,
+          "step_definitions_missing": 0,
+          "tests_passing": 7,
+          "tests_pending": 0
+        },
+        "nfrs": {
+          "applicable": [
+            "NFR-PERF-003",
+            "NFR-SCA-002",
+            "NFR-SEC-002"
+          ],
+          "status": "validated",
+          "results": {
+            "NFR-PERF-003": "Search < 500ms - Validated via Convex indexes",
+            "NFR-SCA-002": "1000 agents/page - Pagination implemented",
+            "NFR-SEC-002": "No private data - apiKeyHash, email, walletId filtered"
+          }
+        },
+        "architecture": {
+          "status": "compliant",
+          "compliance_score": "100%",
+          "review_date": "2026-02-01",
+          "inspector": "@architecture-inspector"
+        }
+      },
+      "blocks": [],
+      "depends_on": [
+        "ROAD-005",
+        "ROAD-007"
+      ],
+      "blocked_by": [],
+      "filePath": "roads/ROAD-039"
+    }
+  ],
+  "generatedAt": "2026-02-01T15:31:13.423Z"
+}
