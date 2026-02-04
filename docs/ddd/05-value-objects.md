@@ -16,14 +16,14 @@ Value Objects are immutable domain primitives defined by their attributes rather
 
 ## Core Value Objects
 
-### BotId
+### AccountId
 ```typescript
-class BotId {
+class AccountId {
   private readonly value: string; // UUID v4
 
   constructor(value: string) {
     if (!isValidUUID(value)) {
-      throw new InvalidBotIdError(value);
+      throw new InvalidAccountIdError(value);
     }
     this.value = value;
   }
@@ -32,28 +32,28 @@ class BotId {
     return this.value;
   }
 
-  equals(other: BotId): boolean {
+  equals(other: AccountId): boolean {
     return this.value === other.value;
   }
 
-  static generate(): BotId {
-    return new BotId(uuidv4());
+  static generate(): AccountId {
+    return new AccountId(uuidv4());
   }
 }
 ```
 
-**Usage**: Identifies bots across all contexts.
+**Usage**: Identifies customer water accounts.
 
 ---
 
-### PromiseId
+### MeterId
 ```typescript
-class PromiseId {
-  private readonly value: string; // UUID v4
+class MeterId {
+  private readonly value: string; // UUID or device serial number
 
   constructor(value: string) {
-    if (!isValidUUID(value)) {
-      throw new InvalidPromiseIdError(value);
+    if (!value || value.length === 0) {
+      throw new InvalidMeterIdError(value);
     }
     this.value = value;
   }
@@ -62,385 +62,304 @@ class PromiseId {
     return this.value;
   }
 
-  equals(other: PromiseId): boolean {
+  equals(other: MeterId): boolean {
     return this.value === other.value;
-  }
-
-  static generate(): PromiseId {
-    return new PromiseId(uuidv4());
   }
 }
 ```
 
-**Usage**: Identifies promises uniquely.
+**Usage**: Identifies physical water meters.
 
 ---
 
-### TokenAmount
+### CubicMeters
 ```typescript
-class TokenAmount {
-  private readonly value: number;
+class CubicMeters {
+  private readonly value: number; // m³
 
   constructor(value: number) {
     if (value < 0) {
-      throw new InvalidTokenAmountError("Token amount cannot be negative");
+      throw new InvalidCubicMetersError("Cannot be negative");
     }
     if (!Number.isFinite(value)) {
-      throw new InvalidTokenAmountError("Token amount must be finite");
+      throw new InvalidCubicMetersError("Must be finite");
     }
-    // Store with 2 decimal precision (cents)
-    this.value = Math.round(value * 100) / 100;
+    // Store with 3 decimal precision
+    this.value = Math.round(value * 1000) / 1000;
   }
 
   getValue(): number {
     return this.value;
   }
 
-  add(other: TokenAmount): TokenAmount {
-    return new TokenAmount(this.value + other.value);
+  add(other: CubicMeters): CubicMeters {
+    return new CubicMeters(this.value + other.value);
   }
 
-  subtract(other: TokenAmount): TokenAmount {
-    return new TokenAmount(this.value - other.value);
+  subtract(other: CubicMeters): CubicMeters {
+    return new CubicMeters(this.value - other.value);
   }
 
-  multiply(factor: number): TokenAmount {
-    return new TokenAmount(this.value * factor);
+  multiply(factor: number): CubicMeters {
+    return new CubicMeters(this.value * factor);
   }
 
-  isGreaterThan(other: TokenAmount): boolean {
+  isGreaterThan(other: CubicMeters): boolean {
     return this.value > other.value;
   }
 
-  isLessThan(other: TokenAmount): boolean {
+  isLessThan(other: CubicMeters): boolean {
     return this.value < other.value;
   }
 
-  equals(other: TokenAmount): boolean {
+  equals(other: CubicMeters): boolean {
     return this.value === other.value;
   }
 
-  static zero(): TokenAmount {
-    return new TokenAmount(0);
+  static zero(): CubicMeters {
+    return new CubicMeters(0);
   }
 }
 ```
 
-**Usage**: All token quantities (prices, stakes, escrows).
+**Usage**: All water volume measurements (meter readings, consumption, allowances).
 
 **Why not a primitive?** Encapsulates validation, prevents negative values, provides domain operations.
 
 ---
 
-### ReputationScore
+### Money
 ```typescript
-class ReputationScore {
+class Money {
   private readonly value: number;
+  private readonly currency: Currency;
 
-  private static readonly MIN = 0;
-  private static readonly MAX = 1000;
-  private static readonly DEFAULT = 100;
-
-  constructor(value: number) {
-    if (value < ReputationScore.MIN || value > ReputationScore.MAX) {
-      throw new InvalidReputationScoreError(
-        `Score must be between ${ReputationScore.MIN} and ${ReputationScore.MAX}`
-      );
+  constructor(value: number, currency: Currency = Currency.USD) {
+    if (value < 0) {
+      throw new InvalidMoneyError("Amount cannot be negative");
     }
-    this.value = Math.round(value);
+    this.value = Math.round(value * 100) / 100;
+    this.currency = currency;
   }
 
   getValue(): number {
     return this.value;
   }
 
-  adjust(delta: number): ReputationScore {
-    const newValue = Math.max(
-      ReputationScore.MIN,
-      Math.min(ReputationScore.MAX, this.value + delta)
-    );
-    return new ReputationScore(newValue);
+  getCurrency(): Currency {
+    return this.currency;
   }
 
-  getTier(): 'beginner' | 'intermediate' | 'advanced' | 'expert' {
-    if (this.value < 100) return 'beginner';
-    if (this.value < 500) return 'intermediate';
-    if (this.value < 800) return 'advanced';
-    return 'expert';
-  }
-
-  equals(other: ReputationScore): boolean {
-    return this.value === other.value;
-  }
-
-  static default(): ReputationScore {
-    return new ReputationScore(ReputationScore.DEFAULT);
-  }
-}
-```
-
-**Usage**: Bot trust metric.
-
----
-
-### Email
-```typescript
-class Email {
-  private readonly value: string;
-
-  constructor(value: string) {
-    if (!this.isValid(value)) {
-      throw new InvalidEmailError(value);
+  add(other: Money): Money {
+    if (!this.currency.equals(other.currency)) {
+      throw new CurrencyMismatchError();
     }
-    this.value = value.toLowerCase().trim();
+    return new Money(this.value + other.value, this.currency);
   }
 
-  getValue(): string {
-    return this.value;
-  }
-
-  getDomain(): string {
-    return this.value.split('@')[1];
-  }
-
-  equals(other: Email): boolean {
-    return this.value === other.value;
-  }
-
-  private isValid(email: string): boolean {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  }
-}
-```
-
-**Usage**: Bot registration (optional).
-
----
-
-### Duration
-```typescript
-class Duration {
-  private readonly milliseconds: number;
-
-  constructor(milliseconds: number) {
-    if (milliseconds < 0) {
-      throw new InvalidDurationError("Duration cannot be negative");
+  subtract(other: Money): Money {
+    if (!this.currency.equals(other.currency)) {
+      throw new CurrencyMismatchError();
     }
-    this.milliseconds = Math.round(milliseconds);
+    return new Money(this.value - other.value, this.currency);
   }
 
-  toMilliseconds(): number {
-    return this.milliseconds;
+  multiply(factor: number): Money {
+    return new Money(this.value * factor, this.currency);
   }
 
-  toSeconds(): number {
-    return this.milliseconds / 1000;
+  equals(other: Money): boolean {
+    return this.value === other.value && 
+           this.currency.equals(other.currency);
   }
 
-  toMinutes(): number {
-    return this.milliseconds / 60000;
+  static zero(currency: Currency = Currency.USD): Money {
+    return new Money(0, currency);
+  }
+}
+
+class Currency {
+  constructor(private readonly code: string) {}
+
+  equals(other: Currency): boolean {
+    return this.code === other.code;
   }
 
-  add(other: Duration): Duration {
-    return new Duration(this.milliseconds + other.milliseconds);
+  static USD = new Currency('USD');
+  static EUR = new Currency('EUR');
+}
+```
+
+**Usage**: All monetary values (rates, deposits, invoices, payments).
+
+---
+
+### Rate
+```typescript
+class Rate {
+  private readonly amount: Money;
+  private readonly unit: 'per_cubic_meter' | 'fixed_monthly';
+
+  constructor(amount: Money, unit: 'per_cubic_meter' | 'fixed_monthly') {
+    if (amount.getValue() < 0) {
+      throw new InvalidRateError("Rate cannot be negative");
+    }
+    this.amount = amount;
+    this.unit = unit;
   }
 
-  isLongerThan(other: Duration): boolean {
-    return this.milliseconds > other.milliseconds;
+  getAmount(): Money {
+    return this.amount;
   }
 
-  equals(other: Duration): boolean {
-    return this.milliseconds === other.milliseconds;
+  getUnit(): string {
+    return this.unit;
   }
 
-  static fromSeconds(seconds: number): Duration {
-    return new Duration(seconds * 1000);
+  calculateCharge(consumption: CubicMeters): Money {
+    if (this.unit === 'per_cubic_meter') {
+      return this.amount.multiply(consumption.getValue());
+    }
+    return this.amount; // Fixed rate regardless of consumption
   }
 
-  static fromMinutes(minutes: number): Duration {
-    return new Duration(minutes * 60000);
+  equals(other: Rate): boolean {
+    return this.amount.equals(other.amount) && 
+           this.unit === other.unit;
   }
 }
 ```
 
-**Usage**: Response time SLAs, execution time tracking.
+**Usage**: Billing rates (consumption-based or fixed).
 
 ---
 
-### ApiKey
+### AccountStatus
 ```typescript
-class ApiKey {
-  private readonly hashedValue: string;
-  private readonly plainValue?: string; // Only set during generation
-
-  private constructor(hashedValue: string, plainValue?: string) {
-    this.hashedValue = hashedValue;
-    this.plainValue = plainValue;
-  }
-
-  getHashedValue(): string {
-    return this.hashedValue;
-  }
-
-  getPlainValue(): string | undefined {
-    return this.plainValue;
-  }
-
-  verify(plainKey: string): boolean {
-    return bcrypt.compareSync(plainKey, this.hashedValue);
-  }
-
-  equals(other: ApiKey): boolean {
-    return this.hashedValue === other.hashedValue;
-  }
-
-  static generate(): ApiKey {
-    const plainValue = `sk_${randomBytes(32).toString('hex')}`;
-    const hashedValue = bcrypt.hashSync(plainValue, 10);
-    return new ApiKey(hashedValue, plainValue);
-  }
-
-  static fromHashed(hashedValue: string): ApiKey {
-    return new ApiKey(hashedValue);
-  }
-}
-```
-
-**Usage**: Bot authentication.
-
-**Security**: Plain value only available during generation, never persisted.
-
----
-
-### PromiseState
-```typescript
-enum PromiseStateEnum {
-  DRAFT = 'draft',
-  LISTED = 'listed',
-  ACCEPTED = 'accepted',
-  EXECUTING = 'executing',
-  COMPLETED = 'completed',
-  FAILED = 'failed',
-  DISPUTED = 'disputed',
-  SETTLED = 'settled',
-  CANCELLED = 'cancelled'
+enum AccountStatusEnum {
+  PENDING_ACTIVATION = 'pending_activation',
+  ACTIVE = 'active',
+  SUSPENDED = 'suspended',
+  DELINQUENT = 'delinquent',
+  CLOSED = 'closed'
 }
 
-class PromiseState {
-  private readonly value: PromiseStateEnum;
+class AccountStatus {
+  private readonly value: AccountStatusEnum;
 
-  constructor(value: PromiseStateEnum) {
+  constructor(value: AccountStatusEnum) {
     this.value = value;
   }
 
-  getValue(): PromiseStateEnum {
+  getValue(): AccountStatusEnum {
     return this.value;
   }
 
-  canTransitionTo(newState: PromiseState): boolean {
+  canTransitionTo(newStatus: AccountStatus): boolean {
     const transitions = {
-      [PromiseStateEnum.DRAFT]: [PromiseStateEnum.LISTED, PromiseStateEnum.CANCELLED],
-      [PromiseStateEnum.LISTED]: [PromiseStateEnum.ACCEPTED, PromiseStateEnum.CANCELLED, PromiseStateEnum.EXPIRED],
-      [PromiseStateEnum.ACCEPTED]: [PromiseStateEnum.EXECUTING, PromiseStateEnum.CANCELLED],
-      [PromiseStateEnum.EXECUTING]: [PromiseStateEnum.COMPLETED, PromiseStateEnum.FAILED, PromiseStateEnum.DISPUTED],
-      [PromiseStateEnum.COMPLETED]: [PromiseStateEnum.SETTLED],
-      [PromiseStateEnum.FAILED]: [PromiseStateEnum.DISPUTED, PromiseStateEnum.SETTLED],
-      [PromiseStateEnum.DISPUTED]: [PromiseStateEnum.SETTLED],
-      [PromiseStateEnum.SETTLED]: [],
-      [PromiseStateEnum.CANCELLED]: []
+      [AccountStatusEnum.PENDING_ACTIVATION]: [AccountStatusEnum.ACTIVE, AccountStatusEnum.CLOSED],
+      [AccountStatusEnum.ACTIVE]: [AccountStatusEnum.SUSPENDED, AccountStatusEnum.CLOSED],
+      [AccountStatusEnum.SUSPENDED]: [AccountStatusEnum.ACTIVE, AccountStatusEnum.DELINQUENT, AccountStatusEnum.CLOSED],
+      [AccountStatusEnum.DELINQUENT]: [AccountStatusEnum.ACTIVE, AccountStatusEnum.SUSPENDED, AccountStatusEnum.CLOSED],
+      [AccountStatusEnum.CLOSED]: []
     };
 
-    return transitions[this.value]?.includes(newState.value) ?? false;
+    return transitions[this.value]?.includes(newStatus.value) ?? false;
   }
 
-  isTerminal(): boolean {
-    return [
-      PromiseStateEnum.SETTLED,
-      PromiseStateEnum.CANCELLED
-    ].includes(this.value);
+  isActive(): boolean {
+    return this.value === AccountStatusEnum.ACTIVE;
   }
 
-  equals(other: PromiseState): boolean {
+  isClosed(): boolean {
+    return this.value === AccountStatusEnum.CLOSED;
+  }
+
+  equals(other: AccountStatus): boolean {
     return this.value === other.value;
   }
 
-  static draft(): PromiseState {
-    return new PromiseState(PromiseStateEnum.DRAFT);
+  static pending(): AccountStatus {
+    return new AccountStatus(AccountStatusEnum.PENDING_ACTIVATION);
   }
 
-  static listed(): PromiseState {
-    return new PromiseState(PromiseStateEnum.LISTED);
+  static active(): AccountStatus {
+    return new AccountStatus(AccountStatusEnum.ACTIVE);
   }
 
-  // ... factory methods for other states
+  static suspended(): AccountStatus {
+    return new AccountStatus(AccountStatusEnum.SUSPENDED);
+  }
+
+  static delinquent(): AccountStatus {
+    return new AccountStatus(AccountStatusEnum.DELINQUENT);
+  }
+
+  static closed(): AccountStatus {
+    return new AccountStatus(AccountStatusEnum.CLOSED);
+  }
 }
 ```
 
-**Usage**: Promise lifecycle management.
+**Usage**: Account lifecycle management.
 
 **Business Logic**: State transition validation encoded in the value object.
 
 ---
 
-### ModelName
+### BillingCycle
 ```typescript
-class ModelName {
-  private readonly value: string;
+enum BillingCycleEnum {
+  MONTHLY = 'monthly',
+  BIMONTHLY = 'bimonthly',
+  QUARTERLY = 'quarterly'
+}
 
-  private static readonly VALID_MODELS = [
-    'chatgpt-3.5-turbo',
-    'chatgpt-4',
-    'chatgpt-4-turbo',
-    'chatgpt-5.2',
-    'claude-sonnet-3.5',
-    'claude-opus-4.5',
-    'claude-haiku-3.5',
-    'gemini-pro',
-    'gemini-ultra',
-    'llama-3.1-70b',
-    'llama-3.1-405b',
-    'mistral-large',
-  ];
+class BillingCycle {
+  private readonly value: BillingCycleEnum;
 
-  constructor(value: string) {
-    if (!ModelName.VALID_MODELS.includes(value)) {
-      throw new InvalidModelNameError(
-        `Unknown model: ${value}. Valid models: ${ModelName.VALID_MODELS.join(', ')}`
-      );
-    }
+  private static readonly CYCLE_DAYS = {
+    [BillingCycleEnum.MONTHLY]: 30,
+    [BillingCycleEnum.BIMONTHLY]: 60,
+    [BillingCycleEnum.QUARTERLY]: 90
+  };
+
+  constructor(value: BillingCycleEnum) {
     this.value = value;
   }
 
-  getValue(): string {
+  getValue(): BillingCycleEnum {
     return this.value;
   }
 
-  isOpenAI(): boolean {
-    return this.value.startsWith('chatgpt');
+  getDays(): number {
+    return BillingCycle.CYCLE_DAYS[this.value];
   }
 
-  isAnthropic(): boolean {
-    return this.value.startsWith('claude');
+  getNextBillingDate(from: Date): Date {
+    const days = this.getDays();
+    return new Date(from.getTime() + days * 24 * 60 * 60 * 1000);
   }
 
-  isGoogle(): boolean {
-    return this.value.startsWith('gemini');
-  }
-
-  equals(other: ModelName): boolean {
+  equals(other: BillingCycle): boolean {
     return this.value === other.value;
   }
 
-  static getSupportedModels(): string[] {
-    return [...ModelName.VALID_MODELS];
+  static monthly(): BillingCycle {
+    return new BillingCycle(BillingCycleEnum.MONTHLY);
+  }
+
+  static bimonthly(): BillingCycle {
+    return new BillingCycle(BillingCycleEnum.BIMONTHLY);
+  }
+
+  static quarterly(): BillingCycle {
+    return new BillingCycle(BillingCycleEnum.QUARTERLY);
   }
 }
 ```
 
-**Usage**: Promise specifications.
-
-**Validation**: Ensures only supported models are referenced.
+**Usage**: Billing schedule management.
 
 ---
 
@@ -495,85 +414,125 @@ class Timestamp {
 
 ---
 
-## Composite Value Objects
-
-### Money (Alternative to TokenAmount)
-```typescript
-class Money {
-  private readonly amount: number;
-  private readonly currency: Currency;
-
-  constructor(amount: number, currency: Currency) {
-    if (amount < 0) {
-      throw new InvalidMoneyError("Amount cannot be negative");
-    }
-    this.amount = Math.round(amount * 100) / 100;
-    this.currency = currency;
-  }
-
-  getAmount(): number {
-    return this.amount;
-  }
-
-  getCurrency(): Currency {
-    return this.currency;
-  }
-
-  add(other: Money): Money {
-    if (!this.currency.equals(other.currency)) {
-      throw new CurrencyMismatchError();
-    }
-    return new Money(this.amount + other.amount, this.currency);
-  }
-
-  // ... other operations
-}
-
-class Currency {
-  constructor(private readonly code: string) {}
-
-  equals(other: Currency): boolean {
-    return this.code === other.code;
-  }
-
-  static CLAW_TOKEN = new Currency('CLAW');
-  static USD = new Currency('USD');
-  static ETH = new Currency('ETH');
-}
-```
-
-**Usage**: If we need multi-currency support later.
-
----
-
 ### Address
 ```typescript
 class Address {
   constructor(
     private readonly street: string,
     private readonly city: string,
-    private readonly country: string,
-    private readonly postalCode: string
+    private readonly state: string,
+    private readonly zipCode: string,
+    private readonly country: string = 'USA'
   ) {
-    // Validation omitted for brevity
+    if (!street || !city || !state || !zipCode) {
+      throw new InvalidAddressError("All address fields required");
+    }
   }
 
   getFullAddress(): string {
-    return `${this.street}, ${this.city}, ${this.country} ${this.postalCode}`;
+    return `${this.street}, ${this.city}, ${this.state} ${this.zipCode}`;
+  }
+
+  getCity(): string {
+    return this.city;
+  }
+
+  getState(): string {
+    return this.state;
+  }
+
+  getZipCode(): string {
+    return this.zipCode;
   }
 
   equals(other: Address): boolean {
     return (
       this.street === other.street &&
       this.city === other.city &&
-      this.country === other.country &&
-      this.postalCode === other.postalCode
+      this.state === other.state &&
+      this.zipCode === other.zipCode &&
+      this.country === other.country
     );
   }
 }
 ```
 
-**Usage**: Future feature for bot operator verification (KYC).
+**Usage**: Service addresses and billing addresses.
+
+---
+
+### Email
+```typescript
+class Email {
+  private readonly value: string;
+
+  constructor(value: string) {
+    if (!this.isValid(value)) {
+      throw new InvalidEmailError(value);
+    }
+    this.value = value.toLowerCase().trim();
+  }
+
+  getValue(): string {
+    return this.value;
+  }
+
+  getDomain(): string {
+    return this.value.split('@')[1];
+  }
+
+  equals(other: Email): boolean {
+    return this.value === other.value;
+  }
+
+  private isValid(email: string): boolean {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+}
+```
+
+**Usage**: Customer contact information.
+
+---
+
+### PhoneNumber
+```typescript
+class PhoneNumber {
+  private readonly value: string;
+
+  constructor(value: string) {
+    const cleaned = this.cleanPhoneNumber(value);
+    if (!this.isValid(cleaned)) {
+      throw new InvalidPhoneNumberError(value);
+    }
+    this.value = cleaned;
+  }
+
+  getValue(): string {
+    return this.value;
+  }
+
+  getFormatted(): string {
+    // Format as (123) 456-7890
+    return `(${this.value.slice(0, 3)}) ${this.value.slice(3, 6)}-${this.value.slice(6)}`;
+  }
+
+  equals(other: PhoneNumber): boolean {
+    return this.value === other.value;
+  }
+
+  private cleanPhoneNumber(phone: string): string {
+    return phone.replace(/\D/g, '');
+  }
+
+  private isValid(phone: string): boolean {
+    return phone.length === 10; // US format
+  }
+}
+```
+
+**Usage**: Customer phone numbers.
 
 ---
 
@@ -584,10 +543,10 @@ class Address {
 1. **Make them immutable**
    ```typescript
    // Good
-   class TokenAmount {
+   class CubicMeters {
      private readonly value: number;
-     add(other: TokenAmount): TokenAmount {
-       return new TokenAmount(this.value + other.value);
+     add(other: CubicMeters): CubicMeters {
+       return new CubicMeters(this.value + other.value);
      }
    }
    ```
@@ -596,7 +555,7 @@ class Address {
    ```typescript
    constructor(value: number) {
      if (value < 0) {
-       throw new InvalidTokenAmountError();
+       throw new InvalidCubicMetersError();
      }
      this.value = value;
    }
@@ -604,24 +563,15 @@ class Address {
 
 3. **Implement value equality**
    ```typescript
-   equals(other: TokenAmount): boolean {
+   equals(other: CubicMeters): boolean {
      return this.value === other.value;
    }
    ```
 
 4. **Provide factory methods**
    ```typescript
-   static zero(): TokenAmount {
-     return new TokenAmount(0);
-   }
-   ```
-
-5. **Encapsulate business logic**
-   ```typescript
-   getTier(): 'low' | 'medium' | 'high' {
-     if (this.value < 100) return 'low';
-     if (this.value < 1000) return 'medium';
-     return 'high';
+   static zero(): CubicMeters {
+     return new CubicMeters(0);
    }
    ```
 
@@ -637,32 +587,20 @@ class Address {
 
 2. **Don't give them identity**
    ```typescript
-   // Bad - value objects shouldn't have IDs
-   class TokenAmount {
+   // Bad
+   class CubicMeters {
      id: string;
      value: number;
    }
    ```
 
-3. **Don't allow invalid state**
-   ```typescript
-   // Bad - validation only in setter
-   class TokenAmount {
-     value: number;
-     setValue(v: number): void {
-       if (v < 0) throw new Error();
-       this.value = v;
-   }
-   }
-   ```
-
-4. **Don't use primitives for domain concepts**
+3. **Don't use primitives for domain concepts**
    ```typescript
    // Bad
-   function processPayment(amount: number) { ... }
+   function calculateRate(consumption: number) { ... }
 
    // Good
-   function processPayment(amount: TokenAmount) { ... }
+   function calculateRate(consumption: CubicMeters) { ... }
    ```
 
 ---
@@ -677,9 +615,9 @@ class Address {
 | Appears in multiple places | Used once |
 
 **Examples**:
-- `TokenAmount` (value object) vs `count` (primitive)
+- `CubicMeters` (value object) vs `count` (primitive)
+- `Money` (value object) vs `price` (primitive)
 - `Email` (value object) vs `name` (primitive)
-- `Duration` (value object) vs `label` (primitive)
 
 ---
 

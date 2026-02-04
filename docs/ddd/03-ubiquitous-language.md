@@ -1,287 +1,260 @@
 # Ubiquitous Language
 
-This document defines the common vocabulary used across ClawMarket. All team members, code, documentation, and communication should use these terms consistently.
+This document defines the common vocabulary used across AquaTrack. All team members, code, documentation, and communication should use these terms consistently.
 
 ---
 
-## Core Market Concepts
+## Core Water Management Concepts
 
-### Promise
-A binding commitment by a Provider Bot to execute LLM inference under specified terms. A Promise includes:
-- What will be computed (model, token count)
-- Cost and payment terms
-- Service level agreements (response time, quality)
-- Stake backing the commitment
+### Customer Account
+A formal agreement between a water utility and a property owner/occupant to provide water service. A Customer Account includes:
+- Service address (property location)
+- Account holder information
+- Active dates (connection and termination)
+- Service deposit (upfront payment, refundable)
+- Billing preferences (frequency, delivery method)
 
-**Example**: "Provider bot GPT-Master-9000 created a Promise to process 500,000 tokens on ChatGPT 5.2 with 30-second response time for 100 tokens."
+**Example**: "Customer Account #12345 at 123 Main Street is active with a $200 service deposit."
 
-### Provider Bot
-An autonomous AI agent (OpenClaw instance) that owns or has API access to language models and offers compute capacity on the marketplace.
+### Meter
+A physical device installed at a property that measures and records water consumption in cubic meters (m³).
 
-**Aliases**: Seller, Supplier
-**Not to be confused with**: Consumer Bot
+**Types**:
+- Single-family residential meter
+- Commercial/Industrial meter
+- Large volume meter for municipal buildings
 
-### Consumer Bot
-An autonomous AI agent that needs LLM inference and purchases compute capacity by accepting Promises.
+**Not to be confused with**: Meter Reading (a single data point from the meter)
 
-**Aliases**: Buyer, Requester
-**Not to be confused with**: Provider Bot
+### Meter Reading
+A recorded measurement of water consumption from a meter at a specific date and time. Includes:
+- Meter ID (unique identifier of the physical device)
+- Reading value (cubic meters consumed, cumulative)
+- Reading date and time
+- Meter status at time of reading
+- Reader identification (person or automated system)
 
-### Order Book
-The collection of all active supply listings (Provider offers) and demand listings (Consumer requests) waiting to be matched.
+**Example**: "Meter Reading for meter #ABC-123 recorded 1,245.67 m³ on Jan 15, 2024."
 
-**Example**: "The Order Book shows 47 GPT-4 offers and 23 Claude Opus requests."
+### Consumption / Usage
+The calculated volume of water used during a billing period. Calculated as:
+**Consumption = Current Reading - Previous Reading**
 
-### Match
-When a supply listing meets demand listing criteria, creating an opportunity for a Promise to be accepted.
+**Example**: "Customer used 15.2 m³ of water in January."
 
-**Example**: "Consumer bot's request matched with three Provider offers; Consumer selected the lowest-priced match."
+### Billing Cycle
+Regular recurring interval (monthly, quarterly, or annual) during which usage is calculated and customers are billed.
 
----
-
-## Promise Lifecycle States
-
-### Draft
-A Promise is being composed but not yet visible in the marketplace.
-
-**Transitions to**: Listed, Cancelled
-
-### Listed
-The Promise is active in the Order Book and available for matching.
-
-**Transitions to**: Accepted, Expired, Cancelled
-
-### Accepted
-A Consumer Bot has agreed to the Promise terms, and tokens are being escrowed.
-
-**Transitions to**: Executing, Cancelled (before execution starts)
-
-### Executing
-The Provider Bot is actively performing the promised LLM inference.
-
-**Transitions to**: Completed, Failed, Disputed
-
-### Completed
-The Promise was successfully fulfilled, verified, and settled.
-
-**Terminal state**: No further transitions
-
-### Failed
-The Provider Bot could not fulfill the Promise (timeout, error, or refusal).
-
-**Transitions to**: Disputed (if challenged), Settled
-
-### Disputed
-Either party has challenged the execution or verification, triggering dispute resolution.
-
-**Transitions to**: Settled
-
-### Settled
-Final resolution has occurred; tokens have been released or slashed.
-
-**Terminal state**: No further transitions
-
-### Cancelled
-The Promise was cancelled before execution began (mutual agreement or expiration).
-
-**Terminal state**: No further transitions
+**Typical Cycles**: 
+- Monthly (30-31 days)
+- Bi-monthly (60 days)
+- Quarterly (90 days)
 
 ---
 
-## Promise Components
+## Service Account Concepts
 
-### PromiseSpecification
-Technical requirements of the computation:
-- **Model**: Which LLM (e.g., "chatgpt-5.2", "claude-opus-4.5")
-- **Token Count**: Number of tokens to process (input + output)
-- **Context Window**: Required context size if applicable
-- **Response Time SLA**: Maximum acceptable completion time
-- **Quality Requirements**: Temperature, top-p, or other model parameters
+### Service Deposit
+Upfront payment required from customer to activate water service. Held in trust and refundable upon account closure.
 
-### PricingTerms
-Financial terms of the Promise:
-- **Price**: Token cost for the service
-- **Payment Schedule**: Upfront, on completion, or split
-- **Penalty Clause**: Stakes slashed if unfulfilled
-- **Discount**: Optional for bulk or repeat customers
+**Purpose**: Ensures customers have commitment to service and covers potential unpaid balances.
 
-### ExecutionProof
-Evidence that the Provider fulfilled the Promise:
-- **API Call Logs**: Timestamps and endpoints
-- **Input Hash**: Cryptographic hash of the prompt
-- **Output Hash**: Cryptographic hash of the response
-- **Execution Metadata**: Model version, token usage, latency
-- **Attestation**: Provider's signed statement of completion
+**Handling**: 
+- Deposited upon account creation
+- Released when account closed in good standing
+- Applied to final bill if account closed with balance
 
-### PromiseHistory
-Immutable audit trail of all state transitions and modifications to a Promise.
+### Account Status
+Current operational state of a customer account:
 
----
+#### Active
+Account in good standing with water service currently flowing. No payment issues.
 
-## Token & Financial Concepts
+#### Delinquent
+Customer has overdue balance beyond specified grace period. Service may be at risk.
 
-### Token
-The internal fungible currency of ClawMarket. Bots use tokens to:
-- Pay for LLM inference (Consumers)
-- Receive payment for services (Providers)
-- Lock stakes to back promises
-- Pay platform transaction fees
+#### Suspended
+Water service disconnected due to non-payment or other violation. Meter physically isolated.
 
-**Not to be confused with**: LLM tokens (text tokenization)
+#### Closed
+Account permanently terminated. No further billing or service.
 
-### Stake
-Tokens locked by a Provider Bot to back a Promise. If the Promise is fulfilled, the stake is returned. If failed, the stake may be slashed.
+#### Pending Activation
+Account created but not yet activated pending verification or deposit clearance.
 
-**Purpose**: Ensures skin-in-the-game and deters low-quality providers.
-
-### Escrow
-Tokens held by the system (not in any bot's wallet) during Promise execution. Released to Provider on success, returned to Consumer on failure, or distributed per dispute resolution.
-
-**Example**: "100 tokens are in escrow for Promise #42 until verification completes."
-
-### Slashing
-The penalty mechanism where a Provider's staked tokens are forfeited (partially or fully) due to Promise failure or dispute loss.
-
-**Example**: "Provider bot lost 50 tokens in slashing after failing to deliver on Promise #89."
-
-### Transfer
-Movement of tokens between wallets, either direct (bot-to-bot) or via escrow.
-
-### Bridge Transaction
-Conversion between ClawMarket's internal tokens and external cryptocurrency (ETH, SOL, USDC).
-
-**Directions**:
-- **Deposit**: External crypto → Internal tokens
-- **Withdrawal**: Internal tokens → External crypto
+### Account Standing
+Credit rating reflecting customer's payment history and reliability:
+- **Excellent**: All payments on time, no disconnections (0-5 days late max)
+- **Good**: Occasional late payments, no disconnections (5-30 days late)
+- **Fair**: Regular late payments or one disconnection (30-60 days late)
+- **Poor**: Multiple disconnections or sustained non-payment (60+ days late)
 
 ---
 
-## Identity & Trust Concepts
+## Billing Concepts
 
-### Bot Account
-A registered autonomous agent with:
-- Unique identifier
-- Authentication credentials (API key)
-- Token wallet
-- Reputation score
-- Stake lock balance
+### Invoice
+Formal bill for water consumption and service charges during a billing period. Includes:
+- Service period (start and end dates)
+- Meter readings (previous and current)
+- Calculated consumption
+- Rate applied ($/m³)
+- Service charges (base fee, surcharges)
+- Due date
+- Balance due
 
-### API Key
-Secret credential used by bots to authenticate API requests to ClawMarket.
+**Example**: "Invoice #INV-2024-001 for January usage due Feb 15, 2024: $45.00"
 
-**Security Note**: Never exposed in logs or client-side code.
+### Billing Period
+Time interval between billing cycles during which usage is measured and billed.
 
-### Reputation Score
-A numerical trust metric (0-1000) reflecting a bot's historical performance:
-- **Increases**: Successful promise fulfillments, positive dispute resolutions
-- **Decreases**: Failed promises, lost disputes, slow response times
+**Standard Periods**: 30, 60, or 90 days depending on billing cycle frequency
 
-**Usage**: Consumers can filter providers by minimum reputation.
+### Rate / Pricing
+Cost per unit of water consumption:
+- **Base Rate**: Fixed monthly/quarterly charge
+- **Consumption Rate**: $/m³ for usage over minimum allowance
+- **Tier Rates**: Variable rates based on consumption tiers (conservation pricing)
+- **Surcharges**: Special fees (late fee, reconnection fee, service request fee)
 
-### Stake Lock
-The total amount of tokens a bot has locked to back active promises. Cannot be withdrawn until promises settle.
+**Example**: "$1.25/m³ for usage + $15 base fee + $5 late fee if 30+ days overdue"
 
-**Formula**: `Available Balance = Wallet Balance - Stake Lock`
+### Payment
+Customer's settlement of an invoice or account balance. 
 
-### Verification
-The automated process of validating ExecutionProof after a Provider claims completion.
+**Types**:
+- Full payment (entire invoice amount)
+- Partial payment (portion of amount due)
+- On-time payment (by due date)
+- Late payment (after due date)
 
-**Methods**:
-- Oracle checks (API logs, hashes)
-- Consensus (peer bot validation)
-- Hybrid (oracle + fallback to arbitration)
+### Account Balance
+Outstanding amount owed by customer or credit balance in customer's favor.
 
----
-
-## Settlement & Dispute Concepts
-
-### Settlement
-The final resolution of a Promise, determining:
-- Whether the Provider fulfilled the commitment
-- How escrowed tokens are distributed
-- Reputation adjustments for both parties
-
-### SettlementCase
-The domain object representing an active settlement process for a specific Promise.
-
-**Outcomes**:
-- **Success**: Escrow released to Provider, reputation increases
-- **Failure**: Escrow returned to Consumer, stake slashed, reputation decreases
-- **Partial**: Split distribution per dispute resolution
-
-### Dispute
-A formal challenge raised when:
-- Consumer claims Provider didn't fulfill Promise
-- Provider claims they did but verification failed
-- Either party disputes the verification result
-
-**Triggers**: Transition to Disputed state, human/DAO arbitration
-
-### Oracle
-An automated system that verifies ExecutionProof by checking:
-- Timestamp validity (was it completed on time?)
-- Hash integrity (does output match proof?)
-- API call evidence (can logs be confirmed?)
-
-**Limitations**: Cannot judge subjective quality; disputes escalate to arbitration.
-
-### Arbitration
-Human or DAO review of Disputed promises when automated verification is insufficient or contested.
-
-**Process**:
-1. Both parties submit evidence
-2. Arbitrator reviews ExecutionProof and claims
-3. Decision rendered (success, failure, or partial)
-4. Settlement executed per decision
+**Positive Balance**: Amount owed by customer
+**Credit Balance**: Amount owed to customer (overpayment or future credit)
 
 ---
 
-## Market Data & Analytics Concepts
+## Usage Tracking Concepts
 
-### Liquidity
-The volume of active listings and ease of matching supply with demand.
+### Meter Reading (Detailed)
+Complete record including:
+- **Meter ID**: Unique device identifier
+- **Reading Value**: Cumulative m³ consumption
+- **Previous Reading**: For consumption calculation
+- **Consumption**: Calculated difference for period
+- **Reading Date**: When measurement was taken
+- **Reading Source**: Manual (technician), Automated (smart meter), Estimated
+- **Status**: Valid, Estimated, Anomalous, Rejected
 
-**High Liquidity**: Many orders, tight spreads, fast matches
-**Low Liquidity**: Few orders, wide spreads, slow matches
+### Consumption Calculation
+Process of determining water usage from consecutive readings:
 
-### Spread
-The difference between the lowest Provider offer and highest Consumer bid for similar specifications.
+```
+Consumption = Current Reading - Previous Reading
+```
 
-**Example**: "Spread for GPT-4 inference is 5 tokens (lowest offer: 105, highest bid: 100)."
+**Example**: "Current: 1,250 m³, Previous: 1,235 m³ = 15 m³ consumption"
 
-### Fulfillment Rate
-Percentage of Promises that reach Completed state without disputes.
+### Anomaly
+Unusual usage pattern detected, such as:
+- Usage >200% of customer's average (potential leak)
+- Usage &lt;10% of customer's average (meter malfunction)
+- Negative consumption (meter rollback or error)
+- Massive spike in short period (potential water main break)
 
-**Formula**: `Fulfilled Promises / Total Accepted Promises * 100`
-
-### Settlement Time
-Average duration from Promise Accepted to Settled.
-
-**Example**: "Average settlement time for Claude Opus promises is 2.3 minutes."
+**Response**: Flag for investigation; may hold billing pending verification.
 
 ---
 
-## Anti-Patterns & Common Mistakes
+## Meter & Service Concepts
 
-### ❌ "LLM Token" Confusion
-**Wrong**: "This promise costs 500 LLM tokens."
-**Right**: "This promise costs 500 ClawMarket tokens to process 1M LLM text tokens."
+### Service Request
+Request for meter-related action, including:
+- Meter reading (for off-cycle billing)
+- Meter repair or replacement
+- Service line investigation (potential leak)
+- Meter disconnection/reconnection
+- Meter inspection or maintenance
 
-Always distinguish between:
-- **ClawMarket tokens**: Currency
-- **LLM tokens**: Text units (input/output)
+### Service Technician
+Field operator authorized to:
+- Conduct meter readings
+- Perform routine maintenance
+- Identify meter faults
+- Disconnect/reconnect service
+- Complete service requests
 
-### ❌ Mixing Context Languages
-**Wrong**: In Promise Market context, referring to "wallet balance."
-**Right**: In Promise Market context, referring to "bot's available tokens" (wallet is Token Management concern).
+### Meter Status
+Operational condition of physical meter device:
+- **Active**: Functioning, recording usage normally
+- **Faulty**: Known to be inaccurate or non-functional
+- **Due for Maintenance**: Scheduled servicing needed
+- **Disconnected**: Service line physically isolated
+- **Scheduled for Replacement**: Scheduled maintenance work
 
-Each bounded context should use its own natural language.
+---
 
-### ❌ "Promise" as Verb
-**Wrong**: "The bot promised to execute the task."
-**Right**: "The bot created a Promise to execute the task."
+## Financial Concepts
 
-Promise is a noun (domain object), not a verb.
+### Service Connection
+Activation of water service to a property, typically involving:
+- Verification of account ownership/tenancy
+- Service deposit collection
+- Meter activation
+- Initial reading recording
+
+### Service Disconnection
+Termination of water service, typically due to:
+- Customer request (moving away)
+- Non-payment (60+ days overdue)
+- Property vacation or demolition
+- Fraud or meter tampering
+
+### Reconnection
+Restoration of service after disconnection:
+- Requires payment of outstanding balance
+- Requires reconnection fee
+- May require meter inspection
+- Deposit may be forfeited or reapplied
+
+### Late Payment
+Payment received after invoice due date.
+
+**Grace Period**: Typically 15-30 days before delinquency triggered
+
+**Penalties**: 
+- Late fee (fixed amount or percentage)
+- Increased interest on balance
+- Service suspension risk
+
+---
+
+## Account Lifecycle Events
+
+### Account Creation
+Initial establishment of customer water service agreement.
+
+**Preconditions**: Proof of occupancy, deposit payment, meter availability
+
+### Account Activation
+Service connection and first meter reading recorded.
+
+**Triggers**: Deposit cleared, address verified, meter activated
+
+### Account Deactivation
+Termination of water service relationship.
+
+**Reasons**: Customer request, fraud, property demolition, unpaid balance
+
+### Account Closure
+Permanent closure after all balances settled and deposit disposition determined.
+
+**Outcomes**: 
+- Deposit refunded (good standing)
+- Deposit applied to final bill
+- Overage charged or credited
 
 ---
 
@@ -289,20 +262,50 @@ Promise is a noun (domain object), not a verb.
 
 | Term | Definition | Context |
 |------|-----------|---------|
-| Promise | Commitment to execute LLM inference | Core |
-| Provider Bot | Agent offering compute capacity | Core |
-| Consumer Bot | Agent requesting compute capacity | Core |
-| Stake | Tokens locked to back a Promise | Token Management |
-| Escrow | Tokens held during execution | Token Management |
-| Slashing | Penalty for unfulfilled Promise | Settlement |
-| Reputation Score | Trust metric (0-1000) | Bot Identity |
-| Order Book | Active supply & demand listings | Promise Market |
-| Match | Supply meets demand | Promise Market |
-| Settlement | Final resolution of Promise | Settlement |
-| Dispute | Challenged Promise outcome | Settlement |
-| Oracle | Automated verification system | Settlement |
-| Arbitration | Human/DAO dispute resolution | Settlement |
-| Bridge Transaction | Crypto ↔ internal token conversion | Token Management |
+| Customer Account | Service agreement for water delivery | Core |
+| Meter | Physical device measuring consumption | Core |
+| Meter Reading | Recorded measurement at specific time | Usage Tracking |
+| Consumption | Calculated usage between readings | Usage Tracking |
+| Service Deposit | Upfront payment to activate service | Account Mgmt |
+| Account Status | Current state (Active, Suspended, etc) | Account Mgmt |
+| Billing Cycle | Regular invoicing interval | Billing |
+| Invoice | Bill for consumption and fees | Billing |
+| Payment | Customer settlement of amount due | Billing |
+| Service Request | Request for meter/service work | Meter Ops |
+| Account Standing | Credit rating based on payment history | Account Mgmt |
+| Anomaly | Unusual consumption pattern detected | Usage Tracking |
+
+---
+
+## Anti-Patterns & Common Mistakes
+
+### ❌ "Meter" Confusion
+**Wrong**: "The meter shows 1,250 cubic meters."
+**Right**: "The meter reading is 1,250 cubic meters."
+
+Always distinguish between:
+- **Meter**: The physical device
+- **Meter Reading**: The recorded value
+
+### ❌ Mixing Reading and Consumption
+**Wrong**: "Consumption from 1,235 to 1,250."
+**Right**: "Meter reading of 1,250 m³; consumption of 15 m³."
+
+Reading is cumulative; consumption is the difference.
+
+### ❌ Confusing Status and Standing
+**Wrong**: "Account standing is Suspended."
+**Right**: "Account status is Suspended; standing was Fair before suspension."
+
+- **Status**: Current operational state
+- **Standing**: Historical credit rating
+
+### ❌ Overdue vs Late
+**Wrong**: "Payment was overdue."
+**Right**: "Invoice became due; payment was late."
+
+- **Due**: Date amount becomes payable
+- **Late**: Payment received after due date
 
 ---
 

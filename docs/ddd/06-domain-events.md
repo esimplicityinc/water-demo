@@ -1,12 +1,12 @@
 # Domain Events
 
-Domain Events represent significant occurrences in the domain that domain experts care about. They are immutable facts about what has happened.
+Domain Events represent significant occurrences in the water management domain that stakeholders care about. They are immutable facts about what has happened.
 
 ---
 
 ## Event Characteristics
 
-1. **Past Tense**: Named with past-tense verbs (e.g., `PromiseCreated`, not `CreatePromise`)
+1. **Past Tense**: Named with past-tense verbs (e.g., `AccountCreated`, not `CreateAccount`)
 2. **Immutable**: Cannot be changed after creation
 3. **Timestamped**: Always include when the event occurred
 4. **Complete**: Contain all data needed by subscribers
@@ -26,7 +26,7 @@ interface DomainEvent {
   aggregateId: string; // ID of affected aggregate
   aggregateType: string; // Type of aggregate
   version: number; // For event versioning
-  causationId?: string; // What caused this event (another event)
+  causationId?: string; // What caused this event
   correlationId?: string; // Groups related events
   metadata?: Record<string, any>;
 }
@@ -34,636 +34,298 @@ interface DomainEvent {
 
 ---
 
-## Bot Identity & Reputation Events
+## Customer Account Management Events
 
-### BotRegistered
-Fired when a new bot account is created.
-
-```typescript
-interface BotRegistered extends DomainEvent {
-  eventType: 'BotRegistered';
-  aggregateType: 'BotAccount';
-  aggregateId: BotId;
-  data: {
-    botId: BotId;
-    email: Email | null;
-    displayName: string;
-    initialReputationScore: ReputationScore;
-    registeredAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Create wallet for new bot
-- Analytics: Track user growth
-
----
-
-### BotVerified
-Fired when a bot completes verification process.
+### CustomerAccountCreated
+Fired when a new customer account is created.
 
 ```typescript
-interface BotVerified extends DomainEvent {
-  eventType: 'BotVerified';
-  aggregateType: 'BotAccount';
-  aggregateId: BotId;
+interface CustomerAccountCreated extends DomainEvent {
+  eventType: 'CustomerAccountCreated';
+  aggregateType: 'CustomerAccount';
+  aggregateId: AccountId;
   data: {
-    botId: BotId;
-    verificationMethod: 'email' | 'api_test' | 'manual';
-    verifiedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Promise Market: Enable listing capabilities
-- Email Service: Send welcome email
-
----
-
-### StakeDeposited
-Fired when a bot locks tokens for staking.
-
-```typescript
-interface StakeDeposited extends DomainEvent {
-  eventType: 'StakeDeposited';
-  aggregateType: 'BotAccount';
-  aggregateId: BotId;
-  data: {
-    botId: BotId;
-    amount: TokenAmount;
-    promiseId: PromiseId | null; // null if general stake
-    lockedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Lock tokens in wallet
-- Promise Market: Enable promise listing if threshold met
-
----
-
-### StakeWithdrawn
-Fired when staked tokens are released back to bot.
-
-```typescript
-interface StakeWithdrawn extends DomainEvent {
-  eventType: 'StakeWithdrawn';
-  aggregateType: 'BotAccount';
-  aggregateId: BotId;
-  data: {
-    botId: BotId;
-    amount: TokenAmount;
-    promiseId: PromiseId | null;
-    releasedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Unlock tokens in wallet
-
----
-
-### ReputationUpdated
-Fired when a bot's reputation score changes.
-
-```typescript
-interface ReputationUpdated extends DomainEvent {
-  eventType: 'ReputationUpdated';
-  aggregateType: 'BotAccount';
-  aggregateId: BotId;
-  data: {
-    botId: BotId;
-    oldScore: ReputationScore;
-    newScore: ReputationScore;
-    delta: number;
-    reason: string;
-    promiseId: PromiseId | null; // if related to promise
-    updatedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Analytics: Track reputation trends
-- Notification Service: Alert bot if reputation drops below threshold
-- Promise Market: Update bot's market visibility
-
----
-
-## Promise Market Events
-
-### PromiseCreated
-Fired when a provider bot creates a new promise.
-
-```typescript
-interface PromiseCreated extends DomainEvent {
-  eventType: 'PromiseCreated';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
-  data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    specification: {
-      modelName: ModelName;
-      tokenCount: number;
-      responseTimeSLA: Duration;
-    };
-    pricingTerms: {
-      price: TokenAmount;
-      stakeAmount: TokenAmount;
-    };
+    accountId: AccountId;
+    customerId: CustomerId;
+    serviceAddress: Address;
+    accountStatus: 'pending_activation';
     createdAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- Bot Identity: Validate provider has sufficient stake
-- Analytics: Track promise creation patterns
+**Subscribers**: Billing (create invoice template), Meter Ops (await meter assignment)
 
 ---
 
-### PromiseListed
-Fired when a promise transitions from Draft to Listed.
+### AccountActivated
+Fired when account becomes active with service enabled.
 
 ```typescript
-interface PromiseListed extends DomainEvent {
-  eventType: 'PromiseListed';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
+interface AccountActivated extends DomainEvent {
+  eventType: 'AccountActivated';
+  aggregateType: 'CustomerAccount';
+  aggregateId: AccountId;
   data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    specification: PromiseSpecification;
-    pricing: PricingTerms;
-    listedAt: Timestamp;
+    accountId: AccountId;
+    serviceDepositDeposited: Money;
+    activatedAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- OrderBook: Add to supply listings
-- Search Index: Index for discovery
-- Notification Service: Alert matching consumers
+**Subscribers**: Billing (start billing cycle), Usage Tracking (begin consumption tracking)
 
 ---
 
-### PromiseMatched
-Fired when order book finds a match for a promise.
+### ServiceDepositDeposited
+Fired when customer pays service deposit.
 
 ```typescript
-interface PromiseMatched extends DomainEvent {
-  eventType: 'PromiseMatched';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
+interface ServiceDepositDeposited extends DomainEvent {
+  eventType: 'ServiceDepositDeposited';
+  aggregateType: 'CustomerAccount';
+  aggregateId: AccountId;
   data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    potentialConsumers: BotId[]; // Bots whose requests match
-    matchedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Notification Service: Alert provider and consumers
-- Analytics: Track matching effectiveness
-
----
-
-### PromiseAccepted
-Fired when a consumer accepts a promise.
-
-```typescript
-interface PromiseAccepted extends DomainEvent {
-  eventType: 'PromiseAccepted';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
-  data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    consumerBotId: BotId;
-    acceptedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Create escrow account
-- OrderBook: Remove from listings
-- Analytics: Track acceptance rate
-
----
-
-### PromiseExecutionStarted
-Fired when provider begins executing the promise.
-
-```typescript
-interface PromiseExecutionStarted extends DomainEvent {
-  eventType: 'PromiseExecutionStarted';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
-  data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    consumerBotId: BotId;
-    startedAt: Timestamp;
-    expectedCompletionBy: Timestamp; // startedAt + SLA
-  };
-}
-```
-
-**Subscribers**:
-- Monitoring: Set up timeout alerts
-- Analytics: Track execution times
-
----
-
-### PromiseExecutionCompleted
-Fired when provider claims to have completed execution.
-
-```typescript
-interface PromiseExecutionCompleted extends DomainEvent {
-  eventType: 'PromiseExecutionCompleted';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
-  data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    consumerBotId: BotId;
-    completedAt: Timestamp;
-    executionTime: Duration;
-    proofSubmitted: boolean;
-  };
-}
-```
-
-**Subscribers**:
-- Settlement & Verification: Initiate settlement case
-- Analytics: Track completion rates
-
----
-
-### PromiseExecutionFailed
-Fired when execution fails or times out.
-
-```typescript
-interface PromiseExecutionFailed extends DomainEvent {
-  eventType: 'PromiseExecutionFailed';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
-  data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    consumerBotId: BotId;
-    failedAt: Timestamp;
-    reason: 'timeout' | 'error' | 'provider_cancel' | 'consumer_cancel';
-    details: string;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Return escrow to consumer
-- Bot Identity: Update provider reputation (negative)
-- Settlement: May still create case if disputed
-
----
-
-### PromiseCancelled
-Fired when a promise is cancelled before execution.
-
-```typescript
-interface PromiseCancelled extends DomainEvent {
-  eventType: 'PromiseCancelled';
-  aggregateType: 'Promise';
-  aggregateId: PromiseId;
-  data: {
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    consumerBotId: BotId | null;
-    cancelledBy: BotId | 'system';
-    cancelledAt: Timestamp;
-    reason: string;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Release escrow if any
-- OrderBook: Remove from listings
-
----
-
-## Token Management Events
-
-### TokensDeposited
-Fired when tokens are added to a wallet.
-
-```typescript
-interface TokensDeposited extends DomainEvent {
-  eventType: 'TokensDeposited';
-  aggregateType: 'Wallet';
-  aggregateId: WalletId;
-  data: {
-    walletId: WalletId;
-    botId: BotId;
-    amount: TokenAmount;
-    source: 'bridge' | 'transfer' | 'reward' | 'admin';
-    transactionId: TransactionId;
+    accountId: AccountId;
+    amount: Money;
     depositedAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- Notification Service: Alert bot of deposit
-- Analytics: Track token inflows
+**Subscribers**: Billing (track deposit), Payment Account (record transaction)
 
 ---
 
-### TokensWithdrawn
-Fired when tokens are removed from a wallet.
+### AccountStatusChanged
+Fired when account status transitions.
 
 ```typescript
-interface TokensWithdrawn extends DomainEvent {
-  eventType: 'TokensWithdrawn';
-  aggregateType: 'Wallet';
-  aggregateId: WalletId;
+interface AccountStatusChanged extends DomainEvent {
+  eventType: 'AccountStatusChanged';
+  aggregateType: 'CustomerAccount';
+  aggregateId: AccountId;
   data: {
-    walletId: WalletId;
-    botId: BotId;
-    amount: TokenAmount;
-    destination: 'bridge' | 'transfer' | 'escrow';
-    transactionId: TransactionId;
-    withdrawnAt: Timestamp;
+    accountId: AccountId;
+    previousStatus: string;
+    newStatus: string;
+    reason: string;
+    changedAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- Analytics: Track token outflows
+**Subscribers**: Meter Ops (disconnect/reconnect as needed), Billing (adjust billing), Notifications (alert customer)
 
 ---
 
-### TokensEscrowed
-Fired when tokens are locked in escrow for a promise.
+## Usage Tracking Events
+
+### MeterReadingRecorded
+Fired when meter reading is submitted.
 
 ```typescript
-interface TokensEscrowed extends DomainEvent {
-  eventType: 'TokensEscrowed';
-  aggregateType: 'EscrowAccount';
-  aggregateId: EscrowId;
+interface MeterReadingRecorded extends DomainEvent {
+  eventType: 'MeterReadingRecorded';
+  aggregateType: 'MeterReading';
+  aggregateId: ReadingId;
   data: {
-    escrowId: EscrowId;
-    promiseId: PromiseId;
-    consumerWalletId: WalletId;
-    consumerBotId: BotId;
-    amount: TokenAmount;
-    escrowedAt: Timestamp;
+    readingId: ReadingId;
+    meterId: MeterId;
+    accountId: AccountId;
+    readingValue: CubicMeters;
+    readingDate: Timestamp;
+    readingSource: string;
+    recordedAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- Promise Market: Confirm escrow before execution
-- Analytics: Track escrow volume
+**Subscribers**: Usage Tracking (validate and calculate consumption)
 
 ---
 
-### TokensReleased
-Fired when escrowed tokens are released to provider.
+### ConsumptionCalculated
+Fired when consumption for period is calculated.
 
 ```typescript
-interface TokensReleased extends DomainEvent {
-  eventType: 'TokensReleased';
-  aggregateType: 'EscrowAccount';
-  aggregateId: EscrowId;
+interface ConsumptionCalculated extends DomainEvent {
+  eventType: 'ConsumptionCalculated';
+  aggregateType: 'ConsumptionData';
+  aggregateId: ConsumptionId;
   data: {
-    escrowId: EscrowId;
-    promiseId: PromiseId;
-    providerWalletId: WalletId;
-    providerBotId: BotId;
-    amount: TokenAmount;
-    platformFee: TokenAmount;
-    releasedAt: Timestamp;
+    consumptionId: ConsumptionId;
+    accountId: AccountId;
+    billingPeriod: Period;
+    consumption: CubicMeters;
+    averageDaily: CubicMeters;
+    calculatedAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- Analytics: Track successful settlements
-- Accounting: Record platform revenue
+**Subscribers**: Billing (calculate invoice), Analytics (track trends)
 
 ---
 
-### TokensSlashed
-Fired when staked tokens are forfeited due to promise failure.
+### AnomalyDetected
+Fired when unusual usage pattern detected.
 
 ```typescript
-interface TokensSlashed extends DomainEvent {
-  eventType: 'TokensSlashed';
-  aggregateType: 'EscrowAccount';
-  aggregateId: EscrowId;
+interface AnomalyDetected extends DomainEvent {
+  eventType: 'AnomalyDetected';
+  aggregateType: 'ConsumptionData';
+  aggregateId: ConsumptionId;
   data: {
-    escrowId: EscrowId;
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    slashedAmount: TokenAmount;
-    slashPercentage: number;
-    returnedToConsumer: TokenAmount;
-    platformPenalty: TokenAmount;
-    slashedAt: Timestamp;
+    consumptionId: ConsumptionId;
+    accountId: AccountId;
+    anomalyType: string; // 'high_usage', 'low_usage', 'negative', etc
+    reason: string;
+    detectedAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- Bot Identity: Update provider reputation (major negative)
-- Analytics: Track slashing rates
-- Notification Service: Alert both parties
+**Subscribers**: Notifications (alert customer), Meter Ops (schedule inspection)
 
 ---
 
-### TransferCompleted
-Fired when a direct bot-to-bot transfer completes.
+## Billing & Payments Events
+
+### InvoiceGenerated
+Fired when invoice is created from consumption.
 
 ```typescript
-interface TransferCompleted extends DomainEvent {
-  eventType: 'TransferCompleted';
-  aggregateType: 'Wallet';
-  aggregateId: WalletId; // From wallet
+interface InvoiceGenerated extends DomainEvent {
+  eventType: 'InvoiceGenerated';
+  aggregateType: 'Invoice';
+  aggregateId: InvoiceId;
   data: {
-    transactionId: TransactionId;
-    fromWalletId: WalletId;
-    toWalletId: WalletId;
-    fromBotId: BotId;
-    toBotId: BotId;
-    amount: TokenAmount;
+    invoiceId: InvoiceId;
+    accountId: AccountId;
+    billingPeriod: Period;
+    consumption: CubicMeters;
+    totalDue: Money;
+    dueDate: Date;
+    issuedAt: Timestamp;
+  };
+}
+```
+
+**Subscribers**: Notifications (send invoice), Analytics (billing metrics)
+
+---
+
+### PaymentReceived
+Fired when customer payment is recorded.
+
+```typescript
+interface PaymentReceived extends DomainEvent {
+  eventType: 'PaymentReceived';
+  aggregateType: 'PaymentAccount';
+  aggregateId: PaymentAccountId;
+  data: {
+    paymentAccountId: PaymentAccountId;
+    accountId: AccountId;
+    amount: Money;
+    method: string;
+    reference: string;
+    receivedAt: Timestamp;
+  };
+}
+```
+
+**Subscribers**: Notifications (send confirmation), Billing (update balance)
+
+---
+
+### AccountBecameDelinquent
+Fired when account enters delinquent status.
+
+```typescript
+interface AccountBecameDelinquent extends DomainEvent {
+  eventType: 'AccountBecameDelinquent';
+  aggregateType: 'CustomerAccount';
+  aggregateId: AccountId;
+  data: {
+    accountId: AccountId;
+    amountDue: Money;
+    daysOverdue: number;
+    becameDelinquentAt: Timestamp;
+  };
+}
+```
+
+**Subscribers**: Notifications (send payment reminder), Meter Ops (prepare disconnect), Collections
+
+---
+
+## Meter Operations Events
+
+### MeterActivated
+Fired when meter starts recording for account.
+
+```typescript
+interface MeterActivated extends DomainEvent {
+  eventType: 'MeterActivated';
+  aggregateType: 'Meter';
+  aggregateId: MeterId;
+  data: {
+    meterId: MeterId;
+    accountId: AccountId;
+    meterNumber: string;
+    activatedAt: Timestamp;
+  };
+}
+```
+
+**Subscribers**: Usage Tracking (start tracking readings)
+
+---
+
+### ServiceRequestCreated
+Fired when service request is initiated.
+
+```typescript
+interface ServiceRequestCreated extends DomainEvent {
+  eventType: 'ServiceRequestCreated';
+  aggregateType: 'ServiceRequest';
+  aggregateId: RequestId;
+  data: {
+    requestId: RequestId;
+    accountId: AccountId;
+    meterId: MeterId;
+    requestType: string;
+    createdAt: Timestamp;
+  };
+}
+```
+
+**Subscribers**: Notifications (confirm receipt), Scheduling (assign work)
+
+---
+
+### ServiceRequestCompleted
+Fired when field work is finished.
+
+```typescript
+interface ServiceRequestCompleted extends DomainEvent {
+  eventType: 'ServiceRequestCompleted';
+  aggregateType: 'ServiceRequest';
+  aggregateId: RequestId;
+  data: {
+    requestId: RequestId;
+    accountId: AccountId;
+    meterId: MeterId;
+    requestType: string;
+    findings: string;
     completedAt: Timestamp;
   };
 }
 ```
 
-**Subscribers**:
-- Notification Service: Alert both bots
-
----
-
-## Settlement & Verification Events
-
-### VerificationStarted
-Fired when settlement case begins verification.
-
-```typescript
-interface VerificationStarted extends DomainEvent {
-  eventType: 'VerificationStarted';
-  aggregateType: 'SettlementCase';
-  aggregateId: SettlementCaseId;
-  data: {
-    settlementCaseId: SettlementCaseId;
-    promiseId: PromiseId;
-    providerBotId: BotId;
-    consumerBotId: BotId;
-    startedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Analytics: Track verification times
-
----
-
-### VerificationSucceeded
-Fired when oracle confirms execution proof is valid.
-
-```typescript
-interface VerificationSucceeded extends DomainEvent {
-  eventType: 'VerificationSucceeded';
-  aggregateType: 'SettlementCase';
-  aggregateId: SettlementCaseId;
-  data: {
-    settlementCaseId: SettlementCaseId;
-    promiseId: PromiseId;
-    verificationResult: {
-      passed: boolean;
-      checks: { checkName: string; passed: boolean }[];
-    };
-    verifiedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Trigger token release
-- Bot Identity: Update provider reputation (positive)
-
----
-
-### VerificationFailed
-Fired when oracle determines execution proof is invalid.
-
-```typescript
-interface VerificationFailed extends DomainEvent {
-  eventType: 'VerificationFailed';
-  aggregateType: 'SettlementCase';
-  aggregateId: SettlementCaseId;
-  data: {
-    settlementCaseId: SettlementCaseId;
-    promiseId: PromiseId;
-    failedChecks: string[];
-    failedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: May trigger slashing
-- Notification Service: Alert provider to fix or dispute
-
----
-
-### DisputeRaised
-Fired when either party challenges a settlement.
-
-```typescript
-interface DisputeRaised extends DomainEvent {
-  eventType: 'DisputeRaised';
-  aggregateType: 'Dispute';
-  aggregateId: DisputeId;
-  data: {
-    disputeId: DisputeId;
-    settlementCaseId: SettlementCaseId;
-    promiseId: PromiseId;
-    raisedBy: BotId;
-    reason: string;
-    raisedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Notification Service: Alert other party and arbitrators
-- Analytics: Track dispute rate
-
----
-
-### DisputeResolved
-Fired when arbitration renders a decision.
-
-```typescript
-interface DisputeResolved extends DomainEvent {
-  eventType: 'DisputeResolved';
-  aggregateType: 'Dispute';
-  aggregateId: DisputeId;
-  data: {
-    disputeId: DisputeId;
-    settlementCaseId: SettlementCaseId;
-    promiseId: PromiseId;
-    decision: 'uphold_verification' | 'overturn_verification' | 'partial_settlement';
-    arbitratedBy: string;
-    resolvedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Settlement: Execute final settlement
-- Bot Identity: Update reputations based on decision
-
----
-
-### SettlementFinalized
-Fired when settlement case is completely resolved.
-
-```typescript
-interface SettlementFinalized extends DomainEvent {
-  eventType: 'SettlementFinalized';
-  aggregateType: 'SettlementCase';
-  aggregateId: SettlementCaseId;
-  data: {
-    settlementCaseId: SettlementCaseId;
-    promiseId: PromiseId;
-    outcome: {
-      decision: 'success' | 'failure' | 'partial';
-      tokensToProvider: TokenAmount;
-      tokensToConsumer: TokenAmount;
-      tokensSlashed: TokenAmount;
-    };
-    finalizedAt: Timestamp;
-  };
-}
-```
-
-**Subscribers**:
-- Token Management: Execute final token distribution
-- Bot Identity: Apply final reputation adjustments
-- Promise Market: Mark promise as settled
+**Subscribers**: Notifications (update customer), Usage Tracking (request reading if meter maintenance)
 
 ---
 
@@ -673,23 +335,23 @@ interface SettlementFinalized extends DomainEvent {
 Store all events as immutable log, reconstitute aggregate state by replaying events.
 
 ```typescript
-class Promise {
-  private state: PromiseState;
+class CustomerAccount {
+  private status: AccountStatus;
   private events: DomainEvent[] = [];
 
-  static reconstitute(events: DomainEvent[]): Promise {
-    const promise = new Promise();
-    events.forEach(event => promise.apply(event));
-    return promise;
+  static reconstitute(events: DomainEvent[]): CustomerAccount {
+    const account = new CustomerAccount();
+    events.forEach(event => account.apply(event));
+    return account;
   }
 
   private apply(event: DomainEvent): void {
     switch (event.eventType) {
-      case 'PromiseCreated':
-        this.state = PromiseState.draft();
+      case 'CustomerAccountCreated':
+        this.status = AccountStatus.pending();
         break;
-      case 'PromiseListed':
-        this.state = PromiseState.listed();
+      case 'AccountActivated':
+        this.status = AccountStatus.active();
         break;
       // ... other events
     }
@@ -701,11 +363,14 @@ class Promise {
 Subscribers implement handlers for events they care about.
 
 ```typescript
-class ReputationUpdateHandler {
-  async handle(event: PromiseExecutionCompleted): Promise<void> {
-    const bot = await this.botRepo.findById(event.data.providerBotId);
-    bot.updateReputation(+10, 'Promise fulfilled');
-    await this.botRepo.save(bot);
+class BillingOnConsumptionCalculated {
+  async handle(event: ConsumptionCalculated): Promise<void> {
+    const invoice = await Invoice.createFromConsumption(
+      event.data.accountId,
+      event.data.consumption,
+      event.data.billingPeriod
+    );
+    await this.invoiceRepository.save(invoice);
   }
 }
 ```
@@ -714,16 +379,19 @@ class ReputationUpdateHandler {
 Coordinate multi-step workflows across aggregates.
 
 ```typescript
-class PromiseSettlementSaga {
-  async handle(event: PromiseExecutionCompleted): Promise<void> {
-    // 1. Create settlement case
-    const settlementCase = await this.settlementService.createCase(event.data.promiseId);
+class BillingCycleSaga {
+  async handle(event: ConsumptionCalculated): Promise<void> {
+    // 1. Create invoice
+    const invoice = Invoice.create(...);
+    await this.invoiceRepository.save(invoice);
 
-    // 2. Trigger verification
-    await this.verificationService.verify(settlementCase.id);
+    // 2. Trigger notification
+    await this.eventBus.publish(new InvoiceGenerated(...));
 
-    // Wait for VerificationSucceeded or VerificationFailed event
-    // Then trigger token release or dispute
+    // 3. If delinquent, schedule meter check
+    if (event.data.accountId.isDelinquent()) {
+      await this.scheduleServiceRequest(...);
+    }
   }
 }
 ```

@@ -8,36 +8,29 @@ The Context Map visualizes the relationships between bounded contexts and their 
 
 ```
 ┌────────────────────────────────────────────────────────────┐
-│                     ClawMarket System                      │
+│                     AquaTrack System                       │
 │                                                            │
-│  ┌─────────────────┐                                      │
-│  │  Bot Identity   │                                      │
-│  │  & Reputation   │                                      │
-│  │                 │                                      │
-│  │  [U] [CF]       │                                      │
-│  └────┬────────────┘                                      │
-│       │ Provides bot identity & reputation                │
-│       │ (Customer-Supplier / Conformist)                  │
+│  ┌──────────────────────┐                                 │
+│  │ Customer Account     │                                 │
+│  │ Management           │                                 │
+│  │                      │                                 │
+│  │ [U] [CF]             │                                 │
+│  └────┬─────────────────┘                                 │
+│       │ Provides account info                              │
 │       │                                                    │
-│       ├─────────────┬──────────────────┐                 │
-│       ▼             ▼                  ▼                  │
-│  ┌──────────┐  ┌──────────┐     ┌──────────┐            │
-│  │ Promise  │  │  Token   │     │Settlement│            │
-│  │ Market   │◄─┤Management│────►│   &      │            │
-│  │          │  │          │     │Verify    │            │
-│  │  [SK]    │  │   [PL]   │     │   [CS]   │            │
-│  └──────────┘  └────┬─────┘     └──────────┘            │
-│       ▲             │                  ▲                  │
-│       │             │                  │                  │
-│       │             │ ACL              │                  │
-│       │             ▼                  │                  │
-│       │      ┌─────────────┐           │                  │
-│       │      │  External   │           │                  │
-│       │      │  Blockchains│           │                  │
-│       │      │  (ETH, SOL) │           │                  │
-│       │      └─────────────┘           │                  │
-│       │                                │                  │
-│       └────────Partnership─────────────┘                  │
+│       ├─────────────┬──────────────┐                      │
+│       ▼             ▼              ▼                      │
+│   ┌──────────┐ ┌──────────┐  ┌──────────┐               │
+│   │ Usage    │ │ Billing  │  │  Meter   │               │
+│   │Tracking  │◄┤& Payments│◄─┤Operations│               │
+│   │          │ │          │  │          │               │
+│   │[SK/CS]   │ │ [PL]     │  │ [CS]     │               │
+│   └──────────┘ └──────────┘  └──────────┘               │
+│       ▲             ▲              ▲                      │
+│       │             │              │                      │
+│       │             └──Partnership─┘                      │
+│       │                                                    │
+│       └─────────────Shared Events──────────────────────┘  │
 │                                                            │
 └────────────────────────────────────────────────────────────┘
 
@@ -47,154 +40,95 @@ Legend:
 [SK] - Shared Kernel
 [PL] - Published Language
 [CS] - Customer-Supplier
-[ACL] - Anticorruption Layer
 ```
 
 ---
 
 ## Context Relationships
 
-### 1. Bot Identity & Reputation → Promise Market
-**Pattern**: Customer-Supplier + Conformist
+### 1. Customer Account → Usage Tracking
+**Pattern**: Customer-Supplier
 
-**Description**: Promise Market depends on Bot Identity for authentication and reputation information.
+**Description**: Usage Tracking depends on Customer Account for account identification.
 
 **Integration**:
-- Promise Market calls Bot Identity APIs to:
-  - Verify bot exists and is verified
-  - Check reputation score for filtering
-  - Validate stake availability
-- Promise Market subscribes to:
-  - `BotRegistered` - to know when new bots join
-  - `ReputationUpdated` - to adjust market visibility
-  - `StakeDeposited` - to enable promise creation
+- Usage Tracking calls Customer Account APIs to verify account status
+- Usage Tracking subscribes to:
+  - `AccountActivated` - begin tracking readings
+  - `AccountSuspended` - stop tracking
+  - `AccountClosed` - archive historical data
 
-**Data Flow**: Bot Identity → Promise Market (one-way)
-
-**Conformist**: Promise Market accepts Bot Identity's model as-is (BotId, ReputationScore value objects).
+**Data Flow**: Customer Account → Usage Tracking (one-way)
 
 ---
 
-### 2. Promise Market ↔ Token Management
+### 2. Customer Account → Billing & Payments
+**Pattern**: Conformist + Customer-Supplier
+
+**Description**: Billing depends on Customer Account for customer and account information.
+
+**Integration**:
+- Billing queries Customer Account for account status, contact info
+- Billing subscribes to:
+  - `AccountActivated` - start billing cycles
+  - `BillingPreferencesChanged` - adjust delivery method
+  - `AccountClosed` - finalize billing
+
+**Data Flow**: Customer Account → Billing (one-way)
+
+---
+
+### 3. Usage Tracking ↔ Billing & Payments
 **Pattern**: Shared Kernel
 
-**Description**: Tightly coupled for escrow operations. Both contexts need consistent understanding of token holds during promise execution.
+**Description**: Tightly coupled for consumption-to-invoice flow. Both contexts need consistent understanding of consumption data.
 
 **Shared Concepts**:
-- `TokenAmount` value object
-- `EscrowAccount` lifecycle
-- Promise-to-escrow relationship
+- `CubicMeters` value object
+- `BillingPeriod` domain concept
+- `Consumption` calculation rules
 
 **Integration**:
-- Promise Market commands Token Management to:
-  - Create escrow when promise accepted
-  - Release escrow when settlement succeeds
-  - Return escrow when promise fails
-- Token Management events Promise Market listens to:
-  - `TokensEscrowed` - confirms escrow created
-  - `TokensReleased` - confirms payment complete
-  - `InsufficientBalance` - handle acceptance failure
+- Usage Tracking calculates consumption, publishes `ConsumptionCalculated`
+- Billing subscribes and creates Invoice immediately
+- If anomaly detected: Billing holds invoice pending approval
 
-**Data Flow**: Bidirectional (commands and events)
+**Data Flow**: Bidirectional (events)
 
-**Risks**: Changes to escrow logic require coordination between teams.
+**Risks**: Changes to consumption calculation require coordination.
 
 ---
 
-### 3. Token Management → External Blockchains
-**Pattern**: Anticorruption Layer
-
-**Description**: Token Management isolates the system from blockchain complexity and volatility.
-
-**ACL Responsibilities**:
-- Translate internal `TokenAmount` to blockchain currency amounts
-- Map blockchain transaction states to internal bridge states
-- Handle blockchain-specific errors (gas fees, confirmations, forks)
-- Provide consistent interface regardless of blockchain (ETH, SOL, etc.)
-
-**Integration**:
-- Token Management uses ACL to:
-  - Monitor deposit addresses for incoming transactions
-  - Submit withdrawal transactions
-  - Query exchange rates
-  - Handle chain reorgs
-
-**Benefits**:
-- Domain remains pure, no blockchain dependencies
-- Can swap blockchains without domain changes
-- Testability: mock ACL for tests
-
----
-
-### 4. Bot Identity & Reputation → Token Management
-**Pattern**: Customer-Supplier
-
-**Description**: Bot Identity requests token operations for stake management.
-
-**Integration**:
-- Bot Identity commands Token Management to:
-  - Lock tokens when depositing stake
-  - Unlock tokens when releasing stake
-- Token Management events Bot Identity listens to:
-  - `TokensLocked` - confirms stake locked
-  - `TokensUnlocked` - confirms stake released
-
-**Data Flow**: Bot Identity → Token Management (commands), Token Management → Bot Identity (events)
-
----
-
-### 5. Promise Market ↔ Settlement & Verification
+### 4. Customer Account ↔ Meter Operations
 **Pattern**: Partnership
 
-**Description**: Both contexts collaborate closely to settle promises. Settlement needs promise details; Promise Market needs settlement outcomes.
+**Description**: Both collaborate closely on service provisioning and account maintenance.
 
 **Integration**:
-- Promise Market events Settlement listens to:
-  - `PromiseExecutionCompleted` - triggers verification
-  - `PromiseExecutionFailed` - may still create settlement case if disputed
-- Settlement events Promise Market listens to:
-  - `VerificationSucceeded` - update promise state
-  - `VerificationFailed` - update promise state
-  - `SettlementFinalized` - mark promise as settled
+- Customer Account subscribes to:
+  - `MeterActivated` - confirm service ready
+  - `MeterFault Detected` - alert customer
+- Meter Operations subscribes to:
+  - `AccountActivated` - activate/connect meter
+  - `AccountSuspended` - disconnect service
+  - `AccountClosed` - remove meter
 
-**Collaboration**:
-- Settlement can query Promise aggregate for execution details
-- Promise Market can query SettlementCase for current status
-
-**Data Flow**: Bidirectional (events and queries)
+**Data Flow**: Bidirectional
 
 ---
 
-### 6. Settlement & Verification → Token Management
-**Pattern**: Customer-Supplier
+### 5. Meter Operations ↔ Usage Tracking
+**Pattern**: Partnership
 
-**Description**: Settlement commands token distribution based on verification outcome.
-
-**Integration**:
-- Settlement commands Token Management to:
-  - Release escrow to provider (success)
-  - Return escrow to consumer (failure)
-  - Slash stake (penalty)
-  - Split funds (partial settlement)
-- Token Management confirms execution with events
-
-**Data Flow**: Settlement → Token Management (commands), Token Management → Settlement (confirmation events)
-
----
-
-### 7. Settlement & Verification → Bot Identity & Reputation
-**Pattern**: Customer-Supplier
-
-**Description**: Settlement triggers reputation updates based on outcomes.
+**Description**: Collaborate on meter readings and consumption verification.
 
 **Integration**:
-- Settlement commands Bot Identity to:
-  - Increase reputation (successful fulfillment)
-  - Decrease reputation (failed promise)
-  - Apply dispute resolution reputation changes
-- Bot Identity confirms with events
+- Meter Operations submits readings via `MeterReadingRecorded` event
+- Usage Tracking validates and calculates consumption
+- If anomaly: Usage Tracking notifies Meter Operations for inspection
+- Meter Operations can request off-cycle readings
 
-**Data Flow**: Settlement → Bot Identity (commands), Bot Identity → Settlement (confirmation events)
+**Data Flow**: Bidirectional (readings and anomalies)
 
 ---
 
@@ -204,8 +138,6 @@ Legend:
 
 All contexts publish domain events to a shared event bus. Subscribers react asynchronously.
 
-**Event Bus**: Convex's reactive queries and mutations
-
 **Benefits**:
 - Loose coupling
 - Scalability
@@ -213,68 +145,49 @@ All contexts publish domain events to a shared event bus. Subscribers react asyn
 
 **Example Flow**:
 ```
-Promise Market: PromiseAccepted event
-    ↓
-Token Management: Creates escrow (listens to event)
-    ↓
-Token Management: TokensEscrowed event
-    ↓
-Promise Market: Confirms acceptance complete
+Consumption Calculated
+     ↓
+Usage Tracking publishes: ConsumptionCalculated
+     ↓
+Billing subscribes: Creates Invoice
+     ↓
+Billing publishes: InvoiceGenerated
+     ↓
+Notifications: Sends to customer
 ```
 
 ---
 
-### Command Pattern (Secondary)
-
-When immediate feedback is needed, contexts expose command APIs.
-
-**Example**:
-```typescript
-// Settlement commands Token Management directly
-await tokenManagementService.releaseEscrow({
-  escrowId: settlementCase.escrowId,
-  recipientWalletId: providerWalletId,
-  amount: settlementCase.amount,
-  reason: "Promise fulfilled"
-});
-```
-
-**Usage**:
-- When transaction boundary must span contexts
-- When caller needs immediate success/failure feedback
-
----
-
-### Query Pattern (Read-Only)
+### Query Pattern (Secondary)
 
 Contexts expose read models for queries without side effects.
 
 **Example**:
 ```typescript
-// Promise Market queries Bot Identity
-const bot = await botIdentityService.getBotById(botId);
-if (bot.reputationScore < 100) {
-  throw new InsufficientReputationError();
+// Billing queries Customer Account
+const account = await accountService.getAccountStatus(accountId);
+if (account.status === 'suspended') {
+  // Hold invoice generation
 }
 ```
 
 **Usage**:
 - Validation checks
-- Display data
+- Status verification
 - Read-only operations
 
 ---
 
 ## Team Organization
 
-If ClawMarket grows, teams could own contexts:
+If AquaTrack grows, teams could own contexts:
 
 | Context | Team | Responsibilities |
 |---------|------|------------------|
-| Bot Identity & Reputation | Identity Team | Auth, bot management, reputation algorithm |
-| Promise Market | Market Team | Order book, matching, promise lifecycle |
-| Token Management | Finance Team | Token operations, bridge, accounting |
-| Settlement & Verification | Trust & Safety | Verification logic, dispute resolution, arbitration |
+| Customer Account | Customer Services | Onboarding, account changes, closures |
+| Usage Tracking | Operations | Meter readings, consumption validation, anomalies |
+| Billing & Payments | Finance | Invoice generation, payment processing, collections |
+| Meter Operations | Field Services | Meter installation, maintenance, service requests |
 
 **Cross-Team Coordination**:
 - Shared event schema repository
@@ -287,30 +200,30 @@ If ClawMarket grows, teams could own contexts:
 
 ### Current (v1): Modular Monolith
 
-All contexts in single Next.js app with Convex backend.
+All contexts in single Next.js + Convex application with logical separation.
 
 **Structure**:
 ```
 src/
-  bot-identity/
+  customer-account/
     domain/
     application/
     infrastructure/
-  promise-market/
+  usage-tracking/
     domain/
     application/
     infrastructure/
-  token-management/
+  billing-payments/
     domain/
     application/
     infrastructure/
-  settlement-verification/
+  meter-operations/
     domain/
     application/
     infrastructure/
   shared/
     events/
-    primitives/
+    value-objects/
 ```
 
 **Benefits**:
@@ -326,15 +239,15 @@ src/
 If scale requires, split contexts into separate services.
 
 **Migration Path**:
-1. Start with Token Management (most isolated)
-2. Extract Settlement & Verification (complex, benefits from scaling)
-3. Keep Promise Market and Bot Identity together initially
-4. Event bus becomes inter-service (e.g., Kafka, AWS EventBridge)
+1. Start with Meter Operations (most independent)
+2. Extract Billing & Payments (high volume)
+3. Keep Customer Account and Usage Tracking together initially
+4. Event bus becomes inter-service (Kafka, AWS EventBridge)
 
 **When to Split**:
-- Independent scaling needs (e.g., settlement verification is CPU-heavy)
-- Team growth (> 10 engineers)
-- Different tech requirements (e.g., Settlement needs ML models)
+- Independent scaling needs
+- Team growth (> 8 engineers)
+- Different tech requirements
 
 ---
 
@@ -345,36 +258,16 @@ If scale requires, split contexts into separate services.
 **Module Imports**:
 ```typescript
 // ❌ BAD: Direct domain coupling
-import { Promise } from '../../promise-market/domain/Promise';
+import { CustomerAccount } from '../../customer-account/domain/aggregates/CustomerAccount';
 
 // ✅ GOOD: Through application service
-import { PromiseMarketService } from '../../promise-market/application/PromiseMarketService';
+import { AccountService } from '../../customer-account/application/AccountService';
 ```
 
 **Dependency Rules**:
 - Domain layer: No imports from other contexts
-- Application layer: Can import other contexts' application services only
+- Application layer: Can import other contexts' application services
 - Infrastructure layer: Can integrate with anything
-
-**Linting**:
-```json
-// .eslintrc.js
-{
-  "rules": {
-    "no-restricted-imports": [
-      "error",
-      {
-        "patterns": [
-          {
-            "group": ["**/*/domain/*"],
-            "message": "Do not import domain objects from other contexts"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
 
 ---
 
@@ -385,47 +278,15 @@ import { PromiseMarketService } from '../../promise-market/application/PromiseMa
 Test event-driven flows across contexts:
 
 ```typescript
-describe('Promise Settlement Flow', () => {
-  it('should update reputation after successful settlement', async () => {
-    // Arrange: Create promise and accept
-    const promise = await promiseMarketService.createPromise(/*...*/);
-    await promiseMarketService.acceptPromise(promise.id, consumerId);
-
-    // Act: Complete and settle
-    await promiseMarketService.completeExecution(promise.id, proof);
-    await settlementService.verify(promise.id);
-    await settlementService.finalize(promise.id);
-
-    // Assert: Check reputation updated
-    const provider = await botIdentityService.getBot(promise.providerId);
-    expect(provider.reputationScore).toBe(110); // Started at 100, +10 for fulfillment
-  });
-});
-```
-
-### Contract Tests
-
-Ensure event schemas match between publisher and subscriber:
-
-```typescript
-describe('Event Contract: PromiseAccepted', () => {
-  it('should match expected schema', () => {
-    const event: PromiseAccepted = {
-      eventId: '...',
-      eventType: 'PromiseAccepted',
-      occurredAt: Timestamp.now(),
-      aggregateId: promiseId,
-      aggregateType: 'Promise',
-      version: 1,
-      data: {
-        promiseId,
-        providerBotId,
-        consumerBotId,
-        acceptedAt: Timestamp.now()
-      }
-    };
-
-    expect(event).toMatchSchema(PromiseAcceptedSchema);
+describe('Billing Cycle Workflow', () => {
+  it('should create invoice after consumption calculated', async () => {
+    // Act: Trigger consumption calculation
+    await usageTrackingService.calculateConsumption(accountId);
+    
+    // Assert: Invoice created
+    const invoice = await billingService.getLatestInvoice(accountId);
+    expect(invoice).toBeDefined();
+    expect(invoice.totalDue).toBeGreaterThan(0);
   });
 });
 ```

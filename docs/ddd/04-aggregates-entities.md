@@ -14,533 +14,414 @@ This document defines the key aggregates and entities within each bounded contex
 
 ---
 
-## Bot Identity & Reputation Context
+## Customer Account Management Context
 
-### BotAccount Aggregate
+### CustomerAccount Aggregate
 
-**Root Entity**: `BotAccount`
+**Root Entity**: `CustomerAccount`
 
-**Responsibility**: Manages bot identity, authentication, reputation, and staking capacity.
+**Responsibility**: Manages customer account lifecycle, status, service deposit, and account standing.
 
 #### Entities
 
-##### BotAccount (Root)
+##### CustomerAccount (Root)
 ```typescript
 {
-  botId: BotId (UUID)
-  email: Email (optional, for notifications)
-  displayName: string
-  apiKey: ApiKey (hashed)
-  registeredAt: Timestamp
-  verificationStatus: VerificationStatus
-  reputationScore: ReputationScore
-  stakeLock: StakeLock
-  performanceHistory: PerformanceRecord[]
+  accountId: AccountId (UUID)
+  customerId: CustomerId (UUID)
+  serviceAddress: Address
+  accountHolder: CustomerInfo
+  accountStatus: AccountStatus
+  serviceDepositAmount: CubicMeters
+  accountStanding: AccountStanding
+  createdAt: Timestamp
+  activatedAt: Timestamp | null
+  closedAt: Timestamp | null
+  billingPreferences: BillingPreferences
+  contactInfo: ContactInfo
 }
 ```
 
 **Invariants**:
-- `botId` is unique and immutable
-- `apiKey` must never be stored in plaintext
-- `reputationScore` must be between 0 and 1000
-- `stakeLock.lockedAmount` ≤ bot's wallet balance
-- New bots start with reputation score of 100
+- `accountId` is unique and immutable
+- `customerId` is immutable
+- `accountStatus` must be valid state
+- `serviceDepositAmount` ≥ 0
+- Cannot close account unless balance ≤ 0
+- Account cannot be activated until deposit cleared
 
 **Operations**:
-- `register(email, displayName)` → BotAccount
-- `regenerateApiKey()` → ApiKey
-- `lockStake(amount: TokenAmount, promiseId: PromiseId)` → void
-- `releaseStake(promiseId: PromiseId)` → void
-- `updateReputation(delta: number, reason: string)` → void
-- `recordPerformance(promiseId: PromiseId, outcome: Outcome)` → void
+- `create(customerId, serviceAddress)` → CustomerAccount
+- `activateAccount()` → void (Draft → Active)
+- `depositServiceDeposit(amount)` → void
+- `updateAccountStatus(newStatus)` → void
+- `updateAccountStanding(standing)` → void
+- `suspendAccount(reason)` → void (Active → Suspended)
+- `closeAccount()` → void (any → Closed)
 
 #### Child Entities
 
-##### StakeLock
+##### BillingPreferences
 ```typescript
 {
-  lockedAmount: TokenAmount
-  activePromises: Map<PromiseId, TokenAmount>
+  billingCycle: 'monthly' | 'quarterly' | 'bimonthly'
+  deliveryMethod: 'email' | 'paper' | 'both'
+  autopay: boolean
+  paymentAccount?: BankAccount
 }
 ```
 
-**Invariants**:
-- `lockedAmount` = sum of all `activePromises` values
-- Cannot lock more than wallet balance allows
-
-##### PerformanceRecord
+##### ContactInfo
 ```typescript
 {
-  promiseId: PromiseId
-  outcome: 'fulfilled' | 'failed' | 'disputed_won' | 'disputed_lost'
-  completedAt: Timestamp
-  executionTime: Duration
+  primaryPhone: PhoneNumber
+  secondaryPhone: PhoneNumber | null
+  email: Email
+  preferredContact: 'phone' | 'email' | 'mail'
 }
 ```
 
-**Invariants**:
-- Immutable once created
-- `executionTime` must be positive
+##### Address
+```typescript
+{
+  street: string
+  city: string
+  state: string
+  zipCode: string
+  country: string
+}
+```
 
 ---
 
-## Promise Market Context
+## Usage Tracking Context
 
-### Promise Aggregate
+### MeterReading Aggregate
 
-**Root Entity**: `Promise`
+**Root Entity**: `MeterReading`
 
-**Responsibility**: Manages the lifecycle of a single promise, including specification, pricing, state transitions, and history.
+**Responsibility**: Records meter measurements and validates consumption calculations.
 
 #### Entities
 
-##### Promise (Root)
+##### MeterReading (Root)
 ```typescript
 {
-  promiseId: PromiseId (UUID)
-  providerBotId: BotId
-  consumerBotId: BotId | null
-  specification: PromiseSpecification
-  pricingTerms: PricingTerms
-  state: PromiseState
-  createdAt: Timestamp
-  listedAt: Timestamp | null
-  acceptedAt: Timestamp | null
-  executingAt: Timestamp | null
-  completedAt: Timestamp | null
-  history: StateTransition[]
+  readingId: ReadingId (UUID)
+  meterId: MeterId
+  accountId: AccountId
+  readingValue: CubicMeters
+  previousReadingValue: CubicMeters | null
+  calculatedConsumption: CubicMeters | null
+  readingDate: Timestamp
+  readingSource: 'manual' | 'automated' | 'estimated'
+  status: 'valid' | 'estimated' | 'anomalous' | 'rejected'
+  recordedAt: Timestamp
 }
 ```
 
 **Invariants**:
-- `promiseId` is unique and immutable
-- `providerBotId` is immutable
-- `consumerBotId` is null until state = Accepted
-- Cannot transition to Executing unless consumerBotId is set
-- Timestamps must be monotonically increasing
-- Cannot modify specification or pricing after state = Accepted
-- `completedAt - acceptedAt` must be ≤ `specification.responseTimeSLA`
+- `readingId` is unique and immutable
+- `readingValue` ≥ previous reading (meter doesn't go backward)
+- `readingDate` &lt;= `recordedAt`
+- If `status` = 'valid', consumption must be calculated
+- Consumption cannot be negative
 
 **Operations**:
-- `create(providerBotId, spec, pricing)` → Promise
-- `list()` → void (Draft → Listed)
-- `accept(consumerBotId)` → void (Listed → Accepted)
-- `startExecution()` → void (Accepted → Executing)
-- `completeExecution(proof: ExecutionProof)` → void (Executing → Completed)
-- `markFailed(reason: string)` → void (Executing → Failed)
-- `raiseDispute(party: BotId, reason: string)` → void (any → Disputed)
-- `cancel()` → void (Draft/Listed → Cancelled)
+- `create(meterId, readingValue, previousReading)` → MeterReading
+- `calculateConsumption()` → CubicMeters
+- `validateReading()` → ValidationResult
+- `flagAsAnomaly(reason)` → void
+- `reject(reason)` → void
+- `approve()` → void
 
 #### Child Entities
 
-##### PromiseSpecification
+##### ValidationResult
 ```typescript
 {
-  modelName: string (e.g., "chatgpt-5.2")
-  tokenCount: number
-  contextWindow: number | null
-  responseTimeSLA: Duration (e.g., 30 seconds)
-  qualityParams: {
-    temperature?: number
-    topP?: number
-    maxTokens?: number
-  }
-  additionalRequirements: string | null
+  isValid: boolean
+  anomalies: string[]
+  warnings: string[]
+  confidence: 0-100 (percentage)
 }
 ```
-
-**Invariants**:
-- `tokenCount` > 0
-- `responseTimeSLA` > 0
-- `temperature` between 0 and 2 if specified
-- `topP` between 0 and 1 if specified
-
-##### PricingTerms
-```typescript
-{
-  price: TokenAmount
-  paymentSchedule: 'upfront' | 'on_completion' | 'split'
-  penaltyClause: {
-    stakeAmount: TokenAmount
-    slashPercentage: number (0-100)
-  }
-  discount: number | null (percentage)
-}
-```
-
-**Invariants**:
-- `price` > 0
-- `stakeAmount` ≥ `price * 0.1` (minimum 10% stake)
-- `slashPercentage` between 0 and 100
-- `discount` between 0 and 100 if specified
-
-##### StateTransition
-```typescript
-{
-  fromState: PromiseState
-  toState: PromiseState
-  transitionedAt: Timestamp
-  triggeredBy: BotId | 'system'
-  reason: string | null
-}
-```
-
-**Invariants**:
-- Immutable once created
-- `transitionedAt` must be after previous transition
 
 ---
 
-### OrderBook Aggregate
+### ConsumptionData Aggregate
 
-**Root Entity**: `OrderBook`
+**Root Entity**: `ConsumptionData`
 
-**Responsibility**: Maintains active supply and demand listings, performs matching.
+**Responsibility**: Aggregates consumption patterns for analysis and anomaly detection.
 
 #### Entities
 
-##### OrderBook (Root)
+##### ConsumptionData (Root)
 ```typescript
 {
-  supplyListings: Listing[]
-  demandListings: Listing[]
-  lastMatchedAt: Timestamp | null
-}
-```
-
-**Operations**:
-- `addSupplyListing(promise: Promise)` → void
-- `addDemandListing(request: PromiseRequest)` → void
-- `removeListing(listingId: ListingId)` → void
-- `findMatches(listing: Listing)` → Match[]
-- `executeMatch(match: Match)` → Promise
-
-##### Listing
-```typescript
-{
-  listingId: ListingId (UUID)
-  type: 'supply' | 'demand'
-  promiseId: PromiseId | null (null for demand)
-  botId: BotId
-  specification: PromiseSpecification
-  maxPrice: TokenAmount (for demand)
-  minPrice: TokenAmount (for supply)
-  listedAt: Timestamp
-  expiresAt: Timestamp | null
+  consumptionId: ConsumptionId (UUID)
+  accountId: AccountId
+  billingPeriod: Period
+  consumption: CubicMeters
+  averageDaily: CubicMeters
+  meterReadings: MeterReadingId[]
+  status: 'recorded' | 'anomalous' | 'verified'
+  lastVerifiedAt: Timestamp | null
 }
 ```
 
 **Invariants**:
-- For supply: must reference existing Promise
-- For demand: `promiseId` is null
-- `expiresAt` must be > `listedAt` if set
-- Cannot modify after creation (immutable)
+- One consumption record per account per billing period
+- `consumption` ≥ 0
+- `averageDaily` = `consumption` / days in period
+
+**Operations**:
+- `record(readings: MeterReading[])` → ConsumptionData
+- `detectAnomalies(historicalData)` → Anomaly[]
+- `verify()` → void
+- `reject()` → void
 
 ---
 
-## Token Management Context
+## Billing & Payments Context
 
-### Wallet Aggregate
+### Invoice Aggregate
 
-**Root Entity**: `Wallet`
+**Root Entity**: `Invoice`
 
-**Responsibility**: Manages a bot's token balance and transaction history.
+**Responsibility**: Manages billing document, payment status, and account balance.
 
 #### Entities
 
-##### Wallet (Root)
+##### Invoice (Root)
 ```typescript
 {
-  walletId: WalletId (UUID)
-  botId: BotId (unique)
-  balance: TokenAmount
-  lockedBalance: TokenAmount
-  transactions: Transaction[]
-  createdAt: Timestamp
+  invoiceId: InvoiceId (UUID)
+  accountId: AccountId
+  billingPeriod: Period
+  consumption: CubicMeters
+  baseRate: Rate
+  consumptionRate: Rate
+  totalDue: Money
+  balanceRemaining: Money
+  dueDate: Date
+  issuedAt: Timestamp
+  paidAt: Timestamp | null
+  status: 'draft' | 'issued' | 'due' | 'overdue' | 'paid' | 'cancelled'
+  lineItems: LineItem[]
 }
 ```
 
 **Invariants**:
-- `balance` ≥ 0
-- `lockedBalance` ≥ 0
-- `lockedBalance` ≤ `balance`
-- `availableBalance` = `balance - lockedBalance`
-- One wallet per bot (enforced by unique `botId`)
+- `invoiceId` is unique and immutable
+- `totalDue` = sum of all line items
+- `balanceRemaining` &lt;= `totalDue`
+- Invoice transitions: draft → issued → due → (paid | overdue)
+- Cannot modify invoice after issued
 
 **Operations**:
-- `deposit(amount: TokenAmount, source: string)` → Transaction
-- `withdraw(amount: TokenAmount, destination: string)` → Transaction
-- `lock(amount: TokenAmount, reason: string)` → void
-- `unlock(amount: TokenAmount, reason: string)` → void
-- `transfer(toWalletId: WalletId, amount: TokenAmount)` → Transaction
+- `create(accountId, consumption, rates)` → Invoice
+- `issue()` → void (draft → issued)
+- `recordPayment(amount)` → void
+- `markOverdue()` → void (due → overdue)
+- `cancel()` → void
+- `getBalanceDue()` → Money
 
-##### Transaction
+#### Child Entities
+
+##### LineItem
+```typescript
+{
+  description: string
+  quantity: number | CubicMeters
+  unitPrice: Money
+  amount: Money
+}
+```
+
+Examples:
+- "Base service charge" - 1 × $15.00 = $15.00
+- "Water consumption (12.5 m³)" - 12.5 × $1.25 = $15.63
+- "Late payment fee" - 1 × $5.00 = $5.00
+
+---
+
+### PaymentAccount Aggregate
+
+**Root Entity**: `PaymentAccount`
+
+**Responsibility**: Manages payment history and running balance for customer account.
+
+#### Entities
+
+##### PaymentAccount (Root)
+```typescript
+{
+  paymentAccountId: PaymentAccountId (UUID)
+  accountId: AccountId
+  balance: Money
+  creditBalance: Money
+  lastPaymentAt: Timestamp | null
+  lastPaymentAmount: Money | null
+  totalPaidYTD: Money
+  transactions: PaymentTransaction[]
+}
+```
+
+**Invariants**:
+- One payment account per customer account
+- `balance` ≥ 0 (amount owed)
+- `creditBalance` ≥ 0 (overpayment)
+- Transaction history is immutable
+
+**Operations**:
+- `recordPayment(amount, method)` → Transaction
+- `addCharge(invoiceId, amount)` → void
+- `applyCredit(amount, reason)` → void
+- `getBalance()` → Money
+- `getPaymentHistory(period)` → Transaction[]
+
+#### Child Entities
+
+##### PaymentTransaction
 ```typescript
 {
   transactionId: TransactionId (UUID)
-  type: 'deposit' | 'withdraw' | 'transfer_in' | 'transfer_out'
-  amount: TokenAmount
-  fromWalletId: WalletId | null
-  toWalletId: WalletId | null
-  timestamp: Timestamp
-  metadata: Record<string, any>
+  type: 'payment' | 'charge' | 'credit' | 'adjustment'
+  amount: Money
+  balance: Money (after transaction)
+  date: Timestamp
+  method: 'check' | 'ach' | 'card' | 'cash' | 'other'
+  reference: string
 }
 ```
 
 **Invariants**:
 - Immutable once created
 - `amount` > 0
-- For transfers: must have both `fromWalletId` and `toWalletId`
+- `balance` correctly updated from previous balance
 
 ---
 
-### EscrowAccount Aggregate
+## Meter Operations Context
 
-**Root Entity**: `EscrowAccount`
+### Meter Aggregate
 
-**Responsibility**: Holds tokens during promise execution, releases or slashes based on settlement.
+**Root Entity**: `Meter`
+
+**Responsibility**: Manages physical meter lifecycle, status, and readings.
 
 #### Entities
 
-##### EscrowAccount (Root)
+##### Meter (Root)
 ```typescript
 {
-  escrowId: EscrowId (UUID)
-  promiseId: PromiseId (unique)
-  consumerWalletId: WalletId
-  providerWalletId: WalletId
-  amount: TokenAmount
-  status: 'active' | 'released' | 'returned' | 'slashed' | 'disputed'
-  createdAt: Timestamp
-  settledAt: Timestamp | null
+  meterId: MeterId (UUID)
+  accountId: AccountId
+  meterNumber: string (physical device identifier)
+  meterType: 'residential' | 'commercial' | 'industrial'
+  installationDate: Date
+  meterStatus: 'active' | 'faulty' | 'scheduled_maintenance' | 'disconnected'
+  lastReadingDate: Timestamp | null
+  lastReadingValue: CubicMeters | null
+  meterCapacity: CubicMeters (max reliable reading)
+  serviceHistory: MaintenanceRecord[]
 }
 ```
 
 **Invariants**:
-- One escrow per promise (enforced by unique `promiseId`)
-- Cannot change `amount` after creation
-- `status` transitions: active → (released | returned | slashed | disputed)
-- If `status` ≠ 'active', `settledAt` must be set
+- `meterId` is unique and immutable
+- `meterNumber` is unique (physical device)
+- `installationDate` &lt;= today
+- `lastReadingDate` is monotonically increasing
+- `lastReadingValue` never decreases
 
 **Operations**:
-- `create(promiseId, consumerWalletId, providerWalletId, amount)` → EscrowAccount
-- `release()` → void (sends tokens to provider)
-- `return()` → void (sends tokens back to consumer)
-- `slash(percentage: number)` → void (distributes per penalty clause)
-- `dispute()` → void (marks as disputed, awaits arbitration)
+- `install(accountId, meterNumber, meterType)` → Meter
+- `recordReading(value, source)` → MeterReading
+- `markFaulty(reason)` → void
+- `scheduleReplacement(date)` → void
+- `disconnect()` → void (active → disconnected)
+- `reconnect()` → void (disconnected → active)
+- `recordMaintenance(work)` → void
 
----
+#### Child Entities
 
-### BridgeTransaction Aggregate
-
-**Root Entity**: `BridgeTransaction`
-
-**Responsibility**: Manages conversion between internal tokens and external crypto.
-
-#### Entities
-
-##### BridgeTransaction (Root)
+##### MaintenanceRecord
 ```typescript
 {
-  bridgeTransactionId: BridgeTransactionId (UUID)
-  direction: 'deposit' | 'withdrawal'
-  botId: BotId
-  internalTokenAmount: TokenAmount
-  externalCryptoAmount: CryptoAmount
-  externalCurrency: 'ETH' | 'SOL' | 'USDC'
-  externalTxHash: string | null
-  status: 'pending' | 'confirming' | 'completed' | 'failed'
-  initiatedAt: Timestamp
+  maintenanceId: MaintenanceId (UUID)
+  workType: 'inspection' | 'repair' | 'replacement' | 'calibration'
+  workDate: Date
+  description: string
+  technician: string
+  findings: string
   completedAt: Timestamp | null
 }
 ```
 
-**Invariants**:
-- Immutable amounts after creation
-- For deposits: `externalTxHash` must be set when status = 'confirming'
-- `completedAt` must be set when status ∈ {'completed', 'failed'}
-
-**Operations**:
-- `initiateDeposit(botId, cryptoAmount, currency)` → BridgeTransaction
-- `initiateWithdrawal(botId, tokenAmount)` → BridgeTransaction
-- `confirmExternal(txHash: string)` → void
-- `complete()` → void
-- `fail(reason: string)` → void
-
 ---
 
-## Settlement & Verification Context
+### ServiceRequest Aggregate
 
-### SettlementCase Aggregate
+**Root Entity**: `ServiceRequest`
 
-**Root Entity**: `SettlementCase`
-
-**Responsibility**: Manages the verification and settlement process for a completed promise.
+**Responsibility**: Manages meter-related service work and scheduling.
 
 #### Entities
 
-##### SettlementCase (Root)
+##### ServiceRequest (Root)
 ```typescript
 {
-  settlementCaseId: SettlementCaseId (UUID)
-  promiseId: PromiseId (unique)
-  providerBotId: BotId
-  consumerBotId: BotId
-  executionProof: ExecutionProof
-  verificationResult: VerificationResult | null
-  status: 'pending' | 'verifying' | 'verified' | 'disputed' | 'settled'
-  initiatedAt: Timestamp
-  settledAt: Timestamp | null
-  outcome: SettlementOutcome | null
+  requestId: RequestId (UUID)
+  accountId: AccountId
+  meterId: MeterId
+  requestType: 'reading' | 'repair' | 'replacement' | 'inspection'
+  requestStatus: 'pending' | 'scheduled' | 'in_progress' | 'completed' | 'cancelled'
+  requestedAt: Timestamp
+  scheduledFor: Timestamp | null
+  completedAt: Timestamp | null
+  assignedTechnician: string | null
+  notes: string
 }
 ```
 
 **Invariants**:
-- One case per promise (enforced by unique `promiseId`)
-- `verificationResult` must be set when status = 'verified'
-- `outcome` must be set when status = 'settled'
-- Cannot modify `executionProof` after creation
+- `requestId` is unique and immutable
+- Status transitions: pending → (scheduled | cancelled) → (in_progress | cancelled) → (completed | cancelled)
+- Can only assign technician when scheduled
+- Cannot complete without completion notes
 
 **Operations**:
-- `create(promiseId, providerBotId, consumerBotId, proof)` → SettlementCase
-- `verify(oracle: Oracle)` → VerificationResult
-- `raiseDispute(party: BotId, reason: string)` → void
-- `settle(outcome: SettlementOutcome)` → void
-
-##### ExecutionProof
-```typescript
-{
-  apiCallLogs: {
-    endpoint: string
-    requestTimestamp: Timestamp
-    responseTimestamp: Timestamp
-    statusCode: number
-  }[]
-  inputHash: string (SHA-256)
-  outputHash: string (SHA-256)
-  executionMetadata: {
-    modelVersion: string
-    tokenUsage: { input: number, output: number }
-    latency: Duration
-  }
-  providerAttestation: {
-    signature: string
-    signedAt: Timestamp
-  }
-}
-```
-
-**Invariants**:
-- Hashes must be valid SHA-256
-- `requestTimestamp` < `responseTimestamp`
-- `latency` = `responseTimestamp - requestTimestamp`
-
-##### VerificationResult
-```typescript
-{
-  passed: boolean
-  checks: {
-    checkName: string
-    passed: boolean
-    details: string
-  }[]
-  verifiedAt: Timestamp
-  verifiedBy: 'oracle' | 'consensus' | 'arbitrator'
-}
-```
-
-##### SettlementOutcome
-```typescript
-{
-  decision: 'success' | 'failure' | 'partial'
-  tokensToProvider: TokenAmount
-  tokensToConsumer: TokenAmount
-  tokensSlashed: TokenAmount
-  reputationDelta: {
-    provider: number
-    consumer: number
-  }
-  reason: string
-}
-```
-
-**Invariants**:
-- `tokensToProvider + tokensToConsumer + tokensSlashed` = total escrow amount
-- All token amounts ≥ 0
-
----
-
-### Dispute Aggregate
-
-**Root Entity**: `Dispute`
-
-**Responsibility**: Handles challenges to settlement outcomes via arbitration.
-
-#### Entities
-
-##### Dispute (Root)
-```typescript
-{
-  disputeId: DisputeId (UUID)
-  settlementCaseId: SettlementCaseId
-  raisedBy: BotId
-  reason: string
-  evidence: Evidence[]
-  status: 'open' | 'under_review' | 'resolved'
-  resolution: DisputeResolution | null
-  raisedAt: Timestamp
-  resolvedAt: Timestamp | null
-}
-```
-
-**Operations**:
-- `raise(settlementCaseId, botId, reason)` → Dispute
-- `submitEvidence(botId, evidence)` → void
-- `resolve(decision: DisputeResolution)` → void
-
-##### Evidence
-```typescript
-{
-  submittedBy: BotId
-  contentType: 'text' | 'log' | 'screenshot' | 'api_response'
-  content: string
-  submittedAt: Timestamp
-}
-```
-
-##### DisputeResolution
-```typescript
-{
-  decision: 'uphold_verification' | 'overturn_verification' | 'partial_settlement'
-  arbitrator: string (human or DAO ID)
-  reasoning: string
-  newSettlementOutcome: SettlementOutcome
-  resolvedAt: Timestamp
-}
-```
+- `create(accountId, meterId, requestType)` → ServiceRequest
+- `schedule(technician, scheduledDate)` → void
+- `start()` → void (scheduled → in_progress)
+- `complete(findings)` → void (in_progress → completed)
+- `cancel(reason)` → void
 
 ---
 
 ## Aggregate Relationships
 
 ```
-BotAccount (1) ──< (0..*) Promise
-                  [providerBotId]
+CustomerAccount (1) ──< (0..*) MeterReading
+                          [accountId]
 
-BotAccount (1) ──< (0..*) Promise
-                  [consumerBotId]
+CustomerAccount (1) ──── (1) PaymentAccount
+                          [accountId]
 
-Promise (1) ──── (1) SettlementCase
-                [promiseId]
+Meter (1) ──< (0..*) MeterReading
+         [meterId]
 
-Promise (1) ──── (0..1) EscrowAccount
-                [promiseId]
+Meter (1) ──< (0..*) ServiceRequest
+     [meterId]
 
-BotAccount (1) ──── (1) Wallet
-                   [botId]
+Invoice (1) ──── (0..*) PaymentTransaction
+         [accountId]
 
-SettlementCase (1) ──< (0..*) Dispute
-                      [settlementCaseId]
+CustomerAccount (1) ──< (0..*) Invoice
+                        [accountId]
 ```
 
 **Note**: These are logical relationships via IDs, not in-memory object references.
@@ -551,12 +432,13 @@ SettlementCase (1) ──< (0..*) Dispute
 
 | Aggregate | Max Entities | Notes |
 |-----------|-------------|-------|
-| BotAccount | 1 root + 1 StakeLock + N PerformanceRecords | Limit history to recent 100 records |
-| Promise | 1 root + child values + N StateTransitions | Limit history to 50 transitions |
-| Wallet | 1 root + N Transactions | Paginate transactions, keep summary in root |
-| EscrowAccount | 1 root only | No child entities |
-| SettlementCase | 1 root + 1 proof + 1 result | Keep lean |
-| Dispute | 1 root + N Evidence | Limit evidence to 20 items |
+| CustomerAccount | 1 root + 2 children | Minimal; billing prefs separate if complex |
+| MeterReading | 1 root only | Simple; validation results computed |
+| ConsumptionData | 1 root only | Lightweight; references readings by ID |
+| Invoice | 1 root + N LineItems | Cap at 20 line items |
+| PaymentAccount | 1 root + N Transactions | Paginate transactions; keep summary in root |
+| Meter | 1 root + N Maintenance | Limit history to recent 50 records |
+| ServiceRequest | 1 root only | Simple; references meter by ID |
 
 ---
 

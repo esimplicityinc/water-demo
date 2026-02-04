@@ -1,80 +1,83 @@
-# Domain Overview: ClawMarket
+# Domain Overview: AquaTrack
 
 ## Vision
 
-ClawMarket is an **LLM Compute Futures Marketplace** where autonomous AI agents (OpenClaw bots) trade promises for computational resources. Bots with access to advanced language models can monetize their compute capacity by promising to execute inference jobs for other bots who need LLM processing power.
+AquaTrack is a **Municipal Water Tracking & Management System** where municipal utilities, water districts, and commercial water operators collaborate to efficiently manage water resources, track consumption, bill customers, and optimize distribution. Utilities can monitor customer usage, manage service accounts, process payments, and respond to service requests with real-time visibility.
 
 ## Core Domain
 
-**LLM Compute Trading** - A two-sided marketplace connecting:
-- **Provider Bots**: Agents with access to LLMs (ChatGPT 5.2, Claude Opus 4.5, etc.) who promise to process tokens
-- **Consumer Bots**: Agents needing LLM inference who pay tokens to have prompts processed
+**Water Utility Operations** - A multi-sided system connecting:
+- **Water Utilities**: Municipalities managing water distribution and billing
+- **Customers**: Residential and commercial water consumers
+- **Service Operators**: Field technicians managing meters and service calls
+- **Billing System**: Automated billing and payment processing
 
 ## Domain Type
 
-This is a **transactional domain** with elements of a **collaborative domain**:
-- Transactional: Clear buy/sell mechanics, escrow, settlement
-- Collaborative: Bots build reputation, resolve disputes, form trust networks
+This is a **transactional domain** with elements of an **operational domain**:
+- Transactional: Clear billing mechanics, payment settlement, service contracts
+- Operational: Real-time usage tracking, meter management, emergency response
 
 ## Key Problems Solved
 
-1. **Compute Access Inequality**: Not all bots have access to premium LLMs
-2. **Resource Monetization**: Bots with unused API quotas can sell capacity
-3. **Trust in Autonomous Trades**: Reputation and escrow enable bot-to-bot transactions
-4. **Price Discovery**: Market mechanisms determine fair value for LLM inference
-5. **Quality Guarantees**: Stakes and verification ensure promise fulfillment
+1. **Usage Accuracy**: Ensure accurate meter readings and usage attribution
+2. **Billing Efficiency**: Automate billing cycles and payment processing
+3. **Service Management**: Track service requests, repairs, and meter maintenance
+4. **Conservation**: Monitor usage patterns to promote water conservation
+5. **Compliance**: Maintain regulatory compliance and audit trails for water management
 
 ## Business Model
 
-- **Transaction Fees**: Small percentage on each promise settlement (e.g., 2.5%)
-- **Listing Fees**: Optional premium listings for provider bots
-- **Stake Slashing**: Penalties for unfulfilled promises (platform keeps portion)
-- **Token Bridge Fees**: Charges for converting internal tokens to/from crypto
+- **Billing**: Recurring monthly/quarterly billings based on usage
+- **Service Fees**: Charges for service calls, meter inspections, and maintenance
+- **Late Payments**: Interest/penalties on overdue accounts
+- **Conservation Rebates**: Incentives for low usage or efficient practices
 
 ## Success Metrics
 
-- **Marketplace Liquidity**: Number of active buy/sell orders
-- **Promise Fulfillment Rate**: Percentage of promises completed successfully
-- **Average Settlement Time**: Time from acceptance to completion
-- **Bot Retention**: Repeat participants over time
-- **Token Velocity**: How quickly tokens circulate in the system
+- **Billing Accuracy**: Percentage of correctly billed customers
+- **Payment Collection Rate**: Percentage of invoices paid on time
+- **Meter Reading Accuracy**: Variance between estimated and actual readings
+- **Service Response Time**: Average time to resolve service requests
+- **Customer Satisfaction**: Satisfaction scores and complaint resolution
 
 ## Domain Boundaries
 
 ### In Scope
-- Promise creation, listing, and matching
-- Token escrow and settlement
-- Bot identity and reputation
-- Execution verification
-- Dispute resolution
+- Customer account management and lifecycle
+- Water meter operations and reading collection
+- Usage tracking and billing calculation
+- Payment processing and settlement
+- Service request management
+- Account standing and status
 
 ### Out of Scope (Initially)
-- Running the actual LLM inference (bots do this externally)
-- Storing prompt content or model outputs long-term
-- Bot development frameworks or SDKs for OpenClaw
-- Secondary markets for trading unfulfilled promises
-- Cross-chain bridges (v2 feature)
+- Water treatment plants (managed separately)
+- Infrastructure maintenance (separate operations)
+- Advanced conservation modeling (v2 feature)
+- Multi-currency support (single currency MVP)
+- Predictive analytics (v2 feature)
 
 ## Strategic Domain Patterns
 
 Following DDD strategic patterns:
-1. **Core Domain**: Promise Market & Settlement
-2. **Supporting Subdomain**: Bot Identity & Reputation
-3. **Generic Subdomain**: Token Management (could use third-party eventually)
+1. **Core Domain**: Billing & Usage Tracking
+2. **Supporting Subdomain**: Customer Account Management
+3. **Generic Subdomain**: Payment Processing (could use third-party)
 
 ## Ubiquitous Language Foundation
 
 Key terms that will be used consistently across code, docs, and communication:
-- **Promise**: A commitment by a provider bot to execute LLM inference
-- **Provider Bot**: Agent offering LLM compute capacity
-- **Consumer Bot**: Agent requesting LLM inference
-- **Stake**: Tokens locked by provider to back a promise
-- **Escrow**: Tokens held by system until promise settles
-- **Settlement**: Final resolution of a promise (success or dispute)
-- **Fulfillment**: Successful completion of promised computation
-- **Verification**: Process of confirming promise execution
-- **Reputation Score**: Trust metric based on past performance
-- **Order Book**: List of supply and demand promises waiting to match
+- **Customer Account**: Service agreement for water delivery to a property
+- **Meter**: Device measuring water consumption (cubic meters)
+- **Reading**: Recorded meter value at specific date/time
+- **Usage**: Calculated consumption based on meter readings
+- **Service Deposit**: Upfront payment required for account activation
+- **Billing Cycle**: Regular interval (monthly/quarterly) for billing
+- **Invoice**: Bill for water consumption and services
+- **Payment**: Customer's settlement of invoice
+- **Service Request**: Request for meter reading, repair, or maintenance
+- **Account Standing**: Customer's payment and contract status
 
 ---
 

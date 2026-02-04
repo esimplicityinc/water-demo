@@ -1,212 +1,208 @@
 # Bounded Contexts
 
-ClawMarket is decomposed into four primary bounded contexts, each with its own domain model, language, and responsibilities.
+AquaTrack is decomposed into four primary bounded contexts, each with its own domain model, language, and responsibilities.
 
 ## Context Map Overview
 
 ```
 ┌─────────────────────┐
-│   Bot Identity      │
-│   & Reputation      │
+│ Customer Account    │
+│ Management          │
 │                     │
-│ - Authentication    │
-│ - API Keys          │
-│ - Reputation Score  │
-│ - Stake Management  │
+│ - Account creation  │
+│ - Customer profile  │
+│ - Account standing  │
+│ - Service deposits  │
 └──────────┬──────────┘
            │ provides
-           │ identity
+           │ customer
+           │ info
            ▼
 ┌─────────────────────┐        ┌─────────────────────┐
-│   Promise Market    │◄──────►│  Token Management   │
-│                     │        │                     │
-│ - Order Book        │        │ - Wallets           │
-│ - Matching Engine   │        │ - Escrow            │
-│ - Promise Lifecycle │        │ - Transfers         │
-│ - Market Data       │        │ - Crypto Bridge     │
-└──────────┬──────────┘        └─────────────────────┘
-           │ triggers
-           │ settlement
+│   Usage Tracking    │◄──────►│    Billing &        │
+│                     │        │  Payments           │
+│ - Meter readings    │        │                     │
+│ - Usage calculation │        │ - Invoice creation  │
+│ - Consumption data  │        │ - Billing cycles    │
+│                     │        │ - Payment processing│
+└──────────┬──────────┘        │ - Settlement        │
+           │ triggers          │                     │
+           │ billing           └─────────────────────┘
            ▼
 ┌─────────────────────┐
-│  Settlement &       │
-│  Verification       │
+│  Meter Operations   │
 │                     │
-│ - Execution Proof   │
-│ - Oracle Checks     │
-│ - Dispute Process   │
-│ - Finalization      │
+│ - Meter lifecycle   │
+│ - Reading requests  │
+│ - Service requests  │
+│ - Maintenance      │
 └─────────────────────┘
 ```
 
 ---
 
-## 1. Bot Identity & Reputation Context
+## 1. Customer Account Management Context
 
 ### Responsibility
-Manages the lifecycle of bot accounts, authentication, reputation scoring, and stake requirements.
+Manages the lifecycle of customer water service accounts, authentication, account standing, and service deposits.
 
 ### Core Concepts
-- **Bot**: An autonomous agent (OpenClaw instance) with a unique identity
-- **API Key**: Authentication credential for bot access
-- **Reputation Score**: Computed trust metric (0-1000 scale)
-- **Stake Lock**: Tokens locked to enable promise creation
-- **Performance History**: Record of past promise fulfillments
+- **Customer Account**: Service agreement for water delivery with terms and conditions
+- **Account Status**: Active, Suspended, Closed, Delinquent
+- **Service Deposit**: Upfront payment to activate account
+- **Account Standing**: Credit rating based on payment history
+- **Billing Address**: Service location for water delivery
 
 ### Key Aggregates
-- **BotAccount**: Root aggregate containing identity, auth, reputation, and stake
+- **CustomerAccount**: Root aggregate containing identity, contact, status, and deposit info
 
 ### Public Events
-- `BotRegistered`
-- `BotVerified`
-- `StakeDeposited`
-- `StakeWithdrawn`
-- `ReputationUpdated`
+- `CustomerAccountCreated`
+- `AccountStatusChanged`
+- `ServiceDepositDeposited`
+- `ServiceDepositReleased`
+- `AccountStandingUpdated`
+- `BillingAddressUpdated`
 
 ### Relationships
-- **Upstream from**: Promise Market (provides bot identity)
-- **Upstream from**: Settlement & Verification (receives reputation updates)
-- **Customer-Supplier**: Token Management (coordinates stake locks)
+- **Upstream from**: Billing & Payments (provides customer info)
+- **Upstream from**: Usage Tracking (provides account context)
+- **Customer-Supplier**: Meter Operations (requests meter operations)
 
 ### Boundaries
-- Does NOT handle promise logic or market operations
-- Does NOT manage token transfers (delegates to Token Management)
-- Does NOT verify execution (delegates to Settlement)
+- Does NOT handle meter reading or calculations
+- Does NOT process payments directly (delegates to Billing)
+- Does NOT track usage (delegates to Usage Tracking)
 
 ---
 
-## 2. Promise Market Context
+## 2. Usage Tracking Context
 
 ### Responsibility
-Core marketplace logic: creating, listing, matching, and managing the lifecycle of promises.
+Core marketplace logic: collecting meter readings, calculating consumption, and maintaining usage history.
 
 ### Core Concepts
-- **Promise**: A commitment to execute LLM inference with specific terms
-- **PromiseSpecification**: Technical details (model, tokens, SLA)
-- **PricingTerms**: Cost, payment schedule, penalties
-- **Order Book**: Lists of supply (provider offers) and demand (consumer requests)
-- **Match**: When a provider offer meets a consumer request
-- **PromiseState**: Lifecycle state (Draft, Listed, Accepted, Executing, Completed)
+- **Meter Reading**: Record of water consumption from meter device
+- **Meter ID**: Unique identifier for physical meter at property
+- **Usage Period**: Time interval between readings
+- **Consumption**: Calculated water volume used (cubic meters)
+- **Anomaly**: Unusual usage pattern detected
 
 ### Key Aggregates
-- **Promise**: Root aggregate containing spec, pricing, history, state
-- **OrderBook**: Manages active supply and demand listings
-- **Market**: Coordinates matching logic
+- **MeterReading**: Root aggregate containing reading data and validation
+- **UsageHistory**: Maintains consumption records and patterns
+- **ConsumptionData**: Aggregated usage statistics
 
 ### Public Events
-- `PromiseCreated`
-- `PromiseListed`
-- `PromiseMatched`
-- `PromiseAccepted`
-- `PromiseExecutionStarted`
-- `PromiseExecutionCompleted`
-- `PromiseExecutionFailed`
-- `PromiseCancelled`
+- `MeterReadingRecorded`
+- `MeterReadingValidated`
+- `MeterReadingRejected`
+- `ConsumptionCalculated`
+- `AnomalyDetected`
+- `UsageHistoryUpdated`
 
 ### Relationships
-- **Conformist**: Bot Identity (must use their bot identities)
-- **Customer-Supplier**: Token Management (requests escrow operations)
-- **Partnership**: Settlement & Verification (collaborates on fulfillment)
+- **Conformist**: Customer Account Management (must use their customer identities)
+- **Customer-Supplier**: Billing & Payments (requests billing calculation)
+- **Partnership**: Meter Operations (collaborates on meter readings)
 
 ### Boundaries
-- Does NOT handle actual LLM execution (bots do this externally)
-- Does NOT manage tokens directly (delegates to Token Management)
-- Does NOT verify execution proofs (delegates to Settlement)
+- Does NOT handle payment processing
+- Does NOT manage physical meters (delegates to Meter Operations)
+- Does NOT calculate bills (delegates to Billing)
 
 ---
 
-## 3. Token Management Context
+## 3. Billing & Payments Context
 
 ### Responsibility
-Manages internal tokens, wallets, escrow, transfers, and the bridge to external crypto.
+Manages invoices, billing cycles, payment processing, and financial settlement.
 
 ### Core Concepts
-- **Token**: Internal fungible currency unit
-- **Wallet**: Bot's token balance and transaction history
-- **Escrow**: Tokens held during promise execution
-- **Transfer**: Movement of tokens between wallets
-- **Bridge Transaction**: Conversion between internal tokens and external crypto
+- **Invoice**: Bill for water consumption and service charges
+- **Billing Cycle**: Recurring interval (monthly, quarterly) for invoicing
+- **Rate**: Pricing per cubic meter or base rate
+- **Payment**: Customer settlement of invoice
+- **Account Balance**: Outstanding amount owed or credit balance
 
 ### Key Aggregates
-- **Wallet**: Root aggregate for bot token balances
-- **EscrowAccount**: Holds tokens for active promises
-- **BridgeTransaction**: Manages crypto on/off ramps
+- **Invoice**: Root aggregate for billing document
+- **PaymentAccount**: Manages payment history and balance
+- **BillingCycle**: Tracks billing periods and processing
 
 ### Public Events
-- `TokensDeposited`
-- `TokensWithdrawn`
-- `TokensEscrowed`
-- `TokensReleased`
-- `TokensSlashed`
-- `TransferCompleted`
-- `BridgeTransactionInitiated`
-- `BridgeTransactionCompleted`
+- `BillingCycleStarted`
+- `InvoiceGenerated`
+- `InvoiceDelivered`
+- `PaymentReceived`
+- `PaymentProcessed`
+- `AccountBalanceUpdated`
+- `DueNoticeIssued`
+- `AccountSuspended`
 
 ### Relationships
-- **Shared Kernel**: Promise Market (tightly integrated for escrow)
-- **Published Language**: Exposes token operations via standard API
-- **Anticorruption Layer**: External crypto networks (protects from blockchain complexity)
+- **Customer-Supplier**: Customer Account Management (needs account info)
+- **Customer-Supplier**: Usage Tracking (requests usage for billing)
+- **Published Language**: Exposes payment status via standard API
 
 ### Boundaries
-- Does NOT understand promise semantics (just locks/releases tokens)
-- Does NOT make settlement decisions (receives commands)
-- Does NOT track reputation (separate concern)
+- Does NOT manage customer accounts (trusts Customer Account context)
+- Does NOT track meter readings (receives usage from Usage Tracking)
+- Does NOT physically access meters (separate concern)
 
 ---
 
-## 4. Settlement & Verification Context
+## 4. Meter Operations Context
 
 ### Responsibility
-Verifies promise fulfillment, handles disputes, and finalizes settlements.
+Manages physical meters, reading collection, service requests, and maintenance operations.
 
 ### Core Concepts
-- **ExecutionProof**: Evidence that LLM inference was completed (logs, hashes, API traces)
-- **Verification**: Automated oracle checks of proof validity
-- **Dispute**: Challenge raised when verification fails or parties disagree
-- **Arbitration**: Human or DAO review of disputed promises
-- **Settlement**: Final decision on token distribution
+- **Meter**: Physical device measuring water consumption
+- **Meter Status**: Active, Faulty, Scheduled for Replacement, Disconnected
+- **Service Request**: Request for meter reading, repair, or maintenance
+- **Technician**: Field operator conducting meter-related work
+- **Reading Schedule**: Regular intervals for meter reading collection
 
 ### Key Aggregates
-- **SettlementCase**: Root aggregate for promise settlement process
-- **Dispute**: Handles challenged promises
-- **VerificationOracle**: Automated proof checking
+- **Meter**: Root aggregate for meter lifecycle and status
+- **ServiceRequest**: Handles service appointments and work orders
+- **ReadingSchedule**: Manages meter reading collection schedule
 
 ### Public Events
-- `VerificationStarted`
-- `VerificationSucceeded`
-- `VerificationFailed`
-- `DisputeRaised`
-- `DisputeResolved`
-- `SettlementFinalized`
+- `MeterActivated`
+- `MeterDeactivated`
+- `MeterFault Detected`
+- `ServiceRequestCreated`
+- `ServiceRequestScheduled`
+- `ServiceRequestCompleted`
+- `ReadingScheduleUpdated`
 
 ### Relationships
-- **Customer-Supplier**: Promise Market (receives settlement requests)
-- **Customer-Supplier**: Token Management (commands token releases/slashing)
-- **Customer-Supplier**: Bot Identity (updates reputation scores)
+- **Customer-Supplier**: Customer Account Management (serves their accounts)
+- **Customer-Supplier**: Usage Tracking (provides readings for usage calculation)
+- **Partnership**: Billing & Payments (meter status affects billing)
 
 ### Boundaries
-- Does NOT manage promise lifecycle before settlement
-- Does NOT hold tokens (delegates to Token Management)
-- Does NOT authenticate bots (trusts Bot Identity)
+- Does NOT calculate consumption
+- Does NOT process payments
+- Does NOT manage customer account data directly (trusts other contexts)
 
 ---
 
 ## Context Integration Patterns
 
 ### Shared Kernel
-- **Promise Market ↔ Token Management**: Escrow operations are tightly coupled
+- **Usage Tracking ↔ Billing & Payments**: Tightly coupled for usage-to-billing flow
 
 ### Customer-Supplier
-- **Bot Identity → Promise Market**: Provides bot verification
-- **Promise Market → Token Management**: Requests escrow operations
-- **Settlement → Token Management**: Commands releases/slashing
-- **Settlement → Bot Identity**: Updates reputation
+- **Customer Account → Usage Tracking**: Provides account identification
+- **Usage Tracking → Billing & Payments**: Provides consumption data
+- **Meter Operations → Customer Account**: Services customer's meters
+- **Billing & Payments → Customer Account**: Updates account balance
 
 ### Partnership
-- **Promise Market ↔ Settlement**: Collaborate on promise fulfillment
-
-### Anticorruption Layer
-- **Token Management → External Blockchains**: Isolates from crypto complexity
+- **Usage Tracking ↔ Meter Operations**: Collaborate on meter readings
 
 ---
 
@@ -214,12 +210,12 @@ Verifies promise fulfillment, handles disputes, and finalizes settlements.
 
 Each context has terminology that may differ:
 
-| Concept | Bot Identity | Promise Market | Token Management | Settlement |
-|---------|-------------|----------------|-----------------|------------|
-| Agent | Bot | Provider/Consumer | Wallet Owner | Party |
-| Commitment | Stake | Promise | Escrow | Case |
-| Success | Reputation++ | Completed | Released | Verified |
-| Failure | Reputation-- | Failed | Slashed | Disputed |
+| Concept | Customer Acct | Usage Tracking | Billing | Meter Ops |
+|---------|---|---|---|---|
+| Water Device | Property meter | Meter | Meter | Physical device |
+| Data Point | Account status | Reading | Invoice | Maintenance record |
+| Success | Active account | Accurate reading | Payment collected | Service completed |
+| Failure | Suspended | Anomaly detected | Non-payment | Meter faulty |
 
 This is intentional - each context uses language natural to its domain.
 
@@ -231,10 +227,10 @@ Each bounded context has comprehensive BDD test coverage:
 
 | Bounded Context | Feature Files | Scenarios | Status |
 |----------------|---------------|-----------|--------|
-| **Bot Identity** | 3 files | 23 scenarios | ✅ Complete |
-| **Promise Market** | 5 files | 50 scenarios | ✅ Complete |
-| **Token Management** | 3 files | 30 scenarios | ✅ Complete |
-| **Settlement** | 3 files | 28 scenarios | ✅ Complete |
+| **Customer Account** | 3 files | 25 scenarios | ✅ Complete |
+| **Usage Tracking** | 4 files | 35 scenarios | ✅ Complete |
+| **Billing & Payments** | 4 files | 40 scenarios | ✅ Complete |
+| **Meter Operations** | 3 files | 28 scenarios | ✅ Complete |
 
 See the [Feature Index](../bdd/feature-index) for complete test details.
 
