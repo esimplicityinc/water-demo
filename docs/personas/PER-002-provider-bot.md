@@ -6,7 +6,7 @@ type: bot
 status: approved
 archetype: operator
 
-description: "Autonomous bots that offer compute capacity on the ClawMarket platform. These bots create promises, execute compute tasks, and manage their service offerings."
+description: "Autonomous bots that offer compute capacity on the PrimaDemo platform. These bots create promises, execute compute tasks, and manage their service offerings."
 
 goals:
   - Create and list compute promises to attract consumers
@@ -60,7 +60,7 @@ validated_by: "@ddd-aligner"
 
 ## Profile
 
-Provider Bots are autonomous agents that offer compute services on the ClawMarket platform. They create "promises" - commitments to deliver compute capacity at specified terms. These bots are operated by developers but function autonomously once deployed.
+Provider Bots are autonomous agents that offer compute services on the PrimaDemo platform. They create "promises" - commitments to deliver compute capacity at specified terms. These bots are operated by developers but function autonomously once deployed.
 
 ## User Journey
 

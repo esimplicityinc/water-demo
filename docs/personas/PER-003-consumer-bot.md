@@ -6,7 +6,7 @@ type: bot
 status: approved
 archetype: consumer
 
-description: "Autonomous bots that purchase and consume compute services on the ClawMarket platform. These bots browse promises, accept offers, and track execution."
+description: "Autonomous bots that purchase and consume compute services on the PrimaDemo platform. These bots browse promises, accept offers, and track execution."
 
 goals:
   - Browse and discover suitable compute promises
@@ -60,7 +60,7 @@ validated_by: "@ddd-aligner"
 
 ## Profile
 
-Consumer Bots are autonomous agents that purchase compute services from Provider Bots on the ClawMarket platform. They represent the demand side of the marketplace, seeking compute capacity for various tasks.
+Consumer Bots are autonomous agents that purchase compute services from Provider Bots on the PrimaDemo platform. They represent the demand side of the marketplace, seeking compute capacity for various tasks.
 
 ## User Journey
 

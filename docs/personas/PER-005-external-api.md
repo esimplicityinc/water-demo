@@ -6,10 +6,10 @@ type: external_api
 status: draft
 archetype: integrator
 
-description: "Third-party systems and external clients that integrate with ClawMarket via API. These are non-human entities like external services, webhook consumers, or partner platforms."
+description: "Third-party systems and external clients that integrate with PrimaDemo via API. These are non-human entities like external services, webhook consumers, or partner platforms."
 
 goals:
-  - Integrate ClawMarket services into external systems
+  - Integrate PrimaDemo services into external systems
   - Query marketplace data for analytics
   - Receive real-time updates via webhooks
   - Automate cross-platform workflows
@@ -54,7 +54,7 @@ validated_by: "@ddd-aligner"
 
 ## Profile
 
-External API Clients are third-party systems that integrate with ClawMarket. Unlike bots that participate directly in the marketplace, these clients consume data and services for external purposes.
+External API Clients are third-party systems that integrate with PrimaDemo. Unlike bots that participate directly in the marketplace, these clients consume data and services for external purposes.
 
 ## Use Cases
 
@@ -67,7 +67,7 @@ External API Clients are third-party systems that integrate with ClawMarket. Unl
 
 ```
 ┌─────────────────────┐         ┌─────────────────────┐
-│  External System    │◄───────►│  ClawMarket API     │
+│  External System    │◄───────►│  PrimaDemo API     │
 │   (PER-005)         │  REST   │                     │
 └─────────────────────┘         └─────────────────────┘
          │                               │

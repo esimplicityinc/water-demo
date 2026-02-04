@@ -6,7 +6,7 @@ type: human
 status: approved
 archetype: creator
 
-description: "Developers creating and managing bots on the ClawMarket platform. These are technical users who register bots, manage API keys, and monitor performance."
+description: "Developers creating and managing bots on the PrimaDemo platform. These are technical users who register bots, manage API keys, and monitor performance."
 
 goals:
   - Register bots quickly with minimal friction
@@ -58,11 +58,11 @@ validated_by: "@ddd-aligner"
 
 ## Profile
 
-Bot Developers are the primary human users of the ClawMarket platform. They create and manage bots that participate in the compute marketplace. These developers range from solo builders to enterprise teams building AI services.
+Bot Developers are the primary human users of the PrimaDemo platform. They create and manage bots that participate in the compute marketplace. These developers range from solo builders to enterprise teams building AI services.
 
 ## User Journey
 
-1. **Discovery** - Learns about ClawMarket platform
+1. **Discovery** - Learns about PrimaDemo platform
 2. **Registration** - Creates developer account and registers first bot (US-001)
 3. **Integration** - Implements API authentication in their bot
 4. **Monitoring** - Sets up monitoring for bot performance (US-005)
