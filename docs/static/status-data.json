@@ -1,0 +1,131 @@
+{
+  "health": {
+    "overall": "operational",
+    "lastChecked": "2026-02-03T15:30:00Z",
+    "services": [
+      { "id": "api", "name": "API Gateway", "status": "online", "uptime": 99.97, "latency": 42, "region": "us-east-1" },
+      { "id": "db", "name": "Database", "status": "online", "uptime": 99.99, "latency": 8, "region": "us-east-1" },
+      { "id": "auth", "name": "Authentication", "status": "online", "uptime": 100, "latency": 35, "region": "global" },
+      { "id": "realtime", "name": "Real-time Events", "status": "online", "uptime": 99.87, "latency": 12, "region": "us-east-1" }
+    ]
+  },
+  "deployments": [
+    { "id": "deploy-005", "date": "2026-02-03T14:22:00Z", "version": "v0.5.1", "commits": 4, "author": "ci-runner", "status": "success" },
+    { "id": "deploy-004", "date": "2026-02-02T09:15:00Z", "version": "v0.5.0", "commits": 12, "author": "ci-runner", "status": "success" },
+    { "id": "deploy-003", "date": "2026-01-31T16:40:00Z", "version": "v0.4.2", "commits": 3, "author": "ci-runner", "status": "success" },
+    { "id": "deploy-002", "date": "2026-01-28T11:20:00Z", "version": "v0.4.1", "commits": 7, "author": "ci-runner", "status": "success" },
+    { "id": "deploy-001", "date": "2026-01-25T08:45:00Z", "version": "v0.4.0", "commits": 15, "author": "ci-runner", "status": "success" }
+  ],
+  "incidents": [
+    {
+      "id": "inc-003",
+      "title": "Elevated API latency",
+      "status": "resolved",
+      "severity": "minor",
+      "startedAt": "2026-02-01T08:15:00Z",
+      "resolvedAt": "2026-02-01T08:45:00Z",
+      "affectedServices": ["api"],
+      "summary": "Increased response times due to traffic spike. Auto-scaled to resolve."
+    },
+    {
+      "id": "inc-002",
+      "title": "Database maintenance",
+      "status": "resolved",
+      "severity": "maintenance",
+      "startedAt": "2026-01-28T02:00:00Z",
+      "resolvedAt": "2026-01-28T02:30:00Z",
+      "affectedServices": ["db"],
+      "summary": "Scheduled maintenance window for index optimization."
+    },
+    {
+      "id": "inc-001",
+      "title": "Authentication service degraded",
+      "status": "resolved",
+      "severity": "major",
+      "startedAt": "2026-01-20T14:30:00Z",
+      "resolvedAt": "2026-01-20T15:10:00Z",
+      "affectedServices": ["auth"],
+      "summary": "Third-party auth provider experienced issues. Failover activated."
+    }
+  ],
+  "metrics": {
+    "summary": {
+      "registrations": { "value": 1247, "change": 12.4, "period": "30d" },
+      "activeUsers": { "value": 892, "change": 8.2, "period": "30d" },
+      "transactions": { "value": 15420, "change": 23.1, "period": "30d" },
+      "apiCalls": { "value": 2147000, "change": 15.7, "period": "30d" }
+    },
+    "dailyActiveUsers": [
+      { "date": "2026-01-04", "value": 312 },
+      { "date": "2026-01-05", "value": 345 },
+      { "date": "2026-01-06", "value": 298 },
+      { "date": "2026-01-07", "value": 410 },
+      { "date": "2026-01-08", "value": 425 },
+      { "date": "2026-01-09", "value": 389 },
+      { "date": "2026-01-10", "value": 445 },
+      { "date": "2026-01-11", "value": 478 },
+      { "date": "2026-01-12", "value": 456 },
+      { "date": "2026-01-13", "value": 512 },
+      { "date": "2026-01-14", "value": 534 },
+      { "date": "2026-01-15", "value": 498 },
+      { "date": "2026-01-16", "value": 567 },
+      { "date": "2026-01-17", "value": 589 },
+      { "date": "2026-01-18", "value": 545 },
+      { "date": "2026-01-19", "value": 612 },
+      { "date": "2026-01-20", "value": 578 },
+      { "date": "2026-01-21", "value": 634 },
+      { "date": "2026-01-22", "value": 656 },
+      { "date": "2026-01-23", "value": 678 },
+      { "date": "2026-01-24", "value": 645 },
+      { "date": "2026-01-25", "value": 712 },
+      { "date": "2026-01-26", "value": 734 },
+      { "date": "2026-01-27", "value": 698 },
+      { "date": "2026-01-28", "value": 756 },
+      { "date": "2026-01-29", "value": 789 },
+      { "date": "2026-01-30", "value": 812 },
+      { "date": "2026-01-31", "value": 834 },
+      { "date": "2026-02-01", "value": 856 },
+      { "date": "2026-02-02", "value": 878 },
+      { "date": "2026-02-03", "value": 892 }
+    ],
+    "transactionVolume": [
+      { "date": "2026-01-28", "value": 1823 },
+      { "date": "2026-01-29", "value": 2104 },
+      { "date": "2026-01-30", "value": 1956 },
+      { "date": "2026-01-31", "value": 2287 },
+      { "date": "2026-02-01", "value": 2445 },
+      { "date": "2026-02-02", "value": 2312 },
+      { "date": "2026-02-03", "value": 2493 }
+    ]
+  },
+  "okrs": [
+    {
+      "id": "okr-1",
+      "objective": "Increase Platform Adoption",
+      "keyResults": [
+        { "label": "Monthly Active Users", "current": 892, "target": 1000, "unit": "" },
+        { "label": "New Registrations", "current": 1247, "target": 1500, "unit": "" },
+        { "label": "User Retention Rate", "current": 78, "target": 85, "unit": "%" }
+      ]
+    },
+    {
+      "id": "okr-2",
+      "objective": "Improve Platform Reliability",
+      "keyResults": [
+        { "label": "Uptime", "current": 99.9, "target": 99.95, "unit": "%" },
+        { "label": "Avg Response Time", "current": 42, "target": 50, "unit": "ms" },
+        { "label": "Error Rate", "current": 0.12, "target": 0.5, "unit": "%" }
+      ]
+    },
+    {
+      "id": "okr-3",
+      "objective": "Drive Transaction Growth",
+      "keyResults": [
+        { "label": "Daily Transactions", "current": 2493, "target": 3000, "unit": "" },
+        { "label": "Transaction Success", "current": 98.5, "target": 99, "unit": "%" },
+        { "label": "Avg Transaction Value", "current": 125, "target": 150, "unit": "$" }
+      ]
+    }
+  ],
+  "generatedAt": "2026-02-03T15:30:00Z"
+}
