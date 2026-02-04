@@ -38,11 +38,11 @@
           "file": "bdd/features/ui/project-setup.feature",
           "approved_by": [
             {
-              "agent": "@bdd-writer",
+              "customer": "@bdd-writer",
               "timestamp": "2026-01-31T11:00:00Z"
             },
             {
-              "agent": "@bdd-runner",
+              "customer": "@bdd-runner",
               "timestamp": "2026-01-31T11:05:00Z"
             }
           ],
@@ -62,15 +62,15 @@
           "results": {
             "NFR-PERF-001": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             },
             "NFR-SEC-001": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-A11Y-001": {
               "status": "pass",
-              "validated_by": "@a11y-agent"
+              "validated_by": "@a11y-customer"
             }
           }
         }
@@ -82,7 +82,7 @@
     },
     {
       "id": "ROAD-002",
-      "title": "DDD Documentation",
+      "title": "Database Schema",
       "status": "complete",
       "phase": 1,
       "created": "2026-01-31",
@@ -118,11 +118,11 @@
           "file": "bdd/features/ui/documentation-validation.feature",
           "approved_by": [
             {
-              "agent": "@bdd-writer",
+              "customer": "@bdd-writer",
               "timestamp": "2026-01-31T11:00:00Z"
             },
             {
-              "agent": "@bdd-runner",
+              "customer": "@bdd-runner",
               "timestamp": "2026-01-31T11:05:00Z"
             }
           ],
@@ -141,11 +141,11 @@
           "results": {
             "NFR-A11Y-001": {
               "status": "pass",
-              "validated_by": "@a11y-agent"
+              "validated_by": "@a11y-customer"
             },
             "NFR-DOC-001": {
               "status": "pass",
-              "validated_by": "@doc-agent"
+              "validated_by": "@doc-customer"
             }
           }
         }
@@ -159,7 +159,7 @@
     },
     {
       "id": "ROAD-003",
-      "title": "Database Schema",
+      "title": "Authentication Infrastructure",
       "status": "complete",
       "phase": 1,
       "created": "2026-01-31",
@@ -195,11 +195,11 @@
           "file": "bdd/features/api/database-schema.feature",
           "approved_by": [
             {
-              "agent": "@bdd-writer",
+              "customer": "@bdd-writer",
               "timestamp": "2026-01-31T11:00:00Z"
             },
             {
-              "agent": "@bdd-runner",
+              "customer": "@bdd-runner",
               "timestamp": "2026-01-31T11:05:00Z"
             }
           ],
@@ -219,15 +219,15 @@
           "results": {
             "NFR-PERF-001": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             },
             "NFR-PERF-002": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             },
             "NFR-SEC-002": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             }
           }
         }
@@ -242,7 +242,7 @@
     },
     {
       "id": "ROAD-004",
-      "title": "Bot Registration",
+      "title": "Customer Enrollment",
       "status": "complete",
       "phase": 1,
       "created": "2026-01-31",
@@ -258,7 +258,7 @@
             {
               "adr": "ADR-004",
               "compliant": true,
-              "notes": "BotAccount aggregate follows DDD patterns"
+              "notes": "CustomerAccount aggregate follows DDD patterns"
             },
             {
               "adr": "ADR-005",
@@ -268,7 +268,7 @@
             {
               "adr": "ADR-008",
               "compliant": true,
-              "notes": "API key security implemented"
+              "notes": "Access token security implemented"
             },
             {
               "adr": "ADR-009",
@@ -280,14 +280,14 @@
         "bdd": {
           "id": "BDD-004",
           "status": "approved",
-          "file": "bdd/features/ui/bot-registration.feature",
+          "file": "bdd/features/ui/customer-enrollment.feature",
           "approved_by": [
             {
-              "agent": "@bdd-writer",
+              "customer": "@bdd-writer",
               "timestamp": "2026-01-31T11:00:00Z"
             },
             {
-              "agent": "@bdd-runner",
+              "customer": "@bdd-runner",
               "timestamp": "2026-01-31T11:05:00Z"
             }
           ],
@@ -308,19 +308,19 @@
           "results": {
             "NFR-SEC-001": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-SEC-002": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-A11Y-001": {
               "status": "pass",
-              "validated_by": "@a11y-agent"
+              "validated_by": "@a11y-customer"
             },
             "NFR-PERF-001": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             }
           }
         },
@@ -340,7 +340,7 @@
     },
     {
       "id": "ROAD-005",
-      "title": "Bot Authentication",
+      "title": "Customer Authentication",
       "status": "complete",
       "phase": 1,
       "created": "2026-01-31",
@@ -356,12 +356,12 @@
             {
               "adr": "ADR-008",
               "compliant": true,
-              "notes": "API key authentication implemented"
+              "notes": "Access token customer portal authentication implemented"
             },
             {
               "adr": "ADR-010",
               "compliant": true,
-              "notes": "Rate limiting configured"
+              "notes": "Anomaly detection configured"
             },
             {
               "adr": "ADR-005",
@@ -373,14 +373,14 @@
         "bdd": {
           "id": "BDD-005",
           "status": "approved",
-          "file": "bdd/features/api/bot-authentication.feature",
+          "file": "bdd/features/api/customer-customer portal authentication.feature",
           "approved_by": [
             {
-              "agent": "@bdd-writer",
+              "customer": "@bdd-writer",
               "timestamp": "2026-01-31T11:00:00Z"
             },
             {
-              "agent": "@bdd-runner",
+              "customer": "@bdd-runner",
               "timestamp": "2026-01-31T11:05:00Z"
             }
           ],
@@ -401,19 +401,19 @@
           "results": {
             "NFR-SEC-001": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-SEC-002": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-SEC-003": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-PERF-001": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             }
           }
         },
@@ -433,7 +433,7 @@
     },
     {
       "id": "ROAD-006",
-      "title": "Bot Profile Management",
+      "title": "Account Management",
       "status": "complete",
       "phase": 1,
       "created": "2026-01-31",
@@ -466,14 +466,14 @@
         "bdd": {
           "id": "BDD-006",
           "status": "approved",
-          "file": "bdd/features/ui/bot-profile-management.feature",
+          "file": "bdd/features/ui/customer-profile-management.feature",
           "approved_by": [
             {
-              "agent": "@bdd-writer",
+              "customer": "@bdd-writer",
               "timestamp": "2026-01-31T11:00:00Z"
             },
             {
-              "agent": "@bdd-runner",
+              "customer": "@bdd-runner",
               "timestamp": "2026-01-31T11:05:00Z"
             }
           ],
@@ -493,15 +493,15 @@
           "results": {
             "NFR-SEC-002": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-A11Y-001": {
               "status": "pass",
-              "validated_by": "@a11y-agent"
+              "validated_by": "@a11y-customer"
             },
             "NFR-PERF-001": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             }
           }
         },
@@ -520,7 +520,7 @@
     },
     {
       "id": "ROAD-007",
-      "title": "Reputation System",
+      "title": "Account Standing System",
       "status": "complete",
       "phase": 1,
       "created": "2026-01-31",
@@ -536,12 +536,12 @@
             {
               "adr": "ADR-004",
               "compliant": true,
-              "notes": "Reputation aggregate follows DDD patterns"
+              "notes": "Account standing aggregate follows DDD patterns"
             },
             {
               "adr": "ADR-012",
               "compliant": true,
-              "notes": "Reputation calculation algorithm documented"
+              "notes": "Account standing assessment algorithm documented"
             },
             {
               "adr": "ADR-005",
@@ -553,14 +553,14 @@
         "bdd": {
           "id": "BDD-007",
           "status": "approved",
-          "file": "bdd/features/api/reputation-system.feature",
+          "file": "bdd/features/api/account standing-system.feature",
           "approved_by": [
             {
-              "agent": "@bdd-writer",
+              "customer": "@bdd-writer",
               "timestamp": "2026-01-31T11:00:00Z"
             },
             {
-              "agent": "@bdd-runner",
+              "customer": "@bdd-runner",
               "timestamp": "2026-01-31T11:05:00Z"
             }
           ],
@@ -580,15 +580,15 @@
           "results": {
             "NFR-PERF-001": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             },
             "NFR-PERF-002": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             },
             "NFR-SEC-001": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             }
           }
         },
@@ -606,7 +606,7 @@
     },
     {
       "id": "ROAD-008",
-      "title": "Basic Token Operations",
+      "title": "Water Usage Tracking",
       "status": "proposed",
       "phase": 2,
       "created": "2026-01-31",
@@ -635,7 +635,7 @@
     },
     {
       "id": "ROAD-009",
-      "title": "Escrow System",
+      "title": "Commitment Management",
       "status": "nfr_validating",
       "phase": 2,
       "created": "2026-01-31",
@@ -660,15 +660,15 @@
           "results": {
             "NFR-PERF-001": {
               "status": "pass",
-              "validated_by": "@performance-agent"
+              "validated_by": "@performance-customer"
             },
             "NFR-SEC-001": {
               "status": "pass",
-              "validated_by": "@security-agent"
+              "validated_by": "@security-customer"
             },
             "NFR-A11Y-001": {
               "status": "pass",
-              "validated_by": "@a11y-agent"
+              "validated_by": "@a11y-customer"
             }
           }
         }
@@ -690,7 +690,7 @@
     },
     {
       "id": "ROAD-010",
-      "title": "Stake Management",
+      "title": "Credit Management",
       "status": "proposed",
       "phase": 2,
       "created": "2026-01-31",
@@ -724,7 +724,7 @@
     },
     {
       "id": "ROAD-011",
-      "title": "Crypto Bridge",
+      "title": "Commitment Discovery",
       "status": "nfr_blocked",
       "phase": 2,
       "created": "2026-01-31",
@@ -755,7 +755,7 @@
     },
     {
       "id": "ROAD-012",
-      "title": "Promise Creation",
+      "title": "Commitment Acceptance",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -793,7 +793,7 @@
     },
     {
       "id": "ROAD-013",
-      "title": "Promise Listing",
+      "title": "Commitment Fulfillment",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -830,7 +830,7 @@
     },
     {
       "id": "ROAD-014",
-      "title": "Order Book",
+      "title": "Commitment Cancellation",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -867,7 +867,7 @@
     },
     {
       "id": "ROAD-015",
-      "title": "Promise Discovery",
+      "title": "Service Discovery",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -896,7 +896,7 @@
     },
     {
       "id": "ROAD-016",
-      "title": "Promise Acceptance",
+      "title": "Commitment Search",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -925,7 +925,7 @@
     },
     {
       "id": "ROAD-017",
-      "title": "Promise Execution",
+      "title": "Commitment Tracking",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -954,7 +954,7 @@
     },
     {
       "id": "ROAD-018",
-      "title": "Oracle Verification",
+      "title": "Proof Verification",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -983,7 +983,7 @@
     },
     {
       "id": "ROAD-019",
-      "title": "Settlement Process",
+      "title": "Service Rating System",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1012,7 +1012,7 @@
     },
     {
       "id": "ROAD-020",
-      "title": "Dispute Resolution",
+      "title": "Billing Dispute Resolution",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1041,7 +1041,7 @@
     },
     {
       "id": "ROAD-021",
-      "title": "Dashboard",
+      "title": "Appeal Process",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1070,7 +1070,7 @@
     },
     {
       "id": "ROAD-022",
-      "title": "shadcn/ui Components",
+      "title": "Monthly Billing",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1098,7 +1098,7 @@
     },
     {
       "id": "ROAD-023",
-      "title": "Real-Time Updates",
+      "title": "Invoice Management",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1126,7 +1126,7 @@
     },
     {
       "id": "ROAD-024",
-      "title": "Mobile Responsive",
+      "title": "Payment Processing",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1293,7 +1293,7 @@
     },
     {
       "id": "ROAD-030",
-      "title": "Deployment",
+      "title": "Deployment Setup",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1321,7 +1321,7 @@
     },
     {
       "id": "ROAD-031",
-      "title": "Documentation",
+      "title": "Monitoring & Logging",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1348,7 +1348,7 @@
     },
     {
       "id": "ROAD-032",
-      "title": "Advanced Analytics",
+      "title": "API Documentation",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1376,7 +1376,7 @@
     },
     {
       "id": "ROAD-033",
-      "title": "DAO Governance",
+      "title": "Mobile Portal",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1406,7 +1406,7 @@
     },
     {
       "id": "ROAD-034",
-      "title": "Secondary Market",
+      "title": "Accessibility Features",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1436,7 +1436,7 @@
     },
     {
       "id": "ROAD-035",
-      "title": "OpenClaw Advertisement Bot",
+      "title": "Usage Analytics Dashboard",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1464,7 +1464,7 @@
     },
     {
       "id": "ROAD-036",
-      "title": "Advertisement Campaign Tracker",
+      "title": "Service Provider Dashboard",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1492,7 +1492,7 @@
     },
     {
       "id": "ROAD-037",
-      "title": "Agent Task Bounty Marketplace",
+      "title": "Water Utility Partner Integration",
       "status": "proposed",
       "phase": 3,
       "created": "2026-01-31",
@@ -1520,7 +1520,7 @@
     },
     {
       "id": "ROAD-039",
-      "title": "Agent Directory & Discovery",
+      "title": "Advanced Analytics",
       "status": "complete",
       "phase": 1,
       "created": "2026-02-01",
@@ -1555,8 +1555,8 @@
           "status": "validated",
           "results": {
             "NFR-PERF-003": "Search < 500ms - Validated via Convex indexes",
-            "NFR-SCA-002": "1000 agents/page - Pagination implemented",
-            "NFR-SEC-002": "No private data - apiKeyHash, email, walletId filtered"
+            "NFR-SCA-002": "1000 customers/page - Pagination implemented",
+            "NFR-SEC-002": "No private data - apiKeyHash, email, accountId filtered"
           }
         },
         "architecture": {
@@ -1575,5 +1575,5 @@
       "filePath": "roads/ROAD-039"
     }
   ],
-  "generatedAt": "2026-02-01T15:31:13.423Z"
+  "generatedAt": "2026-02-03T21:56:05.103Z"
 }
