@@ -1,7 +1,7 @@
 ---
 id: CHANGE-008
 road_id: ROAD-006
-title: "Bot Profile Management"
+title: "Supplier Profile Management"
 date: "2026-01-31"
 version: "0.3.0"
 status: published
@@ -62,7 +62,7 @@ signatures:
     timestamp: "2026-01-31T14:10:00Z"
 ---
 
-### [CHANGE-008] Bot Profile Management - 2026-01-31
+### [CHANGE-008] Supplier Profile Management - 2026-01-31
 
 **Roadmap**: [ROAD-006](../roads/ROAD-006.md)
 **Type**: Added
@@ -71,9 +71,9 @@ signatures:
 #### Added
 
 **Domain Layer**:
-- `BotAccount` aggregate extensions
-  - Location: `src/bot-identity/domain/BotAccount.ts`
-  - Added `emailVerified` field to track email verification status separately from bot verification
+- `SupplierAccount` aggregate extensions
+  - Location: `src/supplier-identity/domain/SupplierAccount.ts`
+  - Added `emailVerified` field to track email verification status separately from supplier verification
   - Added `avatarUrl` field for profile images
   - Added `updateDisplayName()` method with validation (3-32 chars, alphanumeric + hyphen/underscore)
   - Added `verifyEmail()` method for email verification flow
@@ -81,67 +81,67 @@ signatures:
   - Added `getVerificationBadge()` method returning "verified" | "expert" | null based on email verification and reputation score (90+ for expert)
 
 - Domain events for profile management:
-  - `DisplayNameUpdated` - Location: `src/bot-identity/domain/events/DisplayNameUpdated.ts`
-  - `EmailVerified` - Location: `src/bot-identity/domain/events/EmailVerified.ts`
-  - `AvatarUpdated` - Location: `src/bot-identity/domain/events/AvatarUpdated.ts`
-  - `AvatarRemoved` - Location: `src/bot-identity/domain/events/AvatarRemoved.ts`
+  - `DisplayNameUpdated` - Location: `src/supplier-identity/domain/events/DisplayNameUpdated.ts`
+  - `EmailVerified` - Location: `src/supplier-identity/domain/events/EmailVerified.ts`
+  - `AvatarUpdated` - Location: `src/supplier-identity/domain/events/AvatarUpdated.ts`
+  - `AvatarRemoved` - Location: `src/supplier-identity/domain/events/AvatarRemoved.ts`
 
 **Application Layer**:
 - `ProfileService` interface and implementation
-  - Location: `src/bot-identity/application/ProfileService.ts`
+  - Location: `src/supplier-identity/application/ProfileService.ts`
   - Methods:
-    - `getProfile(botId)` - Returns full bot profile with badge calculation
-    - `getPublicProfile(botId)` - Returns public-only fields (no email)
-    - `updateDisplayName(botId, newDisplayName)` - Updates display name and publishes event
-    - `verifyEmail(botId, token)` - Verifies email with token validation
-    - `updateAvatar(botId, file, contentType)` - Uploads and updates avatar
-    - `removeAvatar(botId)` - Removes avatar and publishes event
-  - DTOs: `BotProfileDto`, `PublicBotProfileDto`
+    - `getProfile(supplierId)` - Returns full supplier profile with badge calculation
+    - `getPublicProfile(supplierId)` - Returns public-only fields (no email)
+    - `updateDisplayName(supplierId, newDisplayName)` - Updates display name and publishes event
+    - `verifyEmail(supplierId, token)` - Verifies email with token validation
+    - `updateAvatar(supplierId, file, contentType)` - Uploads and updates avatar
+    - `removeAvatar(supplierId)` - Removes avatar and publishes event
+  - DTOs: `supplierProfileDto`, `PublicsupplierProfileDto`
 
 **Infrastructure Layer**:
 - Convex schema updates
   - Location: `convex/schema.ts`
-  - Added `emailVerified` (boolean) to bots table
-  - Added `avatarUrl` (optional string) to bots table
+  - Added `emailVerified` (boolean) to suppliers table
+  - Added `avatarUrl` (optional string) to suppliers table
 
 - Convex actions for profile management:
-  - Location: `convex/botIdentity/actions.ts`
+  - Location: `convex/supplierIdentity/actions.ts`
   - `updateDisplayName` - Updates display name with validation
   - `verifyEmail` - Verifies email and updates status
   - `updateAvatar` - Updates avatar URL
   - `removeAvatar` - Removes avatar
 
 - Convex mutations for profile management:
-  - Location: `convex/botIdentity/mutations.ts`
-  - `updateBotDisplayName` - Updates display name field
-  - `updateBotEmailVerified` - Updates email verification status
-  - `updateBotAvatar` - Updates avatar URL
+  - Location: `convex/supplierIdentity/mutations.ts`
+  - `updatesupplierDisplayName` - Updates display name field
+  - `updatesupplierEmailVerified` - Updates email verification status
+  - `updatesupplierAvatar` - Updates avatar URL
   - `publishEvent` - Generic event publisher for domain events
-  - Updated `registerBot` to include `emailVerified: false`
+  - Updated `registersupplier` to include `emailVerified: false`
 
 **REST API Endpoints**:
-- `GET /api/bots/me/profile` - Get authenticated bot's profile
-  - Returns: botId, displayName, email, emailVerified, verified, badge, reputationScore, avatarUrl, createdAt
-  - Location: `app/api/bots/me/profile/route.ts`
+- `GET /api/suppliers/me/profile` - Get authenticated supplier's profile
+  - Returns: supplierId, displayName, email, emailVerified, verified, badge, reputationScore, avatarUrl, createdAt
+  - Location: `app/api/suppliers/me/profile/route.ts`
 
-- `PATCH /api/bots/me/profile` - Update bot profile (display name)
+- `PATCH /api/suppliers/me/profile` - Update supplier profile (display name)
   - Validates: 3-32 chars, alphanumeric + hyphen/underscore only
-  - Location: `app/api/bots/me/profile/route.ts`
+  - Location: `app/api/suppliers/me/profile/route.ts`
 
-- `POST /api/bots/me/verify-email` - Request email verification
-  - Location: `app/api/bots/me/verify-email/route.ts`
+- `POST /api/suppliers/me/verify-email` - Request email verification
+  - Location: `app/api/suppliers/me/verify-email/route.ts`
 
-- `POST /api/bots/me/verify-email/confirm` - Confirm email verification with token
-  - Location: `app/api/bots/me/verify-email/confirm/route.ts`
+- `POST /api/suppliers/me/verify-email/confirm` - Confirm email verification with token
+  - Location: `app/api/suppliers/me/verify-email/confirm/route.ts`
 
 **BDD Scenarios**:
-- 16 scenarios in `bdd/features/bot-profile/bot_profile_management.feature`
+- 16 scenarios in `bdd/features/supplier-profile/supplier_profile_management.feature`
   - View profile (own and public)
   - Update display name (success and validation failures)
   - Email verification (request and confirm)
   - Verification badge display
   - Avatar upload/remove
-  - Security (unauthenticated access, cross-bot access)
+  - Security (unauthenticated access, cross-supplier access)
 
 #### Technical Details
 
@@ -149,7 +149,7 @@ signatures:
 - Hexagonal architecture maintained
 - Domain events for audit trail
 - Port/adapter pattern for ProfileService
-- Separation of email verification from bot verification status
+- Separation of email verification from supplier verification status
 
 **Verification Badge Logic**:
 - No badge if email not verified
@@ -161,11 +161,11 @@ signatures:
 - Token validation for email verification
 - File type validation for avatars (JPG, PNG, GIF)
 - File size limit: 5MB for avatars
-- Bots cannot access other bots' private profile data
+- suppliers cannot access other suppliers' private profile data
 
 **TypeScript**:
 - Full type safety with Convex generated types
-- Proper `Id<"bots">` typing for bot IDs
+- Proper `Id<"suppliers">` typing for supplier IDs
 
 #### Quality Gates
 

@@ -2,7 +2,7 @@
 
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
-**Goal:** Integrate the governance system (ADRs, NFRs, state machine) into the ClawMarket multi-agent framework with strict enforcement and auto-escalation.
+**Goal:** Integrate the governance system (ADRs, NFRs, state machine) into the PrimaDemo multi-agent framework with strict enforcement and auto-escalation.
 
 **Architecture:** Central @governance-orchestrator manages all governance state. Specialized agents (@governance-linter, @road-manager, @change-manager) handle specific governance tasks. Existing agents updated to check gates before proceeding.
 
@@ -1168,7 +1168,7 @@ compliance:
   nfr_checks:
     performance:
       status: pass
-      evidence: "https://ci.clawmarket.dev/perf/12345"
+      evidence: "https://ci.primademo.dev/perf/12345"
     security:
       status: pass
       evidence: "npm audit: 0 critical"
@@ -1770,7 +1770,7 @@ governance:
     results:
       NFR-PERF-001:
         status: pass
-        evidence: "https://ci.clawmarket.dev/perf/12345"
+        evidence: "https://ci.primademo.dev/perf/12345"
         metrics:
           api_p95: "45ms"
         timestamp: "2026-01-31T14:00:00Z"
@@ -1929,7 +1929,7 @@ Add section about governance system:
 ```markdown
 ## 🏛️ Governance System (NEW)
 
-ClawMarket uses a deterministic governance system where all changes must satisfy ADRs and NFRs.
+PrimaDemo uses a deterministic governance system where all changes must satisfy ADRs and NFRs.
 
 ### Key Agents
 

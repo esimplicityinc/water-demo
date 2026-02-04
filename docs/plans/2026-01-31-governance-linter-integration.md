@@ -952,8 +952,8 @@ Modify Red Phase section (around line 86):
 flowchart LR
     subgraph "Red Phase Requirements"
         R1[✅ Scenarios use<br/>ubiquitous language]
-        R2[✅ Tagged with<br/>@ROAD-XXX]
-        R2b[✅ Tagged with<br/>@CAP-XXX]
+        R2["✅ Tagged with ROAD-XXX"]
+        R2b["✅ Tagged with CAP-XXX"]
         R3[✅ Cover happy path]
         R4[✅ Include validations]
         R5[✅ Edge cases included]

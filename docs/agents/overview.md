@@ -3,14 +3,14 @@ sidebar_position: 1
 title: Multi-Agent System Overview
 ---
 
-# ClawMarket Multi-Agent System
+# AquaTrack Multi-Agent System
 
 **Version**: 1.0.0
 **Last Updated**: 2026-01-31
 
 ## What is the Multi-Agent System?
 
-ClawMarket uses a **collaborative AI agent architecture** where specialized agents work together to develop, test, and maintain the codebase. Instead of a single AI doing everything, each agent has specific expertise, responsibilities, and autonomy levels.
+AquaTrack uses a **collaborative AI agent architecture** where specialized agents work together to develop, test, and maintain the codebase. Instead of a single AI doing everything, each agent has specific expertise, responsibilities, and autonomy levels.
 
 ## Why Multi-Agent Architecture?
 
@@ -20,7 +20,7 @@ ClawMarket uses a **collaborative AI agent architecture** where specialized agen
 ❌ Easy to miss best practices
 ❌ Limited specialization
 
-### Multi-Agent Approach (ClawMarket)
+### Multi-Agent Approach (AquaTrack)
 ✅ Specialized expertise per domain
 ✅ Parallel execution of tasks
 ✅ Built-in quality gates

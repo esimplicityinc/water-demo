@@ -10,7 +10,7 @@ title: ROAD-005 Bot Authentication Design
 
 ## Overview
 
-Enable bots to authenticate using API keys when accessing protected platform resources. This is the foundation for all secured API operations in ClawMarket.
+Enable bots to authenticate using API keys when accessing protected platform resources. This is the foundation for all secured API operations in PrimaDemo.
 
 ## Current State
 

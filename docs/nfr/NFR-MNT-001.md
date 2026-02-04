@@ -11,7 +11,7 @@ created: 2026-01-31
 
 ## Requirement
 
-All code must be comprehensively documented to ensure knowledge transfer, onboarding efficiency, and long-term maintainability of the ClawMarket platform.
+All code must be comprehensively documented to ensure knowledge transfer, onboarding efficiency, and long-term maintainability of the PrimaDemo platform.
 
 ## Specifications
 

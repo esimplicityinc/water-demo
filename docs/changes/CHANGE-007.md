@@ -72,35 +72,35 @@ signatures:
 
 **Domain Layer**:
 - `PerformanceRecord` entity
-  - Location: `src/bot-identity/domain/PerformanceRecord.ts`
-  - Tracks promise outcomes: fulfilled, failed, disputed_won, disputed_lost, fulfilled_late
+  - Location: `src/supplier-identity/domain/PerformanceRecord.ts`
+  - Tracks water request outcomes: fulfilled, failed, disputed_won, disputed_lost, fulfilled_late
   - Immutable with validation (executionTime > 0)
   - Factory pattern with automatic recordedAt timestamp
 
 - `ReputationCalculator` service
-  - Location: `src/bot-identity/domain/ReputationCalculator.ts`
+  - Location: `src/supplier-identity/domain/ReputationCalculator.ts`
   - Algorithm:
-    - Promise fulfilled on time: +10
-    - Promise fulfilled late (within 2x SLA): +5
-    - Promise failed: -20
+    - Water Request Fulfilled on time: +10
+    - Water Request Fulfilled late (within 2x SLA): +5
+    - Water Request Failed: -20
     - Dispute won: +15
     - Dispute lost: -50
   - Score bounds: 0-1000
   - Returns delta, newScore, reason
 
 - `ReputationHistory` aggregate
-  - Location: `src/bot-identity/domain/ReputationHistory.ts`
+  - Location: `src/supplier-identity/domain/ReputationHistory.ts`
   - Manages performance records for a bot
   - Limit: 100 records (DDD guideline)
   - Calculates stats: total, successful, failed, disputed, average execution time
 
 - `ReputationChanged` domain event
-  - Location: `src/bot-identity/domain/events/ReputationChanged.ts`
-  - Captures: botId, oldScore, newScore, delta, reason, promiseId, occurredAt
+  - Location: `src/supplier-identity/domain/events/ReputationChanged.ts`
+  - Captures: botId, oldScore, newScore, delta, reason, requestId, occurredAt
 
 **Application Layer**:
 - `ReputationService`
-  - Location: `src/bot-identity/application/ReputationService.ts`
+  - Location: `src/supplier-identity/application/ReputationService.ts`
   - Methods:
     - `getReputation(botId, currentScore)` - Returns full reputation data with tier
     - `updateReputation(request, currentScore)` - Calculates and records reputation change
@@ -109,12 +109,12 @@ signatures:
 
 **Infrastructure Layer**:
 - `ReputationRepository` port
-  - Location: `src/bot-identity/ports/ReputationRepository.ts`
-  - Interface: findByBotId, save, addPerformanceRecord, getTopBotsByReputation
+  - Location: `src/supplier-identity/ports/ReputationRepository.ts`
+  - Interface: findBySupplierId, save, addPerformanceRecord, getTopBotsByReputation
   - DI token: `REPUTATION_REPOSITORY_TOKEN`
 
 - `ReputationRepositoryConvex` adapter
-  - Location: `src/bot-identity/infrastructure/convex/ReputationRepositoryConvex.ts`
+  - Location: `src/supplier-identity/infrastructure/convex/ReputationRepositoryConvex.ts`
   - Implements port using Convex queries/mutations
   - Maps between domain objects and database records
 
@@ -126,7 +126,7 @@ signatures:
 
 - Convex functions
   - Location: `convex/reputationHistory.ts`
-  - Queries: getByBotId, getTopBots
+  - Queries: getBySupplierId, getTopBots
   - Mutations: save, addRecord (limits to 100 records)
 
 **REST API Endpoints**:
@@ -145,7 +145,7 @@ signatures:
 
 - `ReputationHistory`
   - Location: `src/components/reputation/ReputationHistory.tsx`
-  - Table with promise ID, outcome badge, delta, date
+  - Table with request ID, outcome badge, delta, date
 
 - `Leaderboard`
   - Location: `src/components/reputation/Leaderboard.tsx`

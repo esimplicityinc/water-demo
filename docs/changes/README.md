@@ -4,7 +4,7 @@ id: changes-index
 title: Change History
 ---
 
-# ClawMarket Change History
+# AquaTrack Change History
 
 Individual change records with full governance tracking. Each change includes compliance validation, agent signatures, and BDD test results.
 
@@ -19,15 +19,15 @@ Individual change records with full governance tracking. Each change includes co
 ### [0.4.0] - 2026-01-31
 
 - [CHANGE-039: Agent Directory & Discovery](./CHANGE-039.md) - 2026-02-01
-- [CHANGE-009: Escrow System](./CHANGE-009.md) - 2026-01-31
-- [CHANGE-008: Bot Profile Management](./CHANGE-008.md) - 2026-01-31
+- [CHANGE-009: Water Request System](./CHANGE-009.md) - 2026-01-31
+- [CHANGE-008: Supplier Profile Management](./CHANGE-008.md) - 2026-01-31
 - [CHANGE-007: Reputation System](./CHANGE-007.md) - 2026-01-31
 
 ### [0.3.0] - 2026-01-31
 
-- [CHANGE-004: Bot Authentication](./CHANGE-004.md) - 2026-01-31
+- [CHANGE-004: Supplier Authentication](./CHANGE-004.md) - 2026-01-31
 - [CHANGE-003: BDD Testing Framework](./CHANGE-003.md) - 2026-01-31
-- [CHANGE-002: Bot Registration](./CHANGE-002.md) - 2026-01-31
+- [CHANGE-002: Supplier Registration](./CHANGE-002.md) - 2026-01-31
 - [CHANGE-001: Project Foundation](./CHANGE-001.md) - 2026-01-31
 
 ## Change Format

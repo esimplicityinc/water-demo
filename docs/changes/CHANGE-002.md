@@ -1,7 +1,7 @@
 ---
 id: CHANGE-002
 road_id: ROAD-004
-title: "Bot Registration Feature"
+title: "Supplier Registration Feature"
 date: "2026-01-31"
 version: "0.2.0"
 status: published
@@ -62,44 +62,44 @@ signatures:
     timestamp: "2026-01-31T14:10:00Z"
 ---
 
-### [CHANGE-002] Bot Registration Feature - 2026-01-31
+### [CHANGE-002] Supplier Registration Feature - 2026-01-31
 
 **Roadmap**: [ROAD-004](../roads/ROAD-004.md)
 **Type**: Added
 **Author**: AI Agent
 
 #### Added
-- `BotAccount` aggregate with business logic
-  - Location: `src/bot-identity/domain/BotAccount.ts`
-  - Validation: display name, email format
-  - Methods: verify(), updateReputation(), lockStake(), releaseStake()
+- `SupplierAccount` aggregate with business logic
+  - Location: `src/supplier-identity/domain/SupplierAccount.ts`
+  - Validation: display name, delivery region
+  - Methods: verify(), updateReputation(), lockDeposit(), releaseDeposit()
 
 - `ApiKey` value object with secure hashing
-  - Location: `src/bot-identity/domain/ApiKey.ts`
+  - Location: `src/supplier-identity/domain/ApiKey.ts`
   - SHA-256 hashing
   - One-time plaintext retrieval
   - Verification method
 
-- `BotId` value object
-  - Location: `src/bot-identity/domain/BotId.ts`
+- `SupplierId` value object
+  - Location: `src/supplier-identity/domain/SupplierId.ts`
   - UUID-based identification
 
-- Convex mutations for bot registration
-  - Location: `convex/botIdentity/mutations.ts`
-  - `registerBot`: Create bot, wallet, and events
+- Convex mutations for supplier registration
+  - Location: `convex/supplierIdentity/mutations.ts`
+  - `registerSupplier`: Create supplier account, wallet, and events
   - API key generation and hashing
   - Display name uniqueness check
 
-- Convex queries for bot data
-  - Location: `convex/botIdentity/queries.ts`
-  - `getBotById`: Fetch bot by ID
-  - `getBotByDisplayName`: Search by name
+- Convex queries for supplier data
+  - Location: `convex/supplierIdentity/queries.ts`
+  - `getSupplierById`: Fetch supplier by ID
+  - `getSupplierByDisplayName`: Search by name
   - `isDisplayNameAvailable`: Check availability
-  - `getTopBots`: Reputation leaderboard
-  - `getBotWallet`: Get wallet info
+  - `getTopSuppliers`: Reputation leaderboard
+  - `getSupplierWallet`: Get wallet info
 
-- Bot registration UI
-  - Location: `components/bot-identity/BotRegistrationForm.tsx`
+- Supplier registration UI
+  - Location: `components/supplier-identity/SupplierRegistrationForm.tsx`
   - Form validation
   - Success screen with API key display
   - Security warnings
@@ -114,12 +114,12 @@ signatures:
   - React context for Convex client
 
 #### Changed
-- Updated homepage with "Register Bot" button
+- Updated homepage with "Register Supplier" button
 - Updated layout.tsx to include Convex provider
 
 #### Technical Details
 - Domain-driven design implemented
-- Event sourcing: `BotRegistered` event published
+- Event sourcing: `SupplierRegistered` event published
 - Automatic wallet creation (zero balance)
 - Initial reputation score: 100
 

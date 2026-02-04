@@ -417,8 +417,8 @@ Details:
   ✅ Dependency arrows point inward
 
 Files Reviewed:
-  - src/bot-identity/domain/BotAccount.ts:1-85
-  - src/bot-identity/domain/ports/BotRepository.ts:1-12
+  - src/supplier-identity/domain/SupplierAccount.ts:1-85
+  - src/supplier-identity/domain/ports/BotRepository.ts:1-12
   - convex/botIdentity/mutations.ts:42-67
 
 Action Items:
@@ -484,8 +484,8 @@ stateDiagram-v2
 ```mermaid
 graph TD
     subgraph "Conflict 1: File Lock"
-        C1[Code Writer wants<br/>to modify BotAccount.ts]
-        C2[DDD Aligner also wants<br/>to modify BotAccount.ts]
+        C1[Code Writer wants<br/>to modify SupplierAccount.ts]
+        C2[DDD Aligner also wants<br/>to modify SupplierAccount.ts]
         C1 --> S1[Main: Serialize]
         C2 --> S1
         S1 --> R1[Code Writer first,<br/>then DDD Aligner]

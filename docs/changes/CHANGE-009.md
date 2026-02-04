@@ -1,7 +1,7 @@
 ---
 id: CHANGE-009
 road_id: ROAD-009
-title: "Escrow System"
+title: "Water Request Escrow System"
 date: "2026-01-31"
 version: "0.4.0"
 status: published
@@ -62,7 +62,7 @@ signatures:
     timestamp: "2026-01-31T14:10:00Z"
 ---
 
-### [CHANGE-009] Escrow System - 2026-01-31
+### [CHANGE-009] Water Request Escrow System - 2026-01-31
 
 **Roadmap**: [ROAD-009](../roads/ROAD-009.md)
 **Type**: Added
@@ -124,7 +124,7 @@ signatures:
 
 - Convex Queries (5 total):
   - `getEscrow`: Get by ID
-  - `getEscrowByPromise`: Get by promise ID
+  - `getEscrowByPromise`: Get by request ID
   - `getEscrowsByConsumer`: List by consumer
   - `getEscrowsByProvider`: List by provider
   - `getEscrowsByState`: Filter by state

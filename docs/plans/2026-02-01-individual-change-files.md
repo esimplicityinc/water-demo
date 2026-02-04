@@ -17,7 +17,7 @@ Before starting, verify these files exist and understand their current state:
 - `docs/plugins/bdd-data-plugin.js` - Currently parses CHANGELOG.md for test results
 - `scripts/update-bdd-results.js` - Currently updates docs/CHANGELOG.md
 - `scripts/governance-linter.js` - Currently lints ROAD items and CHANGELOG
-- `.opencode/agents/clawmarket-orchestrator.md` - References docs/CHANGELOG.md
+- `.opencode/agents/primademo-orchestrator.md` - References docs/CHANGELOG.md
 - `.shared/agents/superpowers-orchestrator.md` - References docs/CHANGELOG.md
 
 ---
@@ -47,7 +47,7 @@ id: changes-index
 title: Change History
 ---
 
-# ClawMarket Change History
+# PrimaDemo Change History
 
 Individual change records with full governance tracking.
 
@@ -407,7 +407,7 @@ test_results:
 
 ### Called by
 - @governance-orchestrator: When ROAD item completes
-- @clawmarket-orchestrator: When feature is done
+- @primademo-orchestrator: When feature is done
 - @bdd-runner: To update test results
 
 ### Calls
@@ -618,7 +618,7 @@ main();
 
 Run:
 ```bash
-cd /Users/aaronwest/Projects2/clawmarket
+cd /Users/aaronwest/Projects2/primademo
 node scripts/migrate-changes.js
 ```
 
@@ -643,12 +643,12 @@ Read current `docs/CHANGELOG.md` and convert it to an index format that links to
 Edit `docs/CHANGELOG.md`:
 ```markdown
 ---
-title: ClawMarket Changelog
+title: PrimaDemo Changelog
 version: 1.0.0
 last_updated: 2026-02-01
 ---
 
-# ClawMarket Changelog
+# PrimaDemo Changelog
 
 All notable changes to this project are documented in individual change files.
 
@@ -830,14 +830,14 @@ git commit -m "feat: update bdd-data-plugin to read from docs/changes/"
 ## Task 6: Update Agent References
 
 **Files:**
-- Modify: `.opencode/agents/clawmarket-orchestrator.md`
+- Modify: `.opencode/agents/primademo-orchestrator.md`
 - Modify: `.shared/agents/superpowers-orchestrator.md`
 - Modify: `.shared/agents/main-orchestrator.md`
 - Modify: `.shared/agents/roadmap-addition.md`
 
-**Step 1: Update clawmarket-orchestrator**
+**Step 1: Update primademo-orchestrator**
 
-Read `.opencode/agents/clawmarket-orchestrator.md` and find all CHANGELOG references.
+Read `.opencode/agents/primademo-orchestrator.md` and find all CHANGELOG references.
 
 **Add to dependencies section:**
 ```yaml
@@ -922,7 +922,7 @@ dependencies:
   - change-manager  # ADD THIS
 ```
 
-**Update permissions (similar to clawmarket-orchestrator).**
+**Update permissions (similar to primademo-orchestrator).**
 
 **Find Phase 7: Completion section and update:**
 
@@ -1055,7 +1055,7 @@ When this ROAD item is completed:
 **Step 5: Commit**
 
 ```bash
-git add .opencode/agents/clawmarket-orchestrator.md
+git add .opencode/agents/primademo-orchestrator.md
 git add .shared/agents/superpowers-orchestrator.md
 git add .shared/agents/main-orchestrator.md
 git add .shared/agents/roadmap-addition.md

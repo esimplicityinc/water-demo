@@ -40,12 +40,12 @@ All P99 response times must be within 2x of the P95 targets.
 Feature: API Performance
   
   Scenario: Read operations meet performance targets
-    When I make 100 concurrent GET requests to "/api/bots"
+    When I make 100 concurrent GET requests to "/api/suppliers"
     Then 95% of responses should complete within 100ms
     And 99% of responses should complete within 200ms
     
   Scenario: Write operations meet performance targets
-    When I make 50 concurrent POST requests to "/api/bots"
+    When I make 50 concurrent POST requests to "/api/water-requests"
     Then 95% of responses should complete within 200ms
     And 99% of responses should complete within 500ms
 ```

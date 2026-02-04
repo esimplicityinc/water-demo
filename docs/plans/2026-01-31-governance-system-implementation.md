@@ -12,7 +12,7 @@
 
 ## Overview
 
-This plan transforms ClawMarket's documentation into a **governance-driven system** where:
+This plan transforms PrimaDemo's documentation into a **governance-driven system** where:
 
 1. **ADRs** are individual files with front matter defining architectural rules
 2. **NFRs** are split by type (performance, security, accessibility) defining standards
@@ -63,13 +63,13 @@ mkdir -p docs/adr
 ```markdown
 ---
 title: Architecture Decision Records (ADRs)
-description: All architectural decisions for ClawMarket
+description: All architectural decisions for PrimaDemo
 last_updated: 2026-01-31
 ---
 
 # Architecture Decision Records
 
-This directory contains all architectural decisions for ClawMarket.
+This directory contains all architectural decisions for PrimaDemo.
 
 ## Format
 
@@ -154,7 +154,7 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-ClawMarket is a complex marketplace with multiple interacting domains (identity, trading, tokens, settlement). We need an architecture that:
+PrimaDemo is a complex marketplace with multiple interacting domains (identity, trading, tokens, settlement). We need an architecture that:
 - Reflects business complexity
 - Enables team scalability
 - Maintains clean separation of concerns
@@ -344,12 +344,12 @@ Replace the entire file with an index pointing to individual ADRs:
 ```markdown
 ---
 title: Architecture Decisions
-description: Index of all architectural decisions for ClawMarket
+description: Index of all architectural decisions for PrimaDemo
 ---
 
 # Architecture Decisions
 
-This document indexes all architectural decisions (ADRs) for ClawMarket.
+This document indexes all architectural decisions (ADRs) for PrimaDemo.
 
 **Full ADRs are now in:** `docs/adr/`
 
@@ -413,7 +413,7 @@ last_updated: 2026-01-31
 
 # Non-Functional Requirements (NFRs)
 
-This directory contains all non-functional requirements that govern ClawMarket.
+This directory contains all non-functional requirements that govern PrimaDemo.
 
 ## Types
 
@@ -744,7 +744,7 @@ description: How ADRs, NFRs, BDD, and CHANGE work together
 
 # Governance System
 
-ClawMarket uses a **deterministic approval system** where:
+PrimaDemo uses a **deterministic approval system** where:
 
 1. **ADRs** define architectural rules (in `docs/adr/`)
 2. **NFRs** define quality standards (in `docs/nfr/`)
@@ -938,7 +938,7 @@ governance:
     status: validating
     results:
       NFR-PERF-001: pass
-        evidence: "https://ci.clawmarket.dev/perf/12345"
+        evidence: "https://ci.primademo.dev/perf/12345"
         timestamp: "2026-01-31T14:00:00Z"
       NFR-SEC-001: pass
         evidence: "npm audit: 0 vulnerabilities"
@@ -1528,7 +1528,7 @@ governance:
     results:
       NFR-PERF-001:
         status: pass
-        evidence: "https://ci.clawmarket.dev/perf/12345"
+        evidence: "https://ci.primademo.dev/perf/12345"
         metrics:
           api_p95: "150ms"
           bundle_size: "420KB"
@@ -1777,7 +1777,7 @@ governance:
     results:
       NFR-PERF-001:
         status: pass
-        evidence: "https://ci.clawmarket.dev/perf/12345"
+        evidence: "https://ci.primademo.dev/perf/12345"
         metrics:
           api_p95: "45ms"
           bundle_size: "N/A (backend only)"
@@ -1985,7 +1985,7 @@ compliance:
   nfr_checks:
     performance:
       status: pass
-      evidence: "https://ci.clawmarket.dev/perf/12345"
+      evidence: "https://ci.primademo.dev/perf/12345"
       metrics:
         api_p95: "45ms"
       validated_by: "@performance-agent"
@@ -2117,7 +2117,7 @@ See front matter for full signature details.
 
 ## Evidence
 
-- **Performance**: [CI Run](https://ci.clawmarket.dev/perf/12345)
+- **Performance**: [CI Run](https://ci.primademo.dev/perf/12345)
 - **Security**: `npm audit` output in CI
 - **BDD Tests**: All green in CI
 ```
@@ -2342,7 +2342,7 @@ Add a new section to the README:
 ```markdown
 ## Governance System
 
-ClawMarket uses a deterministic approval system where all changes must satisfy:
+PrimaDemo uses a deterministic approval system where all changes must satisfy:
 
 1. **ADRs** (Architecture Decision Records) - Define architectural rules
 2. **NFRs** (Non-Functional Requirements) - Define quality standards

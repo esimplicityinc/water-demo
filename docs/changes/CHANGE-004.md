@@ -1,7 +1,7 @@
 ---
 id: CHANGE-004
 road_id: ROAD-005
-title: "Bot Authentication"
+title: "Supplier Authentication"
 date: "2026-01-31"
 version: "0.3.0"
 status: published
@@ -62,7 +62,7 @@ signatures:
     timestamp: "2026-01-31T14:10:00Z"
 ---
 
-### [CHANGE-004] Bot Authentication - 2026-01-31
+### [CHANGE-004] Supplier Authentication - 2026-01-31
 
 **Roadmap**: [ROAD-005](../roads/ROAD-005.md)
 **Type**: Added
@@ -71,45 +71,45 @@ signatures:
 #### Added
 
 **API Key Verification Middleware**:
-- Location: `src/bot-identity/infrastructure/middleware/withAuth.ts`
+- Location: `src/supplier-identity/infrastructure/middleware/withAuth.ts`
 - HOF: `withAuth()` for protecting API routes
 - Middleware: `authMiddleware()` for Next.js middleware.ts
 - Bearer token extraction from Authorization header
 - Rate limiting: 100 failed attempts per 15-minute window
-- Bot context attachment to authenticated requests
+- Supplier context attachment to authenticated requests
 
 **Protected API Endpoints**:
-- `GET /api/bots/me` - Get authenticated bot profile
-  - Returns: botId, displayName, email, verificationStatus, reputationScore
+- `GET /api/suppliers/me` - Get authenticated supplier profile
+  - Returns: supplierId, displayName, region, verificationStatus, reputationScore
   - Excludes sensitive apiKeyHash
-- `POST /api/bots/me/regenerate-api-key` - Rotate API key
+- `POST /api/suppliers/me/regenerate-api-key` - Rotate API key
   - Invalidates old key immediately
   - Returns new plaintext key (shown once)
   - Publishes `ApiKeyRegenerated` domain event
 
 **Convex Infrastructure**:
-- Query: `getBotByApiKey` - Look up bot by API key hash
-  - Location: `convex/botIdentity/queries.ts`
+- Query: `getSupplierByApiKey` - Look up supplier by API key hash
+  - Location: `convex/supplierIdentity/queries.ts`
   - Index: `by_apiKeyHash` for efficient lookup
   - Security: Never returns apiKeyHash
 
 - Action: `verifyApiKey` - Verify API key validity
-  - Location: `convex/botIdentity/actions.ts`
+  - Location: `convex/supplierIdentity/actions.ts`
   - SHA-256 hashing with constant-time comparison
-  - Returns botId if valid, null if invalid
+  - Returns supplierId if valid, null if invalid
 
 - Mutations: `recordAuthAttempt`, `regenerateApiKey`
-  - Location: `convex/botIdentity/mutations.ts`
+  - Location: `convex/supplierIdentity/mutations.ts`
   - Tracks authentication attempts for rate limiting
   - Publishes `ApiKeyRegenerated` domain event
 
 **Application Layer**:
-- `AuthenticatedBotContext` type
-  - Location: `src/bot-identity/application/types/AuthenticatedBotContext.ts`
-  - Fields: botId, displayName, verificationStatus, reputationScore, rateLimitRemaining, authenticatedAt
+- `AuthenticatedSupplierContext` type
+  - Location: `src/supplier-identity/application/types/AuthenticatedSupplierContext.ts`
+  - Fields: supplierId, displayName, verificationStatus, reputationScore, rateLimitRemaining, authenticatedAt
 
 - `AuthenticationService` with ports
-  - Location: `src/bot-identity/application/services/AuthenticationService.ts`
+  - Location: `src/supplier-identity/application/services/AuthenticationService.ts`
   - Methods: authenticate(), isRateLimited(), recordFailedAttempt()
   - Ports: `ApiKeyValidator`, `RateLimitStore` interfaces
   - Hexagonal architecture: Depends on abstractions
@@ -121,8 +121,8 @@ signatures:
 
 #### Changed
 
-- Updated `bots` table with `by_apiKeyHash` index
-- BotAccount aggregate: Added `regenerateApiKey()` method
+- Updated `suppliers` table with `by_apiKeyHash` index
+- SupplierAccount aggregate: Added `regenerateApiKey()` method
 - Schema location: `convex/schema.ts`
 
 #### Technical Details
@@ -134,22 +134,22 @@ signatures:
 - Constant-time key comparison to prevent timing attacks
 
 **Architecture**:
-- Domain layer: Pure business logic (BotAccount, ApiKey)
+- Domain layer: Pure business logic (SupplierAccount, ApiKey)
 - Application layer: Orchestration with ports (AuthenticationService)
 - Infrastructure layer: Convex implementations, Next.js middleware
 - Dependency direction: Domain ← Application ← Infrastructure
 
 **BDD Scenarios**:
-- 6 scenarios in `stack-tests/features/api/bot-identity/02_bot_authentication.feature`
-- Tagged with `@ROAD-005`, `@api`, `@bot-identity`
+- 6 scenarios in `stack-tests/features/api/supplier-identity/02_supplier_authentication.feature`
+- Tagged with `@ROAD-005`, `@api`, `@supplier-identity`
 - Covers: valid auth, missing key, invalid format, non-existent key, rate limiting, key rotation
 
 #### What Works
 
-1. Register a bot (ROAD-004) to get API key
-2. Call `GET /api/bots/me` with `Authorization: Bearer sk_...`
-3. Receive bot profile (200) or error (401/429)
-4. Call `POST /api/bots/me/regenerate-api-key` to rotate key
+1. Register a supplier (ROAD-004) to get API key
+2. Call `GET /api/suppliers/me` with `Authorization: Bearer sk_...`
+3. Receive supplier profile (200) or error (401/429)
+4. Call `POST /api/suppliers/me/regenerate-api-key` to rotate key
 5. Old key immediately invalid, new key returned
 
 ---
@@ -180,13 +180,13 @@ signatures:
 
 - Roadmap tagging system:
   - All scenarios tagged with `@ROAD-XXX`
-  - Bot registration tagged with `@ROAD-004`
+  - Supplier registration tagged with `@ROAD-004`
   - Enables running tests by roadmap item
 
 - Step definitions framework:
   - Location: `stack-tests/features/steps/`
   - Custom fixtures with testContext, api, ui helpers
-  - Domain-specific steps in `clawmarket-steps.ts`
+  - Domain-specific steps in `primademo-steps.ts`
 
 - BDD-specific Just recipes (13 new commands):
   - `just bdd-install` - Install BDD dependencies
@@ -336,7 +336,7 @@ signatures:
 
 **Step Definitions**:
 - 216+ missing steps identified (expected in Red phase)
-- Custom steps for ClawMarket domain
+- Custom steps for PrimaDemo domain
 - Reusable Given/When/Then patterns
 
 #### BDD Test Results

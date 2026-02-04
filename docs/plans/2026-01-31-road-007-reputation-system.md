@@ -92,7 +92,7 @@ describe('PerformanceRecord', () => {
 **Step 2: Run test to verify failure**
 
 ```bash
-cd /Users/aaronwest/Projects2/clawmarket
+cd /Users/aaronwest/Projects2/primademo
 bun test src/bot-identity/domain/__tests__/PerformanceRecord.test.ts
 ```
 

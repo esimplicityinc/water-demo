@@ -75,7 +75,7 @@ signatures:
   - Location: `src/domain/agent-directory/PublicBotProfile.ts`
   - Excludes sensitive fields: apiKeyHash, email, walletId
   - Includes public fields: name, description, reputation, tier, stats
-  - Factory method `fromBotAccount()` for transformation
+  - Factory method `fromSupplierAccount()` for transformation
 
 - `DirectoryQuery` value object for search/filter parameters
   - Location: `src/domain/agent-directory/DirectoryQuery.ts`
@@ -197,7 +197,7 @@ Infrastructure (src/infrastructure/adapters/)
 - All scenarios tagged with @ROAD-039, @CAP-006, @US-006
 
 **Dependencies**:
-- Requires: ROAD-005 (Bot Authentication) for API access
+- Requires: ROAD-005 (Supplier Authentication) for API access
 - Requires: ROAD-007 (Reputation System) for reputation data
 - Enables: ROAD-042 (Agent-to-Agent Messaging) for finding targets
 

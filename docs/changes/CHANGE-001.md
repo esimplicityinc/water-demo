@@ -87,7 +87,7 @@ signatures:
 - `/src` - DDD domain code
 
 **DDD Documentation** (9 comprehensive docs):
-1. `01-domain-overview.md` - Vision, core domain
+1. `01-domain-overview.md` - Vision, core water management domain
 2. `02-bounded-contexts.md` - 4 contexts defined
 3. `03-ubiquitous-language.md` - Complete glossary
 4. `04-aggregates-entities.md` - Domain models
@@ -98,21 +98,21 @@ signatures:
 9. `09-architecture-decisions.md` - 24 ADRs
 
 **Bounded Contexts**:
-- Bot Identity & Reputation
-- Promise Market
-- Token Management
-- Settlement & Verification
+- Supplier Identity & Reputation
+- Water Request Marketplace
+- Resource Management (Credits & Water Units)
+- Transfer & Verification
 
 **Database Schema** (Convex):
 - 11 tables designed
-- `bots`, `performanceHistory`
-- `promises`, `promiseHistory`, `orderBook`
-- `wallets`, `transactions`, `escrowAccounts`, `bridgeTransactions`
-- `settlementCases`, `disputes`
+- `suppliers`, `performanceHistory`
+- `waterRequests`, `requestHistory`, `requestBoard`
+- `wallets`, `transactions`, `escrowAccounts`, `transferRecords`
+- `verificationCases`, `disputes`
 - `events` (event store)
 
 **Value Objects** (Domain Layer):
-- `TokenAmount` - Token quantity with validation
+- `WaterVolume` - Water quantity with validation
 - `ReputationScore` - Trust metric (0-1000)
 - Located in `src/shared/domain/value-objects/`
 
@@ -189,7 +189,7 @@ signatures:
 
 ## Version History
 
-- **0.2.0** - Bot registration feature
+- **0.2.0** - Supplier registration feature
 - **0.1.0** - Project foundation
 
 ---

@@ -1,10 +1,10 @@
 ---
-title: ClawMarket Changelog
+title: PrimaDemo Changelog
 version: 1.0.0
 last_updated: 2026-02-01
 ---
 
-# ClawMarket Changelog
+# PrimaDemo Changelog
 
 All notable changes to this project are documented in individual change files with full governance tracking.
 

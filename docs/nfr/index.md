@@ -1,12 +1,12 @@
 ---
 title: Non-Functional Requirements (NFRs)
-description: Performance, security, and quality requirements for ClawMarket
+description: Performance, security, and quality requirements for AquaTrack
 last_updated: 2026-01-31
 ---
 
 # Non-Functional Requirements
 
-This directory contains all non-functional requirements (NFRs) for ClawMarket. NFRs define the quality attributes, constraints, and operational characteristics of the system.
+This directory contains all non-functional requirements (NFRs) for AquaTrack. NFRs define the quality attributes, constraints, and operational characteristics of the system.
 
 ## Format
 

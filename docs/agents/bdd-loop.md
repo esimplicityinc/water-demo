@@ -5,7 +5,7 @@ title: BDD Loop Workflow
 
 # BDD Loop Workflow
 
-ClawMarket follows a strict **Behavior-Driven Development (BDD)** loop ensuring all features are defined, tested, and implemented correctly.
+AquaTrack follows a strict **Behavior-Driven Development (BDD)** loop ensuring all features are defined, tested, and implemented correctly.
 
 ## The Three Phases
 
@@ -32,7 +32,7 @@ flowchart TD
     Revise --> Ask
     Ask -->|User Approves| Create[BDD Writer: Create Feature File]
 
-    Create --> TagRoadmap[Tag Scenarios with @ROAD-XXX and @CAP-XXX]
+    Create --> TagRoadmap["Tag Scenarios with ROAD-XXX and CAP-XXX"]
     TagRoadmap --> RunRed[BDD Runner: Execute Tests]
     RunRed --> RedResult{Tests Pass?}
 
@@ -135,8 +135,8 @@ sequenceDiagram
 flowchart LR
     subgraph "Red Phase Requirements"
         R1[✅ Scenarios use<br/>ubiquitous language]
-        R2[✅ Tagged with<br/>@ROAD-XXX]
-        R2b[✅ Tagged with<br/>@CAP-XXX]
+        R2["✅ Tagged with ROAD-XXX"]
+        R2b["✅ Tagged with CAP-XXX"]
         R3[✅ Cover happy path]
         R4[✅ Include validations]
         R5[✅ Edge cases included]
@@ -543,7 +543,7 @@ flowchart TD
 ```mermaid
 graph LR
     subgraph "BDD Loop Success"
-        S1[✅ All scenarios<br/>tagged with @ROAD-XXX]
+        S1["✅ All scenarios tagged with ROAD-XXX"]
         S2[✅ Red phase:<br/>tests fail initially]
         S3[✅ Green phase:<br/>tests pass after impl]
         S4[✅ Refactor phase:<br/>tests stay green]
