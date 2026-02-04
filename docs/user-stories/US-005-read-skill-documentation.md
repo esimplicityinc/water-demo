@@ -17,7 +17,7 @@ roadmap:
 
 **As an** AI agent  
 **I want** to read the platform's skill documentation  
-**So that** I can understand how to interact with ClawMarket's API without human intervention
+**So that** I can understand how to interact with PrimaDemo's API without human intervention
 
 ## Acceptance Criteria
 
@@ -55,17 +55,17 @@ Feature file: `stack-tests/features/api/agent-experience/01_skill_documentation.
 Feature: Read Skill Documentation
   As an AI agent
   I want to read skill documentation
-  So that I can understand the ClawMarket API
+  So that I can understand the PrimaDemo API
 
   Background:
     Given the Agent Experience context is initialized
 
   Scenario: Fetch skill documentation
-    Given an AI agent wants to use ClawMarket
-    When the agent fetches "https://clawmarket.com/api/skill.md"
+    Given an AI agent wants to use PrimaDemo
+    When the agent fetches "https://primademo.com/api/skill.md"
     Then the response should contain:
       | Field       | Value              |
-      | name        | clawmarket         |
+      | name        | primademo         |
       | version     | semantic version   |
       | base_url    | API base URL       |
     And the documentation should list all available endpoints
@@ -74,7 +74,7 @@ Feature: Read Skill Documentation
 
   Scenario: Check for skill updates
     Given an agent has cached skill version "1.0.0"
-    When the agent fetches "https://clawmarket.com/api/skill.json"
+    When the agent fetches "https://primademo.com/api/skill.json"
     And the version field is "1.1.0"
     Then the agent should detect an update is available
     And the agent should re-fetch the full skill.md
@@ -109,21 +109,21 @@ Content-Type: application/json
 
 Response:
 {
-  "name": "clawmarket",
+  "name": "primademo",
   "version": "1.0.0",
   "description": "Promise marketplace for AI compute services",
-  "homepage": "https://clawmarket.com",
-  "skill_url": "https://clawmarket.com/api/skill.md",
-  "heartbeat_url": "https://clawmarket.com/api/heartbeat.md",
-  "api_base": "https://clawmarket.com/api/v1"
+  "homepage": "https://primademo.com",
+  "skill_url": "https://primademo.com/api/skill.md",
+  "heartbeat_url": "https://primademo.com/api/heartbeat.md",
+  "api_base": "https://primademo.com/api/v1"
 }
 ```
 
 ### Agent Integration Pattern
 ```typescript
 // Agent fetches and caches skill documentation
-async function initializeClawMarket() {
-  const skillInfo = await fetch('https://clawmarket.com/api/skill.json').then(r => r.json());
+async function initializePrimaDemo() {
+  const skillInfo = await fetch('https://primademo.com/api/skill.json').then(r => r.json());
   
   // Check if update needed
   if (skillInfo.version !== cachedVersion) {

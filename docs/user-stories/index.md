@@ -25,16 +25,16 @@ A user story captures a specific user need:
 ```mermaid
 graph TB
     subgraph "User Stories"
-        US1[US-001: Bot Registration]
-        US2[US-002: Promise Creation]
-        US3[US-003: Promise Acceptance]
-        US4[US-004: Dispute Resolution]
+        US1[US-001: Customer Enrollment]
+        US2[US-002: Service Activation]
+        US3[US-004: Meter Reading]
+        US4[US-005: Usage History]
     end
     
     subgraph "Capabilities"
         C1[CAP-001: Authentication]
         C2[CAP-002: Audit Logging]
-        C3[CAP-005: Escrow]
+        C3[CAP-005: Analytics]
     end
     
     US1 --> C1
@@ -43,44 +43,39 @@ graph TB
     US2 --> C2
     US3 --> C1
     US3 --> C2
-    US3 --> C3
-    US4 --> C1
-    US4 --> C2
     US4 --> C3
 ```
 
 ## Story Catalog by Actor
 
-### Bot Developer
-Stories for developers registering and managing bots:
+### Utility Administrator
+Stories for administrators enrolling customers and managing accounts:
 
-- [US-001: Register New Bot](./US-001-bot-registration) - Create bot account
-- [US-005: View Bot Profile](./US-005-view-profile) - See bot details and reputation
-- [US-006: Update Bot Profile](./US-006-update-profile) - Edit bot information
-- [US-007: Rotate API Key](./US-007-rotate-api-key) - Security key rotation
+- [US-001: Enroll New Customer](./US-001-customer-enrollment) - Create customer account
+- [US-002: Activate Water Service](./US-002-service-activation) - Start water delivery
+- [US-006: Service Area Lookup](./US-006-service-area-lookup) - Find service areas
 
-### Provider Bot
-Stories for bots offering compute capacity:
+### Treatment Operator
+Stories for operators managing water distribution and service:
 
-- [US-002: Create Promise](./US-002-promise-creation) - Offer compute capacity
-- [US-008: List Promise](./US-008-list-promise) - Make promise visible
-- [US-009: Execute Promise](./US-009-execute-promise) - Deliver compute service
-- [US-010: Cancel Promise](./US-010-cancel-promise) - Withdraw unaccepted promise
+- [US-002: Activate Water Service](./US-002-service-activation) - Initiate customer service
+- [US-005: View Usage History](./US-005-view-usage-history) - Analyze consumption patterns
+- [US-006: Service Area Lookup](./US-006-service-area-lookup) - Locate service zones
+- [US-007: Submit Service Request](./US-007-submit-service-request) - Handle requests
+- [US-009: Customer Communication](./US-009-customer-communication) - Coordinate service
 
-### Consumer Bot
-Stories for bots purchasing compute capacity:
+### Residential Customer
+Stories for customers monitoring water usage and requesting service:
 
-- [US-003: Browse Promises](./US-003-browse-promises) - Search and filter listings
-- [US-004: Accept Promise](./US-004-promise-acceptance) - Purchase compute capacity
-- [US-011: Track Execution](./US-011-track-execution) - Monitor promise progress
-- [US-012: Raise Dispute](./US-012-raise-dispute) - Challenge failed delivery
+- [US-004: Record Meter Reading](./US-004-meter-reading) - View consumption
+- [US-007: Submit Service Request](./US-007-submit-service-request) - Report issues
+- [US-008: Technician Dispatch](./US-008-technician-dispatch) - Track service visits
 
-### Platform Admin
-Stories for administrative functions:
+### Field Operations Manager
+Stories for managing field personnel and service delivery:
 
-- [US-013: Review Audit Logs](./US-013-review-audit-logs) - System oversight
-- [US-014: Resolve Dispute](./US-014-resolve-dispute) - Arbitration
-- [US-015: View Analytics](./US-015-view-analytics) - Platform metrics
+- [US-008: Technician Dispatch](./US-008-technician-dispatch) - Assign technicians
+- [US-009: Customer Communication](./US-009-customer-communication) - Coordinate with technicians
 
 ## Dependency Matrix
 
@@ -88,11 +83,10 @@ Stories for administrative functions:
 |-------|---------|----------------------|-----------|---------|
 | US-001 | PER-001 | CAP-001, CAP-002 | UC-001 | ROAD-004 |
 | US-002 | PER-002 | CAP-001, CAP-002, CAP-005 | UC-010 | ROAD-012 |
-| US-003 | PER-003 | CAP-001 | UC-012 | ROAD-015 |
-| US-004 | PER-003 | CAP-001, CAP-002, CAP-005 | UC-013 | ROAD-016 |
+| US-004 | PER-003 | CAP-001, CAP-002, CAP-003, CAP-005 | UC-013 | ROAD-016 |
 | US-005 | PER-002 | CAP-005 | UC-020 | ROAD-038 |
 | US-006 | PER-002 | CAP-001, CAP-006 | UC-021 | ROAD-039 |
-| US-007 | PER-002 | CAP-001, CAP-006, CAP-007 | UC-022 | ROAD-042 |
+| US-007 | PER-003 | CAP-001, CAP-006, CAP-007 | UC-022 | ROAD-042 |
 | US-008 | PER-001 | CAP-007 | UC-023 | ROAD-042 |
 | US-009 | PER-002 | CAP-003, CAP-007 | UC-024 | ROAD-042 |
 | US-010 | PER-002 | CAP-001, CAP-008 | UC-025 | ROAD-043 |

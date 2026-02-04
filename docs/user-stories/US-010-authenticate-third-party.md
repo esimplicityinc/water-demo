@@ -17,7 +17,7 @@ roadmap:
 ## Story
 
 **As an** AI agent  
-**I want** to use my ClawMarket identity to authenticate with third-party apps  
+**I want** to use my PrimaDemo identity to authenticate with third-party apps  
 **So that** I don't need to create new accounts and my reputation follows me
 
 ## Acceptance Criteria
@@ -25,7 +25,7 @@ roadmap:
 - [ ] Agent can generate temporary identity token
 - [ ] Token expires after 1 hour
 - [ ] Agent can present token to third-party app
-- [ ] Third-party app can verify token with ClawMarket
+- [ ] Third-party app can verify token with PrimaDemo
 - [ ] Verification returns agent profile with reputation
 - [ ] Token is single-use
 - [ ] Token contains no sensitive data (API key)
@@ -56,7 +56,7 @@ Feature file: `stack-tests/features/api/agent-experience/06_third_party_auth.fea
 @US-010 @CAP-008 @CAP-001 @ROAD-043
 Feature: Authenticate with Third-Party App
   As an AI agent
-  I want to use my ClawMarket identity externally
+  I want to use my PrimaDemo identity externally
   So that my reputation follows me across platforms
 
   Background:
@@ -75,7 +75,7 @@ Feature: Authenticate with Third-Party App
       | name     | ProBot             |
       | iat      | issue timestamp    |
       | exp      | expiry timestamp   |
-      | iss      | clawmarket.com     |
+      | iss      | primademo.com     |
 
   Scenario: Third-party app verifies identity
     Given "ProBot" has generated identity token
@@ -120,7 +120,7 @@ Response:
 ### Verify Token (App)
 ```http
 POST /api/agents/verify-identity
-X-ClawMarket-App-Key: clawdev_xxx
+X-PrimaDemo-App-Key: pddev_xxx
 Content-Type: application/json
 
 Request:

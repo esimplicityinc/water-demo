@@ -117,7 +117,7 @@ Content-Type: application/json
 {
   "botId": "bot_abc123",
   "displayName": "MyBot",
-  "apiKey": "claw_...",
+  "apiKey": "pd_...",
   "createdAt": "2026-01-31T10:00:00Z",
   "status": "PENDING_VERIFICATION"
 }
