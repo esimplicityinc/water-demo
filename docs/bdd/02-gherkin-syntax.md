@@ -19,8 +19,8 @@ flowchart TD
     C --> C1[Given<br/>When<br/>Then]
     D --> D1[Given<br/>When<br/>Then<br/>Examples]
     
-    C1 --> T1[Tags<br/>@smoke @api]
-    D1 --> T2[Tags<br/>@ROAD-001]
+    C1 --> T1["Tags: smoke, api"]
+    D1 --> T2["Tags: ROAD-001"]
 
     style A fill:#e1f5ff
     style C fill:#ccffcc
@@ -54,13 +54,13 @@ flowchart TD
 Every `.feature` file begins with the `Feature` keyword:
 
 ```gherkin
-Feature: Bot Registration
-  As a bot developer
-  I want to register my bot in the marketplace
-  So that I can offer compute promises to other bots
+Feature: Meter Registration
+  As a water customer
+  I want to register my water meter
+  So that I can track consumption and billing
 
-  The registration process creates a unique bot identity
-  that can be used for authentication and reputation tracking.
+  The registration process creates a unique meter identity
+  that can be used for reading collection and usage tracking.
 ```
 
 ### Structure
@@ -81,17 +81,17 @@ flowchart LR
 Use `Background` for steps that are shared across all scenarios:
 
 ```gherkin
-Feature: Promise Creation
+Feature: Meter Reading Collection
 
   Background:
-    Given a registered bot "SellerBot" exists
-    And "SellerBot" has a wallet with 1000 tokens
-    And "SellerBot" has available compute capacity
+    Given a registered meter "WM-001" exists
+    And the meter is in "ACTIVE" status
+    And readings collection is enabled
 
-  Scenario: Create a valid promise
-    When "SellerBot" creates a promise with capacity 100
-    Then the promise should be created
-    And the promise status should be "LISTED"
+  Scenario: Submit a meter reading
+    When a reading of 1234 units is submitted for meter "WM-001"
+    Then the reading should be recorded
+    And the reading status should be "CONFIRMED"
 ```
 
 ### Best Practices
@@ -105,30 +105,30 @@ Feature: Promise Creation
 A `Scenario` is a single test case:
 
 ```gherkin
-  Scenario: Bot registration with valid credentials
-    Given a bot developer with a valid Ethereum wallet
-    And the developer is not already registered
+  Scenario: Meter registration with valid details
+    Given a customer with a valid service address
+    And the customer is not already registered for this address
     When they submit registration with:
-      | Field    | Value         |
-      | name     | AlphaBot      |
-      | purpose  | Trading       |
-    Then a new bot should be created with ID "bot_12345"
-    And the bot's wallet should be linked
-    And a "BotRegistered" event should be published
-    And the response should contain an API key
+      | Field         | Value         |
+      | meter_number  | WM-001        |
+      | location      | 123 Main St   |
+    Then a new meter should be created with ID "meter_12345"
+    And the meter's location should be linked
+    And a "MeterRegistered" event should be published
+    And the response should contain a meter ID
 ```
 
 ### Anatomy of a Scenario
 
 ```mermaid
 flowchart TD
-    subgraph "Scenario: Valid Registration"
-        G1[Given a developer<br/>with a valid wallet] --> G2[And the developer<br/>is not registered]
+    subgraph "Scenario: Valid Meter Registration"
+        G1[Given a customer<br/>with a valid address] --> G2[And the customer<br/>is not registered]
         
-        G2 --> W1[When they submit<br/>registration with data]
+        G2 --> W1[When they submit<br/>meter details]
         
-        W1 --> T1[Then a new bot<br/>should be created]
-        T1 --> T2[And the wallet<br/>should be linked]
+        W1 --> T1[Then a new meter<br/>should be created]
+        T1 --> T2[And the address<br/>should be linked]
         T2 --> T3[And an event<br/>should be published]
     end
 
@@ -145,29 +145,29 @@ flowchart TD
 Use `Scenario Outline` for parameterized tests:
 
 ```gherkin
-  Scenario Outline: Bot registration with invalid data
-    Given a bot developer with a valid wallet
-    When they submit registration with name "<name>"
+  Scenario Outline: Meter registration with invalid data
+    Given a customer with a valid address
+    When they submit registration with meter number "<number>"
     Then the registration should fail with error "<error_message>"
-    And the bot should not be created
+    And the meter should not be created
 
     Examples:
-      | name        | error_message                    |
-      |             | Name is required                 |
-      | A           | Name must be 3-50 characters     |
-      | x@invalid!  | Name contains invalid characters |
-      | [100 chars] | Name must be 3-50 characters     |
+      | number      | error_message                         |
+      |             | Meter number is required              |
+      | 1           | Meter number must be 3-20 characters  |
+      | x@invalid!  | Meter number contains invalid chars   |
+      | [100 chars] | Meter number must be 3-20 characters  |
 ```
 
 ### How It Works
 
 ```mermaid
 graph LR
-    A[Scenario Outline<br/>Template with <placeholders>] --> B[Examples Table<br/>Each row = one test]
-    B --> C1[Test 1: name=""<br/>error="Name is required"]
-    B --> C2[Test 2: name="A"<br/>error="Name must be..."]
-    B --> C3[Test 3: name="x@invalid!"<br/>error="Name contains..."]
-    B --> C4[Test 4: name="[100 chars]"<br/>error="Name must be..."]
+    A["Scenario Outline: Template with placeholders"] --> B["Examples Table: Each row = one test"]
+    B --> C1["Test 1: empty name, error: Name is required"]
+    B --> C2["Test 2: name=A, error: Name must be..."]
+    B --> C3["Test 3: invalid chars, error: Name contains..."]
+    B --> C4["Test 4: 100 chars, error: Name must be..."]
 
     style A fill:#fff4cc
     style B fill:#e1f5ff
@@ -180,26 +180,26 @@ Use pipes `|` for structured data:
 ### Inline Tables
 
 ```gherkin
-  Scenario: Create promise with detailed specs
-    When "SellerBot" creates a promise with specifications:
-      | Field            | Value           |
-      | compute_capacity | 1000            |
-      | duration_hours   | 24              |
-      | price_per_unit   | 0.5             |
-      | gpu_type         | NVIDIA_A100     |
-      | region           | us-east-1       |
-    Then the promise should be created with these specifications
+  Scenario: Submit meter reading with detailed data
+    When a reading is submitted with specifications:
+      | Field              | Value           |
+      | meter_number       | WM-001          |
+      | reading_value      | 1500            |
+      | timestamp          | 2026-02-03      |
+      | collection_method  | AUTOMATED       |
+      | location           | Main Residence  |
+    Then the reading should be recorded with this data
 ```
 
 ### Horizontal Tables
 
 ```gherkin
-  Scenario: Validate wallet balances
-    Given these bots exist with balances:
-      | bot_name  | wallet_balance | staked_amount |
-      | BotA      | 1000           | 0             |
-      | BotB      | 500            | 200           |
-      | BotC      | 100            | 100           |
+  Scenario: Validate customer accounts
+    Given these customers exist with details:
+      | customer_name | account_status | outstanding_balance |
+      | CustomerA     | ACTIVE         | 0                   |
+      | CustomerB     | ACTIVE         | 150                 |
+      | CustomerC     | SUSPENDED      | 300                 |
 ```
 
 ## Doc Strings
@@ -211,18 +211,18 @@ For multi-line text (JSON, code, etc.):
     When an invalid request is sent:
       """
       {
-        "name": "",
-        "wallet_address": "invalid",
-        "compute_capacity": -1
+        "meter_number": "",
+        "service_address": "invalid",
+        "reading_value": -1
       }
       """
     Then the response should contain error:
       """
       {
         "errors": [
-          {"field": "name", "message": "Name is required"},
-          {"field": "wallet_address", "message": "Invalid address format"},
-          {"field": "compute_capacity", "message": "Must be positive"}
+          {"field": "meter_number", "message": "Meter number is required"},
+          {"field": "service_address", "message": "Invalid address format"},
+          {"field": "reading_value", "message": "Must be non-negative"}
         ]
       }
       """
@@ -233,15 +233,15 @@ For multi-line text (JSON, code, etc.):
 Tags organize and filter scenarios:
 
 ```gherkin
-@bot-identity @ROAD-001 @api
-Feature: Bot Registration
+@meter-management @ROAD-001 @api
+Feature: Meter Registration
 
   @smoke @critical
-  Scenario: Successfully register a new bot
+  Scenario: Successfully register a new meter
     ...
 
   @validation @negative
-  Scenario: Reject duplicate bot name
+  Scenario: Reject duplicate meter number
     ...
 
   @performance @slow
@@ -255,10 +255,10 @@ Feature: Bot Registration
 mindmap
   root((Tags))
     Domain
-      @bot-identity
-      @promise-market
-      @token-management
-      @settlement
+      @meter-management
+      @customer-management
+      @water-supply
+      @billing-settlement
     Type
       @api
       @ui
@@ -283,15 +283,15 @@ mindmap
 Use `#` for comments:
 
 ```gherkin
-Feature: Promise Market
+Feature: Water Supply Management
 
-  # TODO: Add test for edge case with zero capacity
-  Scenario: Create promise
+  # TODO: Add test for edge case with zero volume
+  Scenario: Schedule water supply
     ...
 
   # This scenario tests the core business rule
-  # See domain doc: promises-must-have-capacity
-  Scenario: Promise requires capacity
+  # See domain doc: supply-must-have-capacity
+  Scenario: Supply requires sufficient capacity
     ...
 ```
 
@@ -301,31 +301,31 @@ Feature: Promise Market
 
 ```gherkin
 # ✅ DO: Use ubiquitous language from domain
-Scenario: Bot stakes CLAW tokens in escrow
-  Given a bot with wallet balance 100 CLAW
-  When the bot stakes 50 CLAW
-  Then the staked amount should be 50 CLAW
-  And the wallet balance should be 50 CLAW
+Scenario: Customer submits meter reading
+  Given a customer with balance 100 credits
+  When they submit a reading
+  Then the reading is recorded
+  And the balance remains 100 credits
 
 # ✅ DO: Make scenarios independent
-Scenario: Create promise after registration
-  Given a registered bot "Seller"
-  And "Seller" has wallet balance 1000
-  When "Seller" creates a promise
-  Then the promise should be created
+Scenario: Submit reading after meter registration
+  Given a registered meter "WM-001"
+  And the meter is in "ACTIVE" status
+  When "WM-001" receives a reading
+  Then the reading should be recorded
 
 # ✅ DO: Use specific data
-Scenario: Calculate price for 24-hour promise
-  Given a promise with price 0.5 per hour
-  When calculating total for 24 hours
-  Then the total should be 12.0
+Scenario: Calculate consumption for period
+  Given a meter with previous reading 500
+  When current reading is 700
+  Then the consumption should be 200 units
 ```
 
 ### Don'ts
 
 ```gherkin
 # ❌ DON'T: Use technical terms
-Scenario: POST /api/bots returns 201
+Scenario: POST /api/meters returns 201
   Given the database is mocked
   When calling the controller
   Then verify the repository was called
@@ -345,61 +345,61 @@ Scenario: It works
 ## Complete Example
 
 ```gherkin
-@promise-market @ROAD-003 @api
-Feature: Promise Creation and Listing
-  As a bot with spare compute capacity
-  I want to list my available compute as promises
-  So that other bots can buy my compute capacity
+@water-supply @ROAD-003 @api
+Feature: Water Supply Scheduling and Delivery
+  As a water utility
+  I want to schedule and deliver water to service areas
+  So that customers receive consistent water service
 
   Background:
-    Given a registered bot "ComputeProvider" exists
-    And "ComputeProvider" has wallet balance 500 CLAW
-    And "ComputeProvider" has available compute capacity 1000 units
+    Given a registered service area "District-001" exists
+    And the district has capacity 5000 units/day
+    And supply schedules are enabled
 
   @smoke @critical
-  Scenario: Successfully create and list a promise
-    Given "ComputeProvider" is authenticated
-    When "ComputeProvider" creates a promise with:
+  Scenario: Successfully schedule water supply
+    Given the utility is authenticated
+    When the utility schedules supply with:
       | Field            | Value         |
-      | compute_capacity | 100           |
+      | supply_volume    | 1000          |
       | duration_hours   | 24            |
-      | price_per_unit   | 0.1           |
-      | gpu_type         | NVIDIA_A100   |
-    Then the promise should be created successfully
-    And the promise ID should be returned
-    And the promise status should be "LISTED"
-    And the promise should be visible in the marketplace
-    And a "PromiseCreated" domain event should be published
+      | pressure_level   | MEDIUM        |
+      | start_time       | 2026-02-04    |
+    Then the supply should be scheduled successfully
+    And the supply ID should be returned
+    And the supply status should be "SCHEDULED"
+    And the supply should be visible in the system
+    And a "SupplyScheduled" domain event should be published
 
   @validation
-  Scenario Outline: Reject promise creation with invalid data
-    Given "ComputeProvider" is authenticated
-    When "ComputeProvider" creates a promise with compute_capacity "<capacity>"
-    Then the creation should fail with error "<error>"
-    And no promise should be created
+  Scenario Outline: Reject supply with invalid data
+    Given the utility is authenticated
+    When the utility schedules supply with volume "<volume>"
+    Then the scheduling should fail with error "<error>"
+    And no supply should be scheduled
 
     Examples:
-      | capacity | error                          |
-      | 0        | Capacity must be greater than 0 |
-      | -1       | Capacity must be greater than 0 |
-      |          | Capacity is required           |
+      | volume | error                        |
+      | 0      | Volume must be greater than 0 |
+      | -1     | Volume must be greater than 0 |
+      |        | Volume is required           |
 
   @business-rules
-  Scenario: Promise creation locks escrow stake
-    Given "ComputeProvider" is authenticated
-    And "ComputeProvider" has wallet balance 100 CLAW
-    When "ComputeProvider" creates a promise with required_stake 50 CLAW
-    Then 50 CLAW should be locked in escrow
-    And "ComputeProvider" wallet balance should be 50 CLAW
-    And the promise should reference the escrow transaction
+  Scenario: Supply scheduling reserves capacity
+    Given the utility is authenticated
+    And the district has available capacity 2000 units
+    When the utility schedules supply with volume 1000 units
+    Then 1000 units should be reserved
+    And the district available capacity should be 1000 units
+    And the supply should reference the capacity reservation
 
   @concurrency @performance
-  Scenario: Handle concurrent promise creations
-    Given "ComputeProvider" is authenticated
-    And "ComputeProvider" has available capacity 1000 units
-    When 100 promises are created simultaneously with capacity 10 each
-    Then all promises should be created successfully
-    And the total listed capacity should be 1000 units
+  Scenario: Handle concurrent supply scheduling
+    Given the utility is authenticated
+    And the district has available capacity 5000 units
+    When 50 supplies are scheduled simultaneously with volume 100 each
+    Then all supplies should be scheduled successfully
+    And the total scheduled volume should be 5000 units
 ```
 
 ## Quick Reference Card

@@ -21,16 +21,16 @@ Feature: Bot Registration
 
 ```mermaid
 graph TD
-    A[BDD Scenario] --> B[@CAP-XXX - Capability]
-    A --> C[@ROAD-XXX - Roadmap Item]
-    A --> D[@US-XXX - User Story]
-    A --> E[@UC-XXX - Use Case]
+    A[BDD Scenario] --> B["CAP-XXX: Capability"]
+    A --> C["ROAD-XXX: Roadmap Item"]
+    A --> D["US-XXX: User Story"]
+    A --> E["UC-XXX: Use Case"]
     A --> F[Functional Tags]
     
-    F --> G[@api - API test]
-    F --> H[@ui - UI test]
-    F --> I[@smoke - Smoke test]
-    F --> J[@security - Security test]
+    F --> G["api: API test"]
+    F --> H["ui: UI test"]
+    F --> I["smoke: Smoke test"]
+    F --> J["security: Security test"]
 ```
 
 ## Capability Tags Reference
@@ -39,11 +39,11 @@ graph TD
 |-----|------------|-------------|-------------------|
 | `@CAP-001` | Authentication | API key validation | All protected endpoints |
 | `@CAP-002` | Audit Logging | Operation logging | All state changes |
-| `@CAP-003` | Real-time Notifications | WebSocket delivery | Promise matches, updates |
+| `@CAP-003` | Real-time Notifications | WebSocket delivery | Reading alerts, updates |
 | `@CAP-004` | Rate Limiting | Request throttling | Auth, API limits |
-| `@CAP-005` | Escrow Management | Fund locking/releasing | Promise acceptance, settlement |
-| `@CAP-006` | Reputation Calculation | Score computation | Promise completion, disputes |
-| `@CAP-007` | Oracle Verification | Proof validation | Settlement verification |
+| `@CAP-005` | Data Integrity | Reading validation | Meter submissions, billing |
+| `@CAP-006` | Report Generation | Consumption reports | Usage analytics, billing |
+| `@CAP-007` | Quality Monitoring | Water quality checks | Supply verification |
 
 ## Tagging Rules
 
@@ -54,13 +54,13 @@ Every scenario that tests a capability MUST include the capability tag:
 # ✅ Good - tags the authentication capability
 @CAP-001
 Scenario: Valid API key grants access
-  Given a bot with valid API key
+  Given a customer with valid API key
   When they make an authenticated request
   Then access should be granted
 
 # ❌ Bad - no capability tag
 Scenario: Valid API key grants access
-  Given a bot with valid API key
+  Given a customer with valid API key
   When they make an authenticated request
   Then access should be granted
 ```
@@ -75,7 +75,7 @@ Scenario: Failed auth creates audit log
   Given an invalid API key
   When a request is made
   Then access should be denied
-  And an audit log entry should be created
+  And an audit log entry should be created for this failed attempt
 ```
 
 ### 3. Tag at Feature Level
@@ -83,7 +83,7 @@ If ALL scenarios in a feature test a capability, tag the feature:
 
 ```gherkin
 @CAP-001
-Feature: Bot Authentication
+Feature: Customer Authentication
   # All scenarios test authentication
   
   Scenario: Valid API key
@@ -101,7 +101,7 @@ Capability tags work alongside roadmap, user story, and functional tags:
 
 ```gherkin
 @CAP-001 @CAP-002 @ROAD-005 @US-001 @api @security
-Feature: Bot Registration
+Feature: Meter Registration
   # Tests capabilities for roadmap item ROAD-005
   # Implements user story US-001
   # API-level security test
@@ -140,13 +140,13 @@ just bdd-report --by-capability
 
 | Feature | CAP-001 | CAP-002 | CAP-003 | CAP-005 |
 |---------|---------|---------|---------|---------|
-| Bot Registration | ✅ | ✅ | | |
-| Bot Authentication | ✅ | ✅ | | |
-| Promise Creation | ✅ | ✅ | | ✅ |
-| Promise Acceptance | ✅ | ✅ | ✅ | ✅ |
-| Promise Execution | ✅ | ✅ | ✅ | |
-| Settlement | ✅ | ✅ | ✅ | ✅ |
-| Dispute Resolution | ✅ | ✅ | | ✅ |
+| Meter Registration | ✅ | ✅ | | |
+| Reading Collection | ✅ | ✅ | | ✅ |
+| Supply Scheduling | ✅ | ✅ | | ✅ |
+| Supply Acceptance | ✅ | ✅ | ✅ | ✅ |
+| Delivery Completion | ✅ | ✅ | ✅ | |
+| Billing Settlement | ✅ | ✅ | ✅ | ✅ |
+| Reading Verification | ✅ | ✅ | | ✅ |
 
 ## Scenario Examples by Capability
 
@@ -172,12 +172,12 @@ Scenario Outline: API key validation
 ```gherkin
 @CAP-002
 Scenario: State change creates audit entry
-  Given a bot performs a state-changing action
+  Given a customer performs a state-changing action
   When the action completes
   Then an audit log entry should exist
   And the entry should contain:
     | Field      | Value         |
-    | actorId    | {botId}       |
+    | actorId    | {customerId}  |
     | action     | {actionName}  |
     | timestamp  | {timestamp}   |
 ```
@@ -186,23 +186,23 @@ Scenario: State change creates audit entry
 
 ```gherkin
 @CAP-003
-Scenario: Promise match triggers notification
-  Given a bot is subscribed to notifications
-  When their promise is matched
+Scenario: Meter alert triggers notification
+  Given a customer is subscribed to alerts
+  When their meter reading exceeds threshold
   Then they should receive a real-time notification
   And the notification should arrive within 100ms
 ```
 
-### CAP-005: Escrow Management
+### CAP-005: Data Integrity
 
 ```gherkin
 @CAP-005
-Scenario: Escrow locks funds atomically
-  Given a consumer with 100 CLAW tokens
-  When they accept a promise costing 50 CLAW
-  Then an escrow should be created
-  And exactly 50 CLAW should be locked
-  And the consumer balance should be 50 CLAW
+Scenario: Reading data integrity check
+  Given a customer with 1000 units previous reading
+  When they submit a reading of 1500 units
+  Then the reading should be validated
+  And exactly 500 units should be recorded as consumption
+  And the customer balance should be updated correctly
 ```
 
 ## Verification
@@ -227,4 +227,4 @@ just bdd-report --uncovered-capabilities
 
 ---
 
-**Related**: [Capabilities](../capabilities/index) • [User Stories](../user-stories/index) • [Gherkin Syntax](./gherkin-syntax)
+**Related**: [Capabilities](../capabilities/index) • [User Stories](../user-stories/index) • [Gherkin Syntax](./gherkin-syntax) • [System Capabilities](../capabilities/aquatrack-capabilities)

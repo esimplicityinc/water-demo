@@ -2,13 +2,13 @@
 
 ## Overview
 
-This document provides context for AI agents working on BDD test refactoring in the ClawMarket project.
+This document provides context for AI agents working on BDD test refactoring in the PrimaDemo project.
 
 ## Current State
 
 - **19 feature files** with 162 scenarios
 - **117 "missing" steps** (actually just non-universal patterns)
-- **Universal steps already exist** in `stack-tests/features/steps/clawmarket-steps.ts`
+- **Universal steps already exist** in `stack-tests/features/steps/primademo-steps.ts`
 
 ## The Problem
 
@@ -75,7 +75,7 @@ When I store the response field "{field}" as "{key}"
 ### Setup Steps (Bot Identity)
 
 ```gherkin
-Given the ClawMarket API is available
+Given the PrimaDemo API is available
 Given an authenticated bot exists
 Given a registered bot exists with API key
 Given a bot with a valid API key
@@ -171,8 +171,8 @@ Scenario: Bot views its own profile
 ## File Locations
 
 - **Feature files**: `stack-tests/features/api/bot-identity/*.feature`
-- **Step definitions**: `stack-tests/features/steps/clawmarket-steps.ts`
-- **Universal steps**: Already implemented in `clawmarket-steps.ts`
+- **Step definitions**: `stack-tests/features/steps/primademo-steps.ts`
+- **Universal steps**: Already implemented in `primademo-steps.ts`
 
 ## Process
 
@@ -238,7 +238,7 @@ npx bddgen
 
 If you see "Missing step definitions", either:
 1. You're still using non-universal patterns (fix the feature file)
-2. You need to add a new universal step (add to clawmarket-steps.ts)
+2. You need to add a new universal step (add to primademo-steps.ts)
 
 ## Questions?
 

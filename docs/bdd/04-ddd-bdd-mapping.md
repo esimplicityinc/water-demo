@@ -52,15 +52,15 @@ graph TB
 
 | DDD Concept | BDD Representation | Example |
 |-------------|-------------------|---------|
-| **Bounded Context** | Feature file organization | `features/api/bot-identity/` |
-| **Ubiquitous Language** | Scenario vocabulary | `When a Bot registers` |
-| **Aggregate** | Test subject | `Given a registered Bot` |
-| **Aggregate Root** | Entity under test | `Then the Bot status changes` |
-| **Domain Event** | Then assertion | `Then BotRegistered event published` |
-| **Value Object** | Data in tables | `\| wallet_address \| 0x123... \|` |
-| **Use Case** | Feature description | `Feature: Bot Registration` |
-| **Business Rule** | Scenario validation | `Then reject duplicate names` |
-| **Invariant** | Assertion in Then | `Then balance remains unchanged` |
+| **Bounded Context** | Feature file organization | `features/api/meter-management/` |
+| **Ubiquitous Language** | Scenario vocabulary | `When a Meter registers` |
+| **Aggregate** | Test subject | `Given a registered Meter` |
+| **Aggregate Root** | Entity under test | `Then the Meter status changes` |
+| **Domain Event** | Then assertion | `Then MeterRegistered event published` |
+| **Value Object** | Data in tables | `\| service_address \| 123 Main St \|` |
+| **Use Case** | Feature description | `Feature: Meter Registration` |
+| **Business Rule** | Scenario validation | `Then reject duplicate meters` |
+| **Invariant** | Assertion in Then | `Then volume remains unchanged` |
 
 ---
 
@@ -92,23 +92,23 @@ flowchart TD
 
 ```
 stack-tests/features/api/
-├── bot-identity/           # Bot Identity Bounded Context
-│   ├── 01_bot_registration.feature
-│   ├── 02_bot_authentication.feature
-│   └── 03_bot_reputation.feature
-├── promise-market/         # Promise Market Bounded Context
-│   ├── 01_promise_creation.feature
-│   ├── 02_promise_listing.feature
-│   ├── 03_order_book.feature
-│   ├── 04_promise_acceptance.feature
-│   └── 05_promise_execution.feature
-├── token-management/       # Token Management Bounded Context
-│   ├── 01_wallet_operations.feature
-│   ├── 02_stake_management.feature
-│   └── 03_escrow_system.feature
-└── settlement/            # Settlement Bounded Context
-    ├── 01_verification.feature
-    ├── 02_disputes.feature
+├── meter-management/       # Meter Management Bounded Context
+│   ├── 01_meter_registration.feature
+│   ├── 02_reading_collection.feature
+│   └── 03_maintenance_management.feature
+├── water-supply/           # Water Supply Bounded Context
+│   ├── 01_supply_scheduling.feature
+│   ├── 02_delivery_management.feature
+│   ├── 03_pressure_management.feature
+│   ├── 04_supply_acceptance.feature
+│   └── 05_delivery_completion.feature
+├── customer-management/    # Customer Management Bounded Context
+│   ├── 01_customer_enrollment.feature
+│   ├── 02_account_management.feature
+│   └── 03_service_agreements.feature
+└── billing-settlement/     # Billing Settlement Bounded Context
+    ├── 01_reading_verification.feature
+    ├── 02_billing_disputes.feature
     └── 03_settlement_finalization.feature
 ```
 
@@ -121,26 +121,26 @@ BDD scenarios MUST use terms from the Ubiquitous Language:
 ### Correct Usage ✅
 
 ```gherkin
-Feature: Promise Creation
+Feature: Water Supply Scheduling
 
-  Scenario: Bot creates a compute Promise
-    Given a registered Bot "SellerBot"
-    And "SellerBot" has available compute Capacity
-    When "SellerBot" creates a Promise with:
-      | compute_capacity | 100 units |
-      | duration_hours   | 24        |
-      | price_per_unit   | 0.5 CLAW  |
-    Then a PromiseCreated Domain Event should be published
-    And the Promise should be Listed in the Order Book
+  Scenario: Utility schedules water Supply
+    Given a registered service Area "District-001"
+    And the Area has available capacity
+    When the Utility schedules a Supply with:
+      | supply_volume  | 1000 units |
+      | duration_hours | 24         |
+      | pressure_level | MEDIUM     |
+    Then a SupplyScheduled Domain Event should be published
+    And the Supply should be listed in the Schedule
 ```
 
 ### Incorrect Usage ❌
 
 ```gherkin
 # ❌ Using technical/implementation terms
-Scenario: POST creates compute offer
-  Given user exists in database
-  When POST /api/offers with JSON body
+Scenario: POST creates water supply
+  Given customer exists in database
+  When POST /api/supplies with JSON body
   Then HTTP 201 returned
   And database row inserted
   And Redis cache updated
@@ -150,14 +150,14 @@ Scenario: POST creates compute offer
 
 | Domain Term | Use In Scenarios | Don't Use |
 |-------------|------------------|-----------|
-| Bot | `Given a registered Bot` | user, account, entity |
-| Promise | `When a Promise is created` | offer, contract, listing |
-| Capacity | `compute Capacity` | resources, limit, quota |
-| Order Book | `listed in the Order Book` | marketplace, exchange |
-| CLAW Token | `CLAW tokens` | tokens, currency, money |
-| Stake | `lock Stake` | deposit, collateral |
-| Escrow | `funds in Escrow` | holding, vault |
-| Reputation | `Reputation Score` | rating, trust score |
+| Meter | `Given a registered Meter` | device, sensor, equipment |
+| Supply | `When a Supply is scheduled` | delivery, shipment, transaction |
+| Capacity | `available Capacity` | resources, limit, quota |
+| Schedule | `listed in the Schedule` | calendar, timetable, plan |
+| Service Area | `for Service Area "District-001"` | zone, region, territory |
+| Reading | `submit a Reading` | measurement, value, data point |
+| Pressure | `Pressure Level` | PSI, force, strength |
+| Customer | `Customer account` | user, subscriber, account holder |
 
 ---
 
@@ -165,65 +165,65 @@ Scenario: POST creates compute offer
 
 Each Aggregate is the primary subject of its scenarios:
 
-### Bot Aggregate
+### Meter Aggregate
 
 ```mermaid
 classDiagram
-    class Bot {
-        +BotId id
-        +BotName name
-        +WalletAddress wallet
-        +BotStatus status
-        +Reputation reputation
+    class Meter {
+        +MeterId id
+        +MeterNumber number
+        +ServiceAddress address
+        +MeterStatus status
+        +LastReading reading
         +register()
-        +authenticate()
-        +updateReputation()
+        +recordReading()
+        +updateStatus()
     }
 
-    class BotRegistrationFeature {
-        +Scenario: Register new bot
-        +Scenario: Reject duplicate name
-        +Scenario: Validate wallet
+    class MeterRegistrationFeature {
+        +Scenario: Register new meter
+        +Scenario: Reject duplicate number
+        +Scenario: Validate address
     }
 
-    Bot --> BotRegistrationFeature : tested by
+    Meter --> MeterRegistrationFeature : tested by
 ```
 
 #### Example Scenarios
 
 ```gherkin
-Feature: Bot Registration
+Feature: Meter Registration
 
-  Scenario: Successfully register a new Bot
-    Given a developer with a valid Wallet
-    When they submit Bot Registration with name "AlphaBot"
-    Then a new Bot should be created
-    And the Bot should have a unique BotId
-    And the Bot status should be "ACTIVE"
+  Scenario: Successfully register a new Meter
+    Given a customer with a valid Service Address
+    When they submit Meter Registration with number "WM-001"
+    Then a new Meter should be created
+    And the Meter should have a unique MeterId
+    And the Meter status should be "ACTIVE"
 
-  Scenario: Bot Registration publishes Domain Event
-    Given a developer with a valid Wallet
-    When they complete Bot Registration
-    Then a BotRegistered Domain Event should be published
-    And the event should contain the BotId
+  Scenario: Meter Registration publishes Domain Event
+    Given a customer with a valid Service Address
+    When they complete Meter Registration
+    Then a MeterRegistered Domain Event should be published
+    And the event should contain the MeterId
 ```
 
-### Promise Aggregate
+### Supply Aggregate
 
 ```gherkin
-Feature: Promise Lifecycle
+Feature: Supply Lifecycle
 
-  Scenario: Promise aggregate maintains invariants
-    Given a Bot "Seller" with 1000 CLAW tokens
-    And "Seller" has available Capacity of 100 units
-    When "Seller" creates a Promise requiring 50 CLAW Stake
-    Then the Promise should be created
-    And the Promise aggregate should enforce:
+  Scenario: Supply aggregate maintains invariants
+    Given a Service Area with 5000 units capacity
+    And the Area has available Capacity of 2000 units
+    When the Utility schedules a Supply requiring 1000 units
+    Then the Supply should be created
+    And the Supply aggregate should enforce:
       | Invariant                          | Status |
-      | Stake locked in Escrow             | ✓      |
-      | Capacity deducted from available   | ✓      |
-      | Promise status is LISTED           | ✓      |
-      | Seller balance reduced by 50       | ✓      |
+      | Capacity reserved                  | ✓      |
+      | Available capacity deducted        | ✓      |
+      | Supply status is SCHEDULED         | ✓      |
+      | Area available reduced by 1000     | ✓      |
 ```
 
 ---
@@ -250,20 +250,20 @@ sequenceDiagram
 
 ```gherkin
 # Pattern 1: Basic event verification
-Then a BotRegistered Domain Event should be published
+Then a MeterRegistered Domain Event should be published
 
 # Pattern 2: Event with properties
-Then a PromiseCreated Domain Event should be published with:
+Then a SupplyScheduled Domain Event should be published with:
   | Property       | Value         |
-  | promise_id     | promise_123   |
-  | seller_bot_id  | bot_456       |
-  | capacity       | 100 units     |
+  | supply_id      | supply_123    |
+  | area_id        | area_456      |
+  | volume         | 1000 units    |
 
 # Pattern 3: Multiple events
 Then the following Domain Events should be published:
   | Event              | Order |
-  | PromiseAccepted    | 1     |
-  | EscrowLocked       | 2     |
+  | SupplyScheduled    | 1     |
+  | CapacityReserved   | 2     |
   | NotificationSent   | 3     |
 
 # Pattern 4: No unexpected events
@@ -275,14 +275,14 @@ And no other Domain Events should occur
 
 | Domain Event | Feature File | Scenario Example |
 |--------------|--------------|------------------|
-| BotRegistered | `01_bot_registration.feature` | `Then BotRegistered event published` |
-| BotAuthenticated | `02_bot_authentication.feature` | `Then authentication event with token` |
-| ReputationUpdated | `03_bot_reputation.feature` | `Then reputation change event emitted` |
-| PromiseCreated | `01_promise_creation.feature` | `Then PromiseCreated event published` |
-| PromiseListed | `02_promise_listing.feature` | `Then listing event with market data` |
-| PromiseAccepted | `04_promise_acceptance.feature` | `Then acceptance event with both parties` |
-| EscrowLocked | `03_escrow_system.feature` | `Then escrow locked event with amount` |
-| SettlementCompleted | `03_settlement_finalization.feature` | `Then settlement event with final amounts` |
+| MeterRegistered | `01_meter_registration.feature` | `Then MeterRegistered event published` |
+| ReadingRecorded | `02_reading_collection.feature` | `Then reading event with value` |
+| MaintenanceScheduled | `03_maintenance_management.feature` | `Then maintenance event emitted` |
+| SupplyScheduled | `01_supply_scheduling.feature` | `Then SupplyScheduled event published` |
+| DeliveryStarted | `02_delivery_management.feature` | `Then delivery event with area data` |
+| SupplyAccepted | `04_supply_acceptance.feature` | `Then acceptance event with details` |
+| CapacityReserved | `03_pressure_management.feature` | `Then capacity reserved event with amount` |
+| BillFinalized | `03_settlement_finalization.feature` | `Then bill event with final amounts` |
 
 ---
 
@@ -290,51 +290,49 @@ And no other Domain Events should occur
 
 Value Objects appear as data in scenario tables:
 
-### Wallet Address (Value Object)
+### Service Address (Value Object)
 
 ```gherkin
-  Scenario Outline: Validate wallet addresses
-    When registering with wallet address "<address>"
+  Scenario Outline: Validate service addresses
+    When registering with address "<address>"
     Then the registration should be "<result>"
 
     Examples:
-      | address                                    | result    |
-      | 0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb5 | valid     |
-      | 0x123                                      | invalid   |
-      | not-an-address                             | invalid   |
-      |                                            | invalid   |
+      | address       | result    |
+      | 123 Main St   | valid     |
+      | 456 Oak Ave   | valid     |
+      | Invalid St.   | invalid   |
+      |               | invalid   |
 ```
 
-### Money/CLAW Tokens (Value Object)
+### Water Volume (Value Object)
 
 ```gherkin
-  Scenario: Stake calculation
-    Given a Bot with wallet balance:
-      | currency | amount |
-      | CLAW     | 1000   |
-    When creating a Promise requiring Stake:
-      | currency | amount |
-      | CLAW     | 100    |
-    Then the locked Stake should be:
-      | currency | amount |
-      | CLAW     | 100    |
-```
-
-### Compute Capacity (Value Object)
-
-```gherkin
-  Scenario: Promise capacity validation
-    Given a Bot with available Capacity:
+  Scenario: Volume calculation
+    Given a Service Area with total volume:
       | unit  | amount |
-      | GPU   | 10     |
-      | CPU   | 100    |
-    When creating a Promise with:
-      | resource | required |
-      | GPU      | 5        |
-    Then the remaining Capacity should be:
-      | unit | amount |
-      | GPU  | 5      |
-      | CPU  | 100    |
+      | units | 5000   |
+    When scheduling Supply with volume:
+      | unit  | amount |
+      | units | 1000   |
+    Then the remaining volume should be:
+      | unit  | amount |
+      | units | 4000   |
+```
+
+### Pressure Level (Value Object)
+
+```gherkin
+  Scenario: Pressure validation
+    Given a Service Area with pressure constraints:
+      | level  | min | max |
+      | PSI    | 40  | 80  |
+    When scheduling Supply with:
+      | constraint | value |
+      | pressure   | MEDIUM |
+    Then the pressure should be within:
+      | level  | min | max |
+      | PSI    | 40  | 80  |
 ```
 
 ---
@@ -347,40 +345,40 @@ Each Use Case becomes a Feature:
 
 | Use Case | Feature File | User Story |
 |----------|--------------|------------|
-| UC-001: Register Bot | `01_bot_registration.feature` | As a developer, I want to register my bot... |
-| UC-002: Authenticate Bot | `02_bot_authentication.feature` | As a bot, I want to authenticate... |
-| UC-003: Create Promise | `01_promise_creation.feature` | As a bot, I want to offer compute capacity... |
-| UC-004: Accept Promise | `04_promise_acceptance.feature` | As a bot, I want to buy compute capacity... |
-| UC-005: Execute Promise | `05_promise_execution.feature` | As a seller, I want to deliver compute... |
-| UC-006: Settle Payment | `03_settlement_finalization.feature` | As a participant, I want to complete settlement... |
+| UC-001: Register Meter | `01_meter_registration.feature` | As a customer, I want to register my meter... |
+| UC-002: Submit Reading | `02_reading_collection.feature` | As a customer, I want to submit readings... |
+| UC-003: Schedule Supply | `01_supply_scheduling.feature` | As a utility, I want to schedule water supply... |
+| UC-004: Accept Supply | `04_supply_acceptance.feature` | As an area, I want to accept water supply... |
+| UC-005: Complete Delivery | `05_delivery_completion.feature` | As a utility, I want to deliver water... |
+| UC-006: Process Bill | `03_settlement_finalization.feature` | As a system, I want to finalize billing... |
 
 ### Example Use Case → Feature
 
-**Use Case: Create Promise**
+**Use Case: Schedule Water Supply**
 ```
-Primary Actor: Bot (Seller)
-Goal: Create a compute capacity promise
-Preconditions: Bot is registered and authenticated
-Success: Promise created and listed in order book
+Primary Actor: Water Utility
+Goal: Schedule water delivery to service areas
+Preconditions: Service area is registered and operational
+Success: Supply scheduled and capacity reserved
 ```
 
 **Feature File:**
 ```gherkin
-Feature: Promise Creation
-  As a Bot with spare compute capacity
-  I want to create a Promise
-  So that other Bots can purchase my capacity
+Feature: Water Supply Scheduling
+  As a Water Utility with water to distribute
+  I want to schedule Supply
+  So that Service Areas can receive water
 
   Background:
-    Given a registered Bot "SellerBot"
-    And "SellerBot" is authenticated
-    And "SellerBot" has available compute Capacity
+    Given a registered Service Area "District-001"
+    And the Area is operational
+    And the Area has available capacity
 
-  Scenario: Successfully create a Promise
-    When "SellerBot" creates a Promise with valid specifications
-    Then the Promise should be created
-    And the Promise should be listed in the Order Book
-    And a PromiseCreated Domain Event should be published
+  Scenario: Successfully schedule Supply
+    When the Utility schedules a Supply with valid specifications
+    Then the Supply should be created
+    And the Supply should be listed in the Schedule
+    And a SupplyScheduled Domain Event should be published
 ```
 
 ---
@@ -389,42 +387,42 @@ Feature: Promise Creation
 
 Business Rules are explicitly tested in scenarios:
 
-### Rule: Promise Capacity Must Be Positive
+### Rule: Water Volume Must Be Positive
 
 ```gherkin
-  Scenario Outline: Reject promise with invalid capacity
-    When creating a Promise with capacity "<capacity>"
-    Then the creation should fail with error "<error>"
-    And the error should reference business rule "PROMISE-001"
+  Scenario Outline: Reject supply with invalid volume
+    When scheduling Supply with volume "<volume>"
+    Then the scheduling should fail with error "<error>"
+    And the error should reference business rule "SUPPLY-001"
 
     Examples:
-      | capacity | error                         |
-      | 0        | Capacity must be positive     |
-      | -1       | Capacity must be positive     |
-      | -100     | Capacity must be positive     |
+      | volume | error                        |
+      | 0      | Volume must be positive      |
+      | -1     | Volume must be positive      |
+      | -100   | Volume must be positive      |
 ```
 
-### Rule: Bot Must Have Sufficient Stake
+### Rule: Area Must Have Sufficient Capacity
 
 ```gherkin
-  Scenario: Insufficient stake prevents promise creation
-    Given a Bot "PoorBot" with wallet balance 10 CLAW
-    When "PoorBot" attempts to create a Promise requiring 100 CLAW Stake
-    Then the creation should fail with error "Insufficient stake"
-    And the error should reference business rule "PROMISE-002"
-    And no Promise should be created
-    And no Stake should be locked
+  Scenario: Insufficient capacity prevents supply scheduling
+    Given a Service Area with available Capacity of 500 units
+    When the Utility attempts to schedule Supply requiring 1000 units
+    Then the scheduling should fail with error "Insufficient capacity"
+    And the error should reference business rule "SUPPLY-002"
+    And no Supply should be created
+    And no capacity should be reserved
 ```
 
-### Rule: Duplicate Bot Names Not Allowed
+### Rule: Duplicate Meter Numbers Not Allowed
 
 ```gherkin
-  Scenario: Enforce unique bot names
-    Given a Bot named "AlphaBot" is already registered
-    When a developer attempts to register with name "AlphaBot"
+  Scenario: Enforce unique meter numbers
+    Given a Meter numbered "WM-001" is already registered
+    When a customer attempts to register with number "WM-001"
     Then the registration should fail
-    And the error should indicate "Name already exists"
-    And the error should reference business rule "BOT-001"
+    And the error should indicate "Meter already exists"
+    And the error should reference business rule "METER-001"
 ```
 
 ---
@@ -436,22 +434,22 @@ Here's how all DDD concepts come together in BDD:
 ```mermaid
 flowchart TD
     subgraph "DDD Layer"
-        D_BC[Bounded Context:<br/>Bot Identity]
-        D_UL[Ubiquitous Language:<br/>Bot, Wallet, Registration]
-        D_A[Aggregate:<br/>Bot]
-        D_VO[Value Objects:<br/>BotName, WalletAddress]
-        DE[Domain Event:<br/>BotRegistered]
-        D_UC[Use Case:<br/>Register Bot]
-        D_BR[Business Rule:<br/>Unique names required]
+        D_BC[Bounded Context:<br/>Meter Management]
+        D_UL[Ubiquitous Language:<br/>Meter, Address, Registration]
+        D_A[Aggregate:<br/>Meter]
+        D_VO[Value Objects:<br/>MeterNumber, ServiceAddress]
+        DE[Domain Event:<br/>MeterRegistered]
+        D_UC[Use Case:<br/>Register Meter]
+        D_BR[Business Rule:<br/>Unique numbers required]
     end
 
     subgraph "BDD Layer"
-        B_F[Feature:<br/>01_bot_registration.feature]
+        B_F[Feature:<br/>01_meter_registration.feature]
         B_S1[Scenario:<br/>Successful registration]
-        B_S2[Scenario:<br/>Reject duplicate name]
-        B_G[Given:<br/>Wallet, Developer]
+        B_S2[Scenario:<br/>Reject duplicate number]
+        B_G[Given:<br/>Address, Customer]
         B_W[When:<br/>Submit registration]
-        B_T1[Then:<br/>Bot created]
+        B_T1[Then:<br/>Meter created]
         B_T2[Then:<br/>Event published]
     end
 
@@ -467,45 +465,45 @@ flowchart TD
 ### Complete Feature Example
 
 ```gherkin
-@bot-identity @ROAD-001 @api
-Feature: Bot Registration
-  As a bot developer
-  I want to register my bot
-  So that I can participate in the marketplace
+@meter-management @ROAD-001 @api
+Feature: Meter Registration
+  As a water customer
+  I want to register my meter
+  So that I can track water consumption
 
-  # Business Rule: BOT-001 - Bot names must be unique
-  # Business Rule: BOT-002 - Valid wallet address required
+  # Business Rule: METER-001 - Meter numbers must be unique
+  # Business Rule: METER-002 - Valid service address required
 
   Background:
-    Given the Bot Identity context is initialized
+    Given the Meter Management context is initialized
 
-  Scenario: Successfully register a new Bot
-    # Value Object: WalletAddress
-    Given a developer with Wallet address "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb5"
-    # Aggregate: Bot (not yet created)
-    And no Bot with name "TradingBot" exists
-    # Use Case: Register Bot
-    When the developer submits Bot Registration with:
-      | Field        | Value          |
-      | BotName      | TradingBot     |
-      | WalletAddress| 0x742d...0bEb5 |
+  Scenario: Successfully register a new Meter
+    # Value Object: ServiceAddress
+    Given a customer with Service Address "123 Main Street"
+    # Aggregate: Meter (not yet created)
+    And no Meter with number "WM-001" exists
+    # Use Case: Register Meter
+    When the customer submits Meter Registration with:
+      | Field           | Value              |
+      | MeterNumber     | WM-001            |
+      | ServiceAddress  | 123 Main Street   |
     # Aggregate verification
-    Then a new Bot should be created
-    And the Bot should have a unique BotId
-    And the Bot status should be "PENDING_VERIFICATION"
+    Then a new Meter should be created
+    And the Meter should have a unique MeterId
+    And the Meter status should be "ACTIVE"
     # Domain Event verification
-    And a BotRegistered Domain Event should be published
-    And the event should contain the BotId and BotName
+    And a MeterRegistered Domain Event should be published
+    And the event should contain the MeterId and MeterNumber
     # Value Object verification
-    And the Bot's WalletAddress should be "0x742d...0bEb5"
+    And the Meter's ServiceAddress should be "123 Main Street"
 
-  Scenario: Enforce unique Bot names (BOT-001)
-    Given a Bot "TradingBot" is already registered
-    When a developer attempts to register with name "TradingBot"
+  Scenario: Enforce unique Meter numbers (METER-001)
+    Given a Meter "WM-001" is already registered
+    When a customer attempts to register with number "WM-001"
     Then the registration should fail
-    And the error should reference business rule "BOT-001"
-    And no new Bot should be created
-    And no BotRegistered Domain Event should be published
+    And the error should reference business rule "METER-001"
+    And no new Meter should be created
+    And no MeterRegistered Domain Event should be published
 ```
 
 ---
@@ -533,7 +531,7 @@ flowchart LR
 
 ### Quick Validation Questions
 
-1. **Ubiquitous Language**: Are we using domain terms like "Bot", "Promise", "Stake" instead of technical terms?
+1. **Ubiquitous Language**: Are we using domain terms like "Meter", "Supply", "Reading" instead of technical terms?
 2. **Aggregate Focus**: Is the scenario testing the aggregate root's behavior?
 3. **Event Verification**: Are we asserting domain events are published?
 4. **Business Rules**: Are business rules explicitly tested and referenced?
@@ -551,4 +549,4 @@ flowchart LR
 
 ---
 
-**Related**: [BDD Overview](./bdd-overview) • [Gherkin Syntax](./gherkin-syntax) • [Aggregates & Entities](../ddd/aggregates-entities)
+**Related**: [BDD Overview](./bdd-overview) • [Gherkin Syntax](./gherkin-syntax) • [Aggregates & Entities](../ddd/aggregates-entities) • [Water Domain Concepts](../ddd/water-infrastructure-domain)

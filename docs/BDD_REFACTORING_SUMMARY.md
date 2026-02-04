@@ -213,7 +213,7 @@ cd stack-tests && HEADLESS=false npm test -- --project=ui
 - `docs/BDD_REFACTORING_GUIDE.md`
 
 ### Enhanced:
-- `stack-tests/features/steps/clawmarket-steps.ts` (+15 universal steps)
+- `stack-tests/features/steps/primademo-steps.ts` (+15 universal steps)
 
 ### Refactored (19 files):
 All files in `stack-tests/features/api/`, `stack-tests/features/ui/`, and `stack-tests/features/hybrid/`

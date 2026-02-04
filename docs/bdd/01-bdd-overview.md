@@ -5,7 +5,7 @@ title: BDD Overview
 
 # Behavior-Driven Development (BDD) Overview
 
-ClawMarket uses **Behavior-Driven Development (BDD)** to ensure all features are defined, tested, and implemented correctly. BDD bridges the gap between business requirements and technical implementation.
+AquaTrack uses **Behavior-Driven Development (BDD)** to ensure all features are defined, tested, and implemented correctly. BDD bridges the gap between business requirements and technical implementation.
 
 ## What is BDD?
 
@@ -27,7 +27,7 @@ graph LR
 
 ## The BDD Cycle
 
-ClawMarket follows a strict **Red-Green-Refactor** cycle:
+PrimaDemo follows a strict **Red-Green-Refactor** cycle:
 
 ### 1. Red Phase - Write Scenarios
 Define expected behavior **before** writing any code. Tests should fail initially.
@@ -50,7 +50,7 @@ graph TD
     style D fill:#c8e6c9
 ```
 
-## BDD at ClawMarket
+## BDD at AquaTrack
 
 ### Our Approach
 
@@ -102,16 +102,16 @@ graph TB
 We use **Gherkin** syntax to write scenarios in plain English:
 
 ```gherkin
-Feature: Bot Registration
-  As a bot developer
-  I want to register my bot
-  So that I can participate in the marketplace
+Feature: Meter Registration
+  As a customer
+  I want to register my water meter
+  So that I can track consumption
 
-  Scenario: Successfully register a new bot
-    Given a bot developer with a valid wallet
-    When they submit registration with name "TradingBot"
-    Then a new bot should be created
-    And the bot should have a unique ID
+  Scenario: Successfully register a new meter
+    Given a customer with a valid address
+    When they submit registration with meter number "WM-001"
+    Then a new meter should be created
+    And the meter should have a unique ID
     And the registration timestamp should be recorded
 ```
 
@@ -125,8 +125,8 @@ flowchart TD
     
     Background --> Scenario2[Scenario Outline: Name<br/>━━━━━━━━━━<br/>Parameterized scenario<br/>Examples: Data table]
     
-    Scenario1 --> Tags1[@ROAD-001<br/>@smoke<br/>@api]
-    Scenario2 --> Tags2[@ROAD-001<br/>@validation]
+    Scenario1 --> Tags1["@ROAD-001\n@smoke\n@api"]
+    Scenario2 --> Tags2["@ROAD-001\n@validation"]
 
     style Feature fill:#e1f5ff
     style Scenario1 fill:#ccffcc
@@ -140,16 +140,16 @@ Our BDD scenarios are organized by domain area:
 ```
 stack-tests/features/
 ├── api/
-│   ├── bot-identity/          # Bot registration, auth, reputation
-│   ├── promise-market/        # Promise creation, listing, acceptance
-│   ├── token-management/      # Wallet, stakes, escrow
-│   └── settlement/            # Verification, disputes, finalization
+│   ├── meter-management/      # Meter registration, readings, alerts
+│   ├── customer-management/   # Customer enrollment, profiles, billing
+│   ├── water-supply/          # Supply scheduling, pressure management
+│   └── billing-settlement/    # Meter verification, billing, payments
 ├── ui/
-│   ├── bot-registration-ui/   # UI flows for bot registration
-│   ├── marketplace-browse-ui/ # Browse and search UI
-│   └── promise-management-ui/ # Promise creation UI
+│   ├── meter-registration-ui/ # UI flows for meter registration
+│   ├── dashboard-ui/          # Dashboard and reporting UI
+│   └── billing-management-ui/ # Billing UI
 └── hybrid/
-    └── end-to-end-promise-flow/ # Full user journeys
+    └── end-to-end-meter-flow/ # Full user journeys
 ```
 
 ## Connecting DDD and BDD
@@ -164,20 +164,24 @@ BDD scenarios directly map to DDD concepts:
 | **Domain Events** | Scenarios verify events are published |
 | **Use Cases** | Each use case has corresponding feature file |
 
+### AquaTrack Domain Example
+
+Water infrastructure systems include meters, customers, readings, and billing—each representing key domain concepts.
+
 ### Example Mapping
 
 ```mermaid
 graph LR
-    subgraph "DDD: Bot Identity Context"
-        A[Bot Aggregate]
+    subgraph "DDD: Meter Management Context"
+        A[Meter Aggregate]
         B[Registration<br/>Use Case]
-        C[BotRegistered<br/>Domain Event]
+        C[MeterRegistered<br/>Domain Event]
     end
 
     subgraph "BDD: Feature File"
-        D[Feature: Bot<br/>Registration]
-        E[Scenario: Register<br/>new bot]
-        F[Scenario: Prevent<br/>duplicate names]
+        D[Feature: Meter<br/>Registration]
+        E[Scenario: Register<br/>new meter]
+        F[Scenario: Prevent<br/>duplicate meters]
     end
 
     subgraph "Test Results"
@@ -236,7 +240,7 @@ flowchart TD
     Research --> Draft[Draft Scenarios<br/>Use Ubiquitous Language]
     Draft --> Review[User Review<br/>Refine Scenarios]
     
-    Review --> Create[Create Feature File<br/>Tag with @ROAD-XXX]
+    Review --> Create["Create Feature File, Tag with ROAD-XXX"]
     Create --> RunRed[Run Tests<br/>RED Phase]
     
     RunRed --> Implement[Implement Feature<br/>Domain → App → Infra]
