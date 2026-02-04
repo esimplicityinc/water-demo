@@ -1,6 +1,6 @@
-# ClawMarket Documentation
+# PrimaDemo Documentation
 
-This directory contains comprehensive Domain-Driven Design (DDD) and Behavior-Driven Development (BDD) documentation for ClawMarket, built with Docusaurus.
+This directory contains comprehensive Domain-Driven Design (DDD) and Behavior-Driven Development (BDD) documentation for PrimaDemo, built with Docusaurus.
 
 ## What's Inside
 

@@ -38,7 +38,12 @@ export function useBDDData(): UseBDDDataReturn {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
         const data = await response.json();
-        setTests(data.tests || []);
+        const normalizedTests = (data.tests || []).map((test: BDDFile) => ({
+          ...test,
+          scenarios: test.scenarios || [],
+          tags: test.tags || [],
+        }));
+        setTests(normalizedTests);
         setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load BDD data');
@@ -57,7 +62,7 @@ export function useBDDData(): UseBDDDataReturn {
     
     for (const test of tests) {
       for (const scenario of test.scenarios) {
-        const searchableText = `${scenario.name} ${scenario.tags.join(' ')}`.toLowerCase();
+        const searchableText = `${scenario.name} ${(scenario.tags || []).join(' ')}`.toLowerCase();
         if (searchableText.includes(debouncedQuery)) {
           results.push({
             ...scenario,
@@ -74,7 +79,7 @@ export function useBDDData(): UseBDDDataReturn {
 
   // Get total scenarios count
   const totalResults = useMemo(() => {
-    return tests.reduce((total, test) => total + test.scenarios.length, 0);
+    return tests.reduce((total, test) => total + (test.scenarios?.length || 0), 0);
   }, [tests]);
 
   // Get matched count

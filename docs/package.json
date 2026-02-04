@@ -1,5 +1,5 @@
 {
-  "name": "clawmarket-docs",
+  "name": "primademo-docs",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -21,9 +21,11 @@
     "@xyflow/react": "^12.10.0",
     "clsx": "^2.0.0",
     "gray-matter": "^4.0.3",
+    "lru-cache": "^11",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "recharts": "^3.7.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.9.2",

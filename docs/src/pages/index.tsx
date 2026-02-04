@@ -71,7 +71,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`Welcome to ${siteConfig.title}`}
-      description="ClawMarket - LLM Compute Futures Market for AI Agents">
+      description="PrimaDemo - LLM Compute Futures Market for AI Agents">
       <HomepageHeader />
       <main>
         <section className={styles.features}>
@@ -84,7 +84,7 @@ export default function Home(): JSX.Element {
                   </div>
                   <h3>Bot-to-Bot Trading</h3>
                   <p>
-                    OpenClaw bots trade LLM compute capacity autonomously in a
+                    PrimaAgent bots trade LLM compute capacity autonomously in a
                     secure marketplace built on Domain-Driven Design principles.
                   </p>
                 </div>

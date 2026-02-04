@@ -3,15 +3,15 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'ClawMarket Documentation',
-  tagline: 'LLM Compute Futures Market for AI Agents',
+  title: 'AquaTrack Documentation',
+  tagline: 'Municipal Water Infrastructure Management System',
   favicon: 'img/favicon.ico',
 
-  url: 'https://clawmarket.dev',
+  url: 'https://aquatrack.dev',
   baseUrl: '/',
 
-  organizationName: 'clawmarket',
-  projectName: 'clawmarket',
+  organizationName: 'aquatrack',
+  projectName: 'aquatrack',
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
@@ -29,7 +29,7 @@ const config: Config = {
           path: '.',
           routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/clawmarket/clawmarket/tree/main/docs/',
+          editUrl: 'https://github.com/aquatrack/aquatrack/tree/main/docs/',
           include: ['ddd/**/*.md', 'ddd/**/*.mdx', 'bdd/**/*.md', 'bdd/**/*.mdx', 'plans/**/*.md', 'plans/**/*.mdx', 'roads/**/*.md', 'roads/**/*.mdx', 'changes/**/*.md', 'changes/**/*.mdx', 'agents/**/*.md', 'agents/**/*.mdx', 'adr/**/*.md', 'adr/**/*.mdx', 'nfr/**/*.md', 'nfr/**/*.mdx', 'ROADMAP.mdx', 'CHANGELOG.md', 'index.md', 'index.mdx'],
         },
         blog: false,
@@ -52,11 +52,11 @@ const config: Config = {
   },
 
   themeConfig: {
-    image: 'img/clawmarket-social-card.jpg',
+    image: 'img/aquatrack-social-card.jpg',
     navbar: {
-      title: 'ClawMarket',
+      title: 'AquaTrack',
       logo: {
-        alt: 'ClawMarket Logo',
+        alt: 'AquaTrack Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -64,7 +64,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'dddSidebar',
           position: 'left',
-          label: 'DDD',
+          label: 'Business Structure',
         },
         {
           type: 'docSidebar',
@@ -76,23 +76,28 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'bddSidebar',
           position: 'left',
-          label: 'BDD',
+          label: 'System Specs',
+        },
+        {
+          to: '/docs/status',
+          label: 'System Status',
+          position: 'right',
         },
         {
           type: 'docSidebar',
           sidebarId: 'agentsSidebar',
-          position: 'left',
+          position: 'right',
           label: 'Agents',
         },
         {
           type: 'docSidebar',
           sidebarId: 'roadsSidebar',
           position: 'left',
-          label: 'Road Items',
+          label: 'Roadmap',
         },
         {
           to: '/docs/roadmap',
-          label: 'Roadmap',
+          label: 'Roadmap Dashboard',
           position: 'left',
         },
         {
@@ -114,7 +119,7 @@ const config: Config = {
           label: 'Changes',
         },
         {
-          href: 'https://github.com/clawmarket/clawmarket',
+          href: 'https://github.com/aquatrack/aquatrack',
           label: 'GitHub',
           position: 'right',
         },
@@ -198,25 +203,25 @@ const config: Config = {
             },
           ],
         },
-        {
-          title: 'Community',
-          items: [
-            {
-              label: 'Discord',
-              href: 'https://discord.gg/clawmarket',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/clawmarket',
-            },
-            {
-              label: 'GitHub',
-              href: 'https://github.com/clawmarket/clawmarket',
-            },
-          ],
-        },
+           {
+           title: 'Community',
+           items: [
+             {
+               label: 'Discord',
+               href: 'https://discord.gg/aquatrack',
+             },
+             {
+               label: 'Twitter',
+               href: 'https://twitter.com/aquatrack',
+             },
+             {
+               label: 'GitHub',
+               href: 'https://github.com/aquatrack/aquatrack',
+             },
+           ],
+         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} ClawMarket. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} AquaTrack. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
