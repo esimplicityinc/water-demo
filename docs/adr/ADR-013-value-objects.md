@@ -16,7 +16,7 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-Domain primitives (TokenAmount, Percentage, Duration, etc.) are used throughout the system. Without proper encapsulation, primitive obsession leads to:
+Domain primitives (WaterVolume, SystemCredit, Percentage, Duration, etc.) are used throughout the system. Without proper encapsulation, primitive obsession leads to:
 - Scattered validation logic
 - Inconsistent units and formats
 - Runtime errors from invalid values
@@ -32,10 +32,11 @@ Use **Value Objects** for all domain primitives:
 - Equal by value, not identity
 
 Examples:
-- `TokenAmount`: Validates non-negative, handles decimals
+- `WaterVolume`: Validates non-negative, handles liters/gallons
+- `SystemCredit`: Validates non-negative credit amounts
 - `Percentage`: Validates 0-100 range
 - `Duration`: Validates positive time spans
-- `WalletAddress`: Validates format and checksum
+- `SupplierAddress`: Validates delivery location format
 
 ## Consequences
 

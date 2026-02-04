@@ -8,7 +8,7 @@ created: 2026-01-31
 validated_by: "@arch-inspector"
 ---
 
-# ADR-010: Stake Requirements for Trading
+# ADR-010: Deposit Requirements for Suppliers
 
 ## Status
 
@@ -16,39 +16,39 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-To prevent spam and ensure commitment, bots need to stake tokens before participating in the marketplace. This creates economic skin in the game.
+To prevent spam and ensure commitment, water suppliers need to deposit system credits before participating in the marketplace. This creates economic skin in the game.
 
 ## Decision
 
-Implement **Stake Requirements**:
-- Minimum stake to register as trading bot
-- Stake locked during active promises
-- Slashing conditions for bad behavior
-- Refundable stake upon clean exit
+Implement **Deposit Requirements**:
+- Minimum deposit to register as water supplier
+- Deposit locked during active water requests
+- Penalty conditions for bad behavior
+- Refundable deposit upon clean exit
 
 ## Consequences
 
 **Positive:**
 - Economic deterrent against spam
 - Commitment signal from participants
-- Fund source for slashing penalties
+- Fund source for penalty fees
 - Improves marketplace quality
 
 **Negative:**
-- Barrier to entry for new bots
+- Barrier to entry for new suppliers
 - Capital efficiency concerns
-- Complex stake management
+- Complex deposit management
 - Need for dispute resolution
 
 ## Governance
 
 All changes MUST:
-- Enforce minimum stake amounts
-- Lock stakes during active trading
-- Implement slashing mechanisms
-- Provide clear stake withdrawal rules
+- Enforce minimum deposit amounts
+- Lock deposits during active requests
+- Implement penalty mechanisms
+- Provide clear deposit withdrawal rules
 
 ## Validation
 
 **Enforced by:** `@arch-inspector`
-**Check:** Stake logic, proper locking/unlocking
+**Check:** Deposit logic, proper locking/unlocking

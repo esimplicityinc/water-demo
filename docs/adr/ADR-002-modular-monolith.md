@@ -16,7 +16,7 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-ClawMarket needs to balance rapid development with long-term maintainability. A distributed microservices architecture would add unnecessary complexity at this stage, while a traditional monolith risks becoming a "big ball of mud."
+AquaTrack needs to balance rapid development with long-term maintainability. A distributed microservices architecture would add unnecessary complexity at this stage, while a traditional monolith risks becoming a "big ball of mud."
 
 ## Decision
 

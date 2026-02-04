@@ -1,12 +1,12 @@
 ---
 title: Architecture Decision Records (ADRs)
-description: All architectural decisions for ClawMarket
+description: All architectural decisions for AquaTrack
 last_updated: 2026-01-31
 ---
 
 # Architecture Decision Records
 
-This directory contains all architectural decisions for ClawMarket.
+This directory contains all architectural decisions for AquaTrack.
 
 ## Format
 
@@ -47,14 +47,14 @@ created: YYYY-MM-DD
 | ADR-004 | Next.js for Frontend | Infrastructure | Accepted |
 | ADR-005 | Event-Driven Communication | Architecture | Accepted |
 | ADR-006 | Aggregates as Consistency Boundaries | Architecture | Accepted |
-| ADR-007 | Hybrid Settlement | Architecture | Accepted |
-| ADR-008 | Hybrid Token Model | Architecture | Accepted |
+| ADR-007 | Hybrid Transfer Architecture | Architecture | Accepted |
+| ADR-008 | Hybrid Resource Model | Architecture | Accepted |
 | ADR-009 | API Key Authentication | Security | Accepted |
-| ADR-010 | Stake Requirements | Architecture | Accepted |
-| ADR-011 | Order Book Style Market | Architecture | Accepted |
-| ADR-012 | Promise Lifecycle States | Architecture | Accepted |
+| ADR-010 | Deposit Requirements for Suppliers | Architecture | Accepted |
+| ADR-011 | Request Matching Market | Architecture | Accepted |
+| ADR-012 | Water Request Lifecycle States | Architecture | Accepted |
 | ADR-013 | Value Objects for Domain Primitives | Architecture | Accepted |
-| ADR-014 | Real-Time Order Book Updates | Performance | Accepted |
+| ADR-014 | Real-Time Request Board Updates | Performance | Accepted |
 | ADR-015 | Eventual Consistency Between Contexts | Architecture | Accepted |
 | ADR-016 | Convex Functions as Application Services | Architecture | Accepted |
 | ADR-017 | Bun as Runtime and Package Manager | Infrastructure | Accepted |

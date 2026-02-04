@@ -8,7 +8,7 @@ created: 2026-01-31
 validated_by: "@arch-inspector"
 ---
 
-# ADR-014: Real-Time Order Book Updates
+# ADR-014: Real-Time Request Board Updates
 
 ## Status
 
@@ -16,18 +16,18 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-The order book must reflect market state changes in real-time. Users need immediate visibility into:
-- New orders being placed
-- Orders being filled or cancelled
-- Price movements
-- Depth changes
+The request board must reflect marketplace state changes in real-time. Users need immediate visibility into:
+- New water requests being posted
+- Requests being accepted or cancelled
+- Price updates
+- Available volume changes
 
 Polling is inefficient and creates latency.
 
 ## Decision
 
-Use **Convex Live Queries** for real-time order book updates:
-- Subscriptions to order book state
+Use **Convex Live Queries** for real-time request board updates:
+- Subscriptions to request board state
 - Automatic push updates on changes
 - Optimistic UI updates
 - Connection resilience with reconnection logic

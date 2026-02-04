@@ -8,7 +8,7 @@ created: 2026-01-31
 validated_by: "@arch-inspector"
 ---
 
-# ADR-008: Hybrid Token Model
+# ADR-008: Hybrid Resource Model
 
 ## Status
 
@@ -16,26 +16,26 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-The platform needs tokens for both platform operations (utility) and value representation (settlements). Using one token type for both creates confusion.
+The water management platform needs resources for both system operations (utility) and water quantity representation (transactions). Using one resource type for both creates confusion.
 
 ## Decision
 
-Use **Hybrid Token Model**:
-- Platform tokens for internal operations and fees
-- Settlement tokens for value transfer and trading
+Use **Hybrid Resource Model**:
+- System credits for internal operations and platform fees
+- Water units for water volume tracking and transfers
 - Clear separation of concerns
-- Conversion mechanisms between types
+- Conversion mechanisms between types (credits-to-water-units)
 
 ## Consequences
 
 **Positive:**
-- Clear separation of utility vs value
-- Different inflation/Deflation policies possible
-- Regulatory clarity (utility vs security)
-- Flexible tokenomics per type
+- Clear separation of system operations vs water tracking
+- Different pricing policies possible per resource type
+- Regulatory clarity (operations vs resource management)
+- Flexible resource economics per type
 
 **Negative:**
-- Two token systems to manage
+- Two resource systems to manage
 - Conversion complexity
 - User education needed
 - Potential for confusion

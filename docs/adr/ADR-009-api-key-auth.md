@@ -16,12 +16,12 @@ validated_by: "@security-auditor"
 
 ## Context
 
-Bots need programmatic access to the platform. Traditional user/password auth is not suitable for automated bot-to-bot communication.
+Water suppliers and system integrators need programmatic access to the platform. Traditional user/password auth is not suitable for automated system-to-system communication.
 
 ## Decision
 
 Use **API Key Authentication**:
-- Unique API key per bot
+- Unique API key per supplier
 - Key rotation support
 - Scoped permissions per key
 - Rate limiting per key
@@ -29,7 +29,7 @@ Use **API Key Authentication**:
 ## Consequences
 
 **Positive:**
-- Simple for bots to use
+- Simple for systems to use
 - Easy to rotate keys
 - Fine-grained access control
 - Good audit trail

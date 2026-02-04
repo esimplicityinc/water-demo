@@ -1,6 +1,6 @@
 ---
 id: ADR-012
-title: Promise Lifecycle States
+title: Water Request Lifecycle States
 status: accepted
 category: architecture
 scope: project-wide
@@ -8,7 +8,7 @@ created: 2026-01-31
 validated_by: "@arch-inspector"
 ---
 
-# ADR-012: Promise Lifecycle States
+# ADR-012: Water Request Lifecycle States
 
 ## Status
 
@@ -16,25 +16,25 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-Compute promises go through multiple states from creation to completion. Clear state management is critical for correct behavior and auditability.
+Water requests go through multiple states from creation to completion. Clear state management is critical for correct behavior and auditability.
 
 ## Decision
 
-Define **Promise Lifecycle States**:
+Define **Water Request Lifecycle States**:
 - Draft: Initial creation, not yet published
-- Listed: Published and available for acceptance
-- Accepted: Matched with consumer, pending execution
-- Executing: Work in progress
-- Completed: Successfully finished
-- Failed: Execution failed, dispute possible
-- Cancelled: Cancelled before execution
+- Posted: Published and available for fulfillment
+- Accepted: Matched with supplier, pending delivery
+- InProgress: Delivery in progress
+- Completed: Successfully delivered
+- Failed: Delivery failed, dispute possible
+- Cancelled: Cancelled before delivery
 - Disputed: Under dispute resolution
 
 ## Consequences
 
 **Positive:**
 - Clear state transitions
-- Auditability of promise history
+- Auditability of request history
 - Prevents invalid operations
 - Supports complex workflows
 

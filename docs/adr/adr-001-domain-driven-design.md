@@ -16,7 +16,7 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-ClawMarket is a complex marketplace with multiple interacting domains (identity, trading, tokens, settlement). We need an architecture that:
+AquaTrack is a complex water management platform with multiple interacting domains (supplier identity, water requests, resource management, transfer verification). We need an architecture that:
 - Reflects business complexity
 - Enables team scalability
 - Maintains clean separation of concerns

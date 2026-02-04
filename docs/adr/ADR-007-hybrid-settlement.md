@@ -8,7 +8,7 @@ created: 2026-01-31
 validated_by: "@arch-inspector"
 ---
 
-# ADR-007: Hybrid Settlement Architecture
+# ADR-007: Hybrid Transfer Architecture
 
 ## Status
 
@@ -16,38 +16,38 @@ validated_by: "@arch-inspector"
 
 ## Context
 
-Settlement needs to handle both fast, frequent small trades and slower, larger settlements. A single settlement model cannot optimally serve both use cases.
+Water transfers need to handle both fast, frequent small movements and slower, larger bulk transfers. A single transfer model cannot optimally serve both use cases.
 
 ## Decision
 
-Use **Hybrid Settlement** model:
-- Fast settlements for small amounts (immediate)
-- Batch settlements for large amounts (periodic)
-- Threshold-based settlement routing
-- Configurable per-bot settlement preferences
+Use **Hybrid Transfer** model:
+- Fast transfers for small volumes (immediate)
+- Batch transfers for large volumes (periodic)
+- Threshold-based transfer routing
+- Configurable per-supplier transfer preferences
 
 ## Consequences
 
 **Positive:**
 - Optimizes for both speed and cost
-- Reduces gas fees for small trades
-- Maintains security for large settlements
+- Reduces transaction costs for small transfers
+- Maintains integrity for large transfers
 - Flexible configuration per use case
 
 **Negative:**
 - Two code paths to maintain
-- More complex settlement logic
+- More complex transfer logic
 - Reconciliation needed between models
 
 ## Governance
 
 All changes MUST:
-- Support both settlement models
+- Support both transfer models
 - Implement proper threshold logic
-- Track settlement method in audit trail
-- Allow bot configuration of preferences
+- Track transfer method in audit trail
+- Allow supplier configuration of preferences
 
 ## Validation
 
 **Enforced by:** `@arch-inspector`
-**Check:** Settlement logic, proper threshold handling
+**Check:** Transfer logic, proper threshold handling
