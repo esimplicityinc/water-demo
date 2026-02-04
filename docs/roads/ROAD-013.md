@@ -1,6 +1,6 @@
 ---
 id: ROAD-013
-title: Promise Listing
+title: Commitment Fulfillment
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -20,26 +20,26 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-013: Promise Listing
+# ROAD-013: Commitment Fulfillment
 
 ## Description
-Promise listing functionality. Manages the lifecycle of promise listings including visibility, expiration, and cancellation.
+Commitment listing functionality. Manages the lifecycle of commitment listings including visibility, expiration, and cancellation.
 
 ## Status
 🎯 **Proposed**
 
 ## Acceptance Criteria
-- [ ] List promise (Draft → Listed)
+- [ ] List commitment (Draft → Listed)
 - [ ] Order book insertion
-- [ ] Promise visibility rules
+- [ ] Commitment visibility rules
 - [ ] Listing expiration
 - [ ] Cancel listing
 
 ## Dependencies
-- Depends on: ROAD-001 (Project Setup), ROAD-002 (DDD Documentation), ROAD-003 (Database Schema), ROAD-012 (Promise Creation)
-- Blocks: ROAD-014 (Order Book), ROAD-016 (Promise Acceptance)
+- Depends on: ROAD-001 (Project Setup), ROAD-002 (DDD Documentation), ROAD-003 (Database Schema), ROAD-012 (Commitment Creation)
+- Blocks: ROAD-014 (Order Book), ROAD-016 (Commitment Acceptance)
 
 ## Related
 - [ROADMAP.mdx](../ROADMAP.mdx)
-- Phase: 3 - Promise Market
+- Phase: 3 - Commitment Market
 - Priority: Critical

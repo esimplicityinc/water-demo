@@ -1,6 +1,6 @@
 ---
 id: ROAD-014
-title: Order Book
+title: Commitment Cancellation
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -20,10 +20,10 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-014: Order Book
+# ROAD-014: Commitment Cancellation
 
 ## Description
-Order book for promise trading. Provides the marketplace infrastructure for matching supply and demand of AI compute service promises.
+Order book for commitment trading. Provides the marketplace infrastructure for matching supply and demand of AI compute service commitments.
 
 ## Status
 🎯 **Proposed**
@@ -37,10 +37,10 @@ Order book for promise trading. Provides the marketplace infrastructure for matc
 - [ ] WebSocket updates
 
 ## Dependencies
-- Depends on: ROAD-001 (Project Setup), ROAD-002 (DDD Documentation), ROAD-003 (Database Schema), ROAD-013 (Promise Listing)
-- Blocks: ROAD-016 (Promise Acceptance), ROAD-023 (Real-Time Updates)
+- Depends on: ROAD-001 (Project Setup), ROAD-002 (DDD Documentation), ROAD-003 (Database Schema), ROAD-013 (Commitment Listing)
+- Blocks: ROAD-016 (Commitment Acceptance), ROAD-023 (Real-Time Updates)
 
 ## Related
 - [ROADMAP.mdx](../ROADMAP.mdx)
-- Phase: 3 - Promise Market
+- Phase: 3 - Commitment Market
 - Priority: Critical

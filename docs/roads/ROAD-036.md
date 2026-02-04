@@ -1,6 +1,6 @@
 ---
 id: ROAD-036
-title: Advertisement Campaign Tracker
+title: Service Provider Dashboard
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -19,10 +19,10 @@ depends_on: []
 blocked_by: []
 ---
 
-# ROAD-036: Advertisement Campaign Tracker & Auto-Adjuster
+# ROAD-036: Service Provider Dashboard
 
 ## Description
-Build a comprehensive campaign analytics dashboard and automated optimization system for the OpenClaw advertisement bot. Track conversion rates by platform, perform A/B testing on messages, calculate cost-per-acquisition, and use ML-based recommendations to auto-adjust campaigns for optimal performance.
+Build a comprehensive campaign analytics dashboard and automated optimization system for the AquatrackCustomer usage customer. Track conversion rates by platform, perform A/B testing on messages, calculate cost-per-acquisition, and use ML-based recommendations to auto-adjust campaigns for optimal performance.
 
 ## Status
 🎯 **Proposed**
@@ -57,7 +57,7 @@ Ad Events → Event Collector → Data Warehouse → Dashboard
 |--------|-------------|--------|
 | Impressions | Ad views | High volume |
 | CTR | Click-through rate | >2% |
-| Signup Rate | Clicks to registration | >10% |
+| Signup Rate | Clicks to enrollment | >10% |
 | CPA | Cost per acquisition | `<$5` |
 | Engagement | Likes, shares, comments | Growing |
 
@@ -68,7 +68,7 @@ Ad Events → Event Collector → Data Warehouse → Dashboard
 4. **Platform Shift**: Reallocate budget to better platforms
 
 ### Dependencies
-- **ROAD-035**: Advertisement Bot (data source)
+- **ROAD-035**: Usage Customer (data source)
 - **ROAD-032**: Advanced Analytics (analytics infrastructure)
 - **ROAD-023**: Real-Time Updates (live metrics)
 
@@ -91,8 +91,8 @@ Start with rule-based auto-adjustment before implementing ML. Ensure explainabil
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

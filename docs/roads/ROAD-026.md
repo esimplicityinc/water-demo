@@ -44,9 +44,9 @@ Implement integration tests for Convex functions, API endpoints, and event flows
 ### Integration Test Categories
 | Category | Scope | Examples |
 |----------|-------|----------|
-| Convex Functions | Backend queries/mutations | `getBotById`, `registerBot` |
-| API Routes | HTTP endpoints | `/api/bots/me`, `/api/escrows` |
-| Event Flows | Domain events | EscrowCreated → Notification |
+| Convex Functions | Backend queries/mutations | `getCustomerById`, `enrollCustomer` |
+| API Routes | HTTP endpoints | `/api/customers/me`, `/api/holdbacks` |
+| Event Flows | Domain events | HoldbackCreated → Alert |
 | Database | Data persistence | Save → Query → Verify |
 
 ### Test Database Strategy
@@ -82,8 +82,8 @@ Integration tests align with BDD scenarios:
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

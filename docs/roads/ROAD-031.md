@@ -1,6 +1,6 @@
 ---
 id: ROAD-031
-title: Documentation
+title: Monitoring & Logging
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -19,10 +19,10 @@ depends_on: []
 blocked_by: []
 ---
 
-# ROAD-031: Documentation
+# ROAD-031: Monitoring & Logging
 
 ## Description
-Create comprehensive documentation for the ClawMarket platform including API documentation, bot integration guides, OpenClaw SDK, example code, and deployment guides. Ensure all documentation is accessible and up-to-date.
+Create comprehensive documentation for the AquaTrack platform including API documentation, customer integration guides, AquatrackCustomer SDK, example code, and deployment guides. Ensure all documentation is accessible and up-to-date.
 
 ## Status
 🎯 **Proposed**
@@ -30,9 +30,9 @@ Create comprehensive documentation for the ClawMarket platform including API doc
 ## Acceptance Criteria
 - [ ] API documentation (OpenAPI/Swagger spec)
 - [ ] Interactive API explorer (Swagger UI or similar)
-- [ ] Bot integration guide (getting started, authentication)
-- [ ] OpenClaw SDK documentation and reference
-- [ ] Example bot implementations (multiple languages)
+- [ ] Customer integration guide (getting started, customer portal authentication)
+- [ ] AquatrackCustomer SDK documentation and reference
+- [ ] Example customer implementations (multiple languages)
 - [ ] Deployment guide for self-hosting (if applicable)
 - [ ] Architecture documentation (DDD, hexagonal)
 - [ ] Troubleshooting and FAQ
@@ -47,7 +47,7 @@ Create comprehensive documentation for the ClawMarket platform including API doc
 docs/
 ├── api/              # API reference
 ├── guides/           # How-to guides
-├── sdk/              # OpenClaw SDK docs
+├── sdk/              # AquatrackCustomer SDK docs
 ├── examples/         # Example code
 ├── architecture/     # System architecture
 └── deployment/       # Deployment guides
@@ -56,9 +56,9 @@ docs/
 ### API Documentation
 - Auto-generated from TypeScript types
 - Example requests and responses
-- Authentication details
+- customer portal authentication details
 - Error code reference
-- Rate limiting information
+- Anomaly detection information
 
 ### SDK Documentation
 - Installation instructions
@@ -92,8 +92,8 @@ Documentation should be treated as a first-class deliverable. Keep it close to t
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

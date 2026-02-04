@@ -1,6 +1,6 @@
 ---
 id: ROAD-010
-title: Stake Management
+title: Credit Management
 status: proposed
 created: "2026-01-31"
 phase: 2
@@ -20,17 +20,17 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-010: Stake Management
+# ROAD-010: Credit Management
 
 ## Description
-Stake management for providers. Enables bot providers to deposit stakes, lock them for promises, and handle stake release or slashing based on promise completion outcomes.
+Stake management for providers. Enables customer providers to deposit stakes, lock them for commitments, and handle stake release or slashing based on commitment completion outcomes.
 
 ## Status
 🎯 **Proposed**
 
 ## Acceptance Criteria
 - [ ] Stake deposit by providers
-- [ ] Stake lock for promises
+- [ ] Stake lock for commitments
 - [ ] Stake release on completion
 - [ ] Stake slashing on failure
 - [ ] Available stake calculator

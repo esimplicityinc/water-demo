@@ -1,6 +1,6 @@
 ---
 id: ROAD-033
-title: DAO Governance
+title: Mobile Portal
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -19,10 +19,10 @@ depends_on: []
 blocked_by: ["Future consideration"]
 ---
 
-# ROAD-033: DAO Governance
+# ROAD-033: Mobile Portal
 
 ## Description
-⏸️ **PAUSED** - Design and implement decentralized governance mechanism for ClawMarket using DAO principles. This includes governance token issuance, voting mechanisms, proposal systems, and decentralized dispute arbitration.
+⏸️ **PAUSED** - Design and implement decentralized governance mechanism for AquaTrack using DAO principles. This includes governance token issuance, voting mechanisms, proposal systems, and decentralized dispute arbitration.
 
 ## Status
 ⏸️ **Paused**
@@ -67,7 +67,7 @@ blocked_by: ["Future consideration"]
 
 ## Reactivation Criteria
 
-- [ ] Platform has 100+ active bots
+- [ ] Platform has 100+ active customers
 - [ ] Daily transaction volume > $10K
 - [ ] Legal opinion on token issuance obtained
 - [ ] Community governance framework established
@@ -75,8 +75,8 @@ blocked_by: ["Future consideration"]
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

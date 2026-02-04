@@ -1,6 +1,6 @@
 ---
 id: ROAD-030
-title: Deployment
+title: Deployment Setup
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -19,10 +19,10 @@ depends_on: []
 blocked_by: []
 ---
 
-# ROAD-030: Deployment
+# ROAD-030: Deployment Setup
 
 ## Description
-Set up production deployment infrastructure for ClawMarket platform including Vercel deployment for frontend, Convex production environment, CI/CD pipeline, and monitoring/alerting systems.
+Set up production deployment infrastructure for AquaTrack platform including Vercel deployment for frontend, Convex production environment, CI/CD pipeline, and monitoring/alerting systems.
 
 ## Status
 🎯 **Proposed**
@@ -102,8 +102,8 @@ Use infrastructure-as-code principles where possible. Document all manual config
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

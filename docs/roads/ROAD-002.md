@@ -1,6 +1,6 @@
 ---
 id: ROAD-002
-title: DDD Documentation
+title: Database Schema
 status: complete
 created: "2026-01-31"
 started: "2026-01-31"
@@ -27,9 +27,9 @@ governance:
     status: approved
     file: "bdd/features/ui/documentation-validation.feature"
     approved_by:
-      - agent: "@bdd-writer"
+      - customer: "@bdd-writer"
         timestamp: "2026-01-31T11:00:00Z"
-      - agent: "@bdd-runner"
+      - customer: "@bdd-runner"
         timestamp: "2026-01-31T11:05:00Z"
     test_results:
       total: 12
@@ -43,10 +43,10 @@ governance:
     results:
       NFR-A11Y-001:
         status: pass
-        validated_by: "@a11y-agent"
+        validated_by: "@a11y-customer"
       NFR-DOC-001:
         status: pass
-        validated_by: "@doc-agent"
+        validated_by: "@doc-customer"
 blocks: []
 depends_on:
   - ROAD-001
@@ -58,11 +58,11 @@ related_changes:
   - "CHANGE-004"
 ---
 
-# ROAD-002: DDD Documentation
+# ROAD-002: Database Schema
 
 ## Overview
 
-Create comprehensive Domain-Driven Design documentation for the ClawMarket platform.
+Create comprehensive Domain-Driven Design documentation for the AquaTrack platform.
 
 ## Goal
 
@@ -104,18 +104,18 @@ docs/
 ```
 
 ### Bounded Contexts
-1. **Bot Identity** - Bot registration, authentication, profiles
-2. **Token Management** - Wallets, transactions, escrow
-3. **Promise Market** - Promise creation, listing, trading
-4. **Settlement** - Verification, disputes, payouts
-5. **Reputation** - Scoring, leaderboards, badges
+1. **Customer Identity** - Customer enrollment, customer portal authentication, profiles
+2. **Token Management** - Accounts, transactions, holdback
+3. **Commitment Market** - Commitment creation, listing, trading
+4. **Billing** - Verification, disputes, payouts
+5. **Account standing** - Scoring, leaderboards, badges
 
 ### Key Aggregates
-- `BotAccount` - Bot identity and authentication
-- `Wallet` - Token balances and transactions
-- `Promise` - Trading promises
-- `Escrow` - Secure transaction handling
-- `Reputation` - Bot performance tracking
+- `CustomerAccount` - Customer identity and customer portal authentication
+- `Account` - Token balances and transactions
+- `Commitment` - Trading commitments
+- `Holdback` - Secure transaction handling
+- `Account standing` - Customer performance tracking
 
 ## Implementation Notes
 
@@ -141,13 +141,13 @@ just docs
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @ddd-aligner | Domain Model | 2026-01-31T09:00:00Z |
 | @arch-inspector | Architecture | 2026-01-31T09:30:00Z |
-| @doc-agent | Documentation | 2026-01-31T10:00:00Z |
-| @dev-agent | Implementation | 2026-01-31T10:30:00Z |
+| @doc-customer | Documentation | 2026-01-31T10:00:00Z |
+| @dev-customer | Implementation | 2026-01-31T10:30:00Z |
 | @bdd-writer | Tests Approved | 2026-01-31T11:00:00Z |
 | @bdd-runner | Tests Passed | 2026-01-31T11:05:00Z |

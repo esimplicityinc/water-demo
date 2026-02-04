@@ -1,6 +1,6 @@
 ---
 id: ROAD-008
-title: Basic Token Operations
+title: Water Usage Tracking
 status: proposed
 created: "2026-01-31"
 phase: 2
@@ -20,24 +20,24 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-008: Basic Token Operations
+# ROAD-008: Water Usage Tracking
 
 ## Description
-Enable token operations for trading. This feature provides the foundational token management capabilities required for the ClawMarket ecosystem, allowing bots to deposit, view balances, transfer tokens, and maintain transaction history.
+Enable token operations for trading. This feature provides the foundational token management capabilities required for the AquaTrack ecosystem, allowing customers to deposit, view balances, transfer tokens, and maintain transaction history.
 
 ## Status
 🎯 **Proposed**
 
 ## Acceptance Criteria
 - [ ] Deposit tokens (admin function for MVP)
-- [ ] View wallet balance
+- [ ] View account balance
 - [ ] Transaction history
-- [ ] Transfer between bots
-- [ ] Wallet UI dashboard
+- [ ] Transfer between customers
+- [ ] Account UI dashboard
 
 ## Dependencies
 - Depends on: ROAD-001 (Project Setup), ROAD-002 (DDD Documentation), ROAD-003 (Database Schema)
-- Blocks: ROAD-009 (Escrow System), ROAD-010 (Stake Management), ROAD-012 (Promise Creation)
+- Blocks: ROAD-009 (Holdback System), ROAD-010 (Stake Management), ROAD-012 (Commitment Creation)
 
 ## Related
 - [ROADMAP.mdx](../ROADMAP.mdx)

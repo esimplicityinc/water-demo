@@ -1,6 +1,6 @@
 ---
 id: ROAD-016
-title: Promise Acceptance
+title: Commitment Search
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -23,33 +23,33 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-016: Promise Acceptance
+# ROAD-016: Commitment Search
 
 ## Description
-Allow buyers to accept a listed promise, triggering escrow creation and promise state transition from Listed to Accepted. This is the core marketplace transaction that creates a binding agreement between provider and buyer.
+Allow buyers to accept a listed commitment, triggering holdback creation and commitment state transition from Listed to Accepted. This is the core marketplace transaction that creates a binding agreement between provider and buyer.
 
 ## Status
 🎯 **Proposed**
 
 ## Acceptance Criteria
-- [ ] Accept promise mutation endpoint
+- [ ] Accept commitment mutation endpoint
 - [ ] Validate buyer has sufficient funds
-- [ ] Create escrow with locked funds
-- [ ] Transition promise state: Listed → Accepted
+- [ ] Create holdback with locked funds
+- [ ] Transition commitment state: Listed → Accepted
 - [ ] Update order book (remove from available listings)
 - [ ] Generate acceptance transaction record
-- [ ] Trigger escrow creation workflow
+- [ ] Trigger holdback creation workflow
 - [ ] Acceptance UI flow with terms confirmation
-- [ ] Confirmation dialog with promise details
-- [ ] Success notification with next steps
+- [ ] Confirmation dialog with commitment details
+- [ ] Success alert with next steps
 - [ ] Failure handling (insufficient funds, expired listing)
 - [ ] Atomic operation (rollback on failure)
 
 ## Dependencies
-- Promise Listing (ROAD-013) - requires listed promises
-- Escrow System (ROAD-009) - requires escrow infrastructure
-- Token Operations (ROAD-008) - requires wallet validation
+- Commitment Listing (ROAD-013) - requires listed commitments
+- Holdback System (ROAD-009) - requires holdback infrastructure
+- Token Operations (ROAD-008) - requires account validation
 
 ## Related
-- [Promise Aggregate](../src/promise/domain/aggregates/)
-- [Escrow Aggregate](../src/escrow/domain/aggregates/)
+- [Commitment Aggregate](../src/commitment/domain/aggregates/)
+- [Holdback Aggregate](../src/holdback/domain/aggregates/)

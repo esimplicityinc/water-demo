@@ -1,6 +1,6 @@
 ---
 id: ROAD-011
-title: Crypto Bridge
+title: Commitment Discovery
 status: nfr_blocked
 created: "2026-01-31"
 phase: 2
@@ -20,7 +20,7 @@ blocked_by: [ROAD-009]
 plans: []
 ---
 
-# ROAD-011: Crypto Bridge
+# ROAD-011: Commitment Discovery
 
 ## Description
 Crypto bridge for external token integration. Enables integration with external blockchain networks (ETH, Solana) and stablecoins (USDC) for cross-chain token operations.
@@ -36,7 +36,7 @@ Crypto bridge for external token integration. Enables integration with external 
 - [ ] Exchange rate handling
 
 ## Dependencies
-- Depends on: ROAD-009 (Escrow System) - waiting for escrow completion
+- Depends on: ROAD-009 (Holdback System) - waiting for holdback completion
 - Blocks: None
 
 ## Related
@@ -45,4 +45,4 @@ Crypto bridge for external token integration. Enables integration with external 
 - Priority: Low
 
 ## Notes
-This feature is paused pending completion of the Escrow System (ROAD-009). The escrow mechanism is a prerequisite for secure cross-chain token bridging.
+This feature is paused pending completion of the Holdback System (ROAD-009). The holdback mechanism is a prerequisite for secure cross-chain token bridging.

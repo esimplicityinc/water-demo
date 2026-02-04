@@ -27,9 +27,9 @@ governance:
     status: approved
     file: "bdd/features/ui/project-setup.feature"
     approved_by:
-      - agent: "@bdd-writer"
+      - customer: "@bdd-writer"
         timestamp: "2026-01-31T11:00:00Z"
-      - agent: "@bdd-runner"
+      - customer: "@bdd-runner"
         timestamp: "2026-01-31T11:05:00Z"
     test_results:
       total: 5
@@ -44,13 +44,13 @@ governance:
     results:
       NFR-PERF-001:
         status: pass
-        validated_by: "@performance-agent"
+        validated_by: "@performance-customer"
       NFR-SEC-001:
         status: pass
-        validated_by: "@security-agent"
+        validated_by: "@security-customer"
       NFR-A11Y-001:
         status: pass
-        validated_by: "@a11y-agent"
+        validated_by: "@a11y-customer"
 blocks: []
 depends_on: []
 blocked_by: []
@@ -65,7 +65,7 @@ related_changes:
 
 ## Overview
 
-Establish core infrastructure and architecture for the ClawMarket platform.
+Establish core infrastructure and architecture for the AquaTrack platform.
 
 ## Goal
 
@@ -78,7 +78,7 @@ Set up the initial project structure with Next.js 14, TypeScript, Convex backend
 ## Acceptance Criteria
 
 - [x] Next.js 14 with TypeScript configured
-- [x] Convex backend setup with authentication
+- [x] Convex backend setup with customer portal authentication
 - [x] Tailwind CSS configuration
 - [x] Bun runtime configured
 - [x] Just recipe framework installed
@@ -126,11 +126,11 @@ just dev
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
-| @dev-agent | Implemented | 2026-01-31T10:00:00Z |
+| @dev-customer | Implemented | 2026-01-31T10:00:00Z |
 | @arch-inspector | Reviewed | 2026-01-31T10:30:00Z |
 | @ddd-aligner | Verified | 2026-01-31T10:45:00Z |
 | @bdd-writer | Tests Approved | 2026-01-31T11:00:00Z |

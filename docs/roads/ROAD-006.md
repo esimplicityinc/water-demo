@@ -1,6 +1,6 @@
 ---
 id: ROAD-006
-title: Bot Profile Management
+title: Account Management
 status: complete
 created: "2026-01-31"
 started: "2026-01-31"
@@ -25,11 +25,11 @@ governance:
   bdd:
     id: BDD-006
     status: approved
-    file: "bdd/features/ui/bot-profile-management.feature"
+    file: "bdd/features/ui/customer-profile-management.feature"
     approved_by:
-      - agent: "@bdd-writer"
+      - customer: "@bdd-writer"
         timestamp: "2026-01-31T11:00:00Z"
-      - agent: "@bdd-runner"
+      - customer: "@bdd-runner"
         timestamp: "2026-01-31T11:05:00Z"
     test_results:
       total: 12
@@ -44,13 +44,13 @@ governance:
     results:
       NFR-SEC-002:
         status: pass
-        validated_by: "@security-agent"
+        validated_by: "@security-customer"
       NFR-A11Y-001:
         status: pass
-        validated_by: "@a11y-agent"
+        validated_by: "@a11y-customer"
       NFR-PERF-001:
         status: pass
-        validated_by: "@performance-agent"
+        validated_by: "@performance-customer"
   capabilities:
     - CAP-001
     - CAP-002
@@ -60,48 +60,48 @@ depends_on:
   - ROAD-005
 blocked_by: []
 plans:
-  - "2026-01-31-bot-profile-management-plan.md"
+  - "2026-01-31-customer-profile-management-plan.md"
 related_changes:
   - "CHANGE-008"
 ---
 
-# ROAD-006: Bot Profile Management
+# ROAD-006: Account Management
 
 ## Overview
 
-Enable bots to manage their profiles including display name, email, avatar, and verification status.
+Enable customers to manage their profiles including display name, email, avatar, and verification status.
 
 ## Goal
 
-Allow bots to customize their public profile and verify their identity for trust signals.
+Allow customers to customize their public profile and verify their identity for trust signals.
 
 ## Description
 
-Implement profile management features including viewing and updating profile information, email verification flow, verification badges based on reputation, and avatar management.
+Implement profile management features including viewing and updating profile information, email verification flow, verification badges based on account standing, and avatar management.
 
 ## Acceptance Criteria
 
-- [x] View bot profile (`GET /api/bots/me/profile`)
+- [x] View customer profile (`GET /api/customers/me/profile`)
   - [x] Display name
-  - [x] Bot ID
+  - [x] Customer ID
   - [x] Created date
-  - [x] Reputation tier
+  - [x] Account standing tier
   - [x] Verification status
   - [x] Avatar URL
   - [x] Email (if verified)
-- [x] Update display name (`PATCH /api/bots/me/profile`)
+- [x] Update display name (`PATCH /api/customers/me/profile`)
   - [x] Validation (3-50 characters)
   - [x] Uniqueness check
-  - [x] Domain event: `DisplayNameUpdated`
-- [x] Email verification (`POST /api/bots/me/verify-email`)
+  - [x] Domain event: `CustomernameUpdated`
+- [x] Email verification (`POST /api/customers/me/verify-email`)
   - [x] Email format validation
   - [x] Verification token sent
   - [x] Token confirmation endpoint
   - [x] Domain event: `EmailVerified`
-- [x] Bot verification badge
+- [x] Customer verification badge
   - [x] Beginner tier (default)
-  - [x] Expert tier (reputation > 1000)
-  - [x] Verified badge (email + high reputation)
+  - [x] Expert tier (account standing > 1000)
+  - [x] Verified badge (email + high account standing)
   - [x] Visual indicators in UI
 - [x] Profile avatar/icon
   - [x] `avatarUrl` field in schema
@@ -114,39 +114,39 @@ Implement profile management features including viewing and updating profile inf
 
 ### Profile Schema
 ```typescript
-interface BotProfile {
-  botId: string;
-  displayName: string;
+interface CustomerProfile {
+  customerid: string;
+  customername: string;
   avatarUrl: string | null;
   email: string | null;
   emailVerified: boolean;
-  reputationTier: "beginner" | "expert" | "verified";
+  account standingTier: "beginner" | "expert" | "verified";
   createdAt: number;
   updatedAt: number;
 }
 ```
 
 ### Verification Tiers
-- **Beginner**: Default for all new bots
-- **Expert**: Reputation score > 1000
-- **Verified**: Email verified + reputation > 500
+- **Beginner**: Default for all new customers
+- **Expert**: Standing score > 1000
+- **Verified**: Email verified + account standing > 500
 
 ### Convex Mutations
 ```typescript
 // Update display name
-export const updateDisplayName = mutation({
-  args: { displayName: v.string() },
+export const updateCustomername = mutation({
+  args: { customername: v.string() },
   handler: async (ctx, args) => {
-    const bot = await requireAuth(ctx);
-    validateDisplayName(args.displayName);
-    await checkUniqueDisplayName(ctx, args.displayName);
+    const customer = await requireAuth(ctx);
+    validateCustomername(args.customername);
+    await checkUniqueCustomername(ctx, args.customername);
     
-    await ctx.db.patch(bot._id, {
-      displayName: args.displayName,
+    await ctx.db.patch(customer._id, {
+      customername: args.customername,
       updatedAt: Date.now()
     });
     
-    await publishEvent(new DisplayNameUpdated(bot._id, args.displayName));
+    await publishEvent(new CustomernameUpdated(customer._id, args.customername));
   }
 });
 ```
@@ -161,20 +161,20 @@ export const updateDisplayName = mutation({
 ## Implementation Notes
 
 Email verification flow:
-1. Bot submits email address
+1. Customer submits email address
 2. System generates verification token
 3. Email sent with verification link
-4. Bot confirms token via API
+4. Customer confirms token via API
 5. Email marked as verified
 
 Verification badges update automatically based on:
-- Real-time reputation score changes
+- Real-time standing score changes
 - Email verification status
 - Displayed throughout UI (cards, listings, profiles)
 
 ## Related Documentation
 
-- [BotAccount Aggregate](./../ddd/04-aggregates.md#botaccount)
+- [CustomerAccount Aggregate](./../ddd/04-aggregates.md#customerAccount)
 - [Profile UI Components](./../components/profile-management.md)
 - [Email Verification Flow](./../api/email-verification.md)
 
@@ -183,28 +183,28 @@ Verification badges update automatically based on:
 Profile management test:
 ```bash
 # View profile
-curl -X GET /api/bots/me/profile \
+curl -X GET /api/customers/me/profile \
   -H "Authorization: Bearer cm_sk_live_..."
 
 # Update display name
-curl -X PATCH /api/bots/me/profile \
+curl -X PATCH /api/customers/me/profile \
   -H "Authorization: Bearer cm_sk_live_..." \
-  -d '{"displayName": "NewName"}'
+  -d '{"customername": "NewName"}'
 
 # Upload avatar
-curl -X POST /api/bots/me/avatar \
+curl -X POST /api/customers/me/avatar \
   -H "Authorization: Bearer cm_sk_live_..." \
   -F "avatar=@avatar.png"
 ```
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @ddd-aligner | Domain Model | 2026-01-31T09:00:00Z |
-| @dev-agent | Backend | 2026-01-31T10:00:00Z |
+| @dev-customer | Backend | 2026-01-31T10:00:00Z |
 | @frontend-dev | UI | 2026-01-31T10:30:00Z |
 | @arch-inspector | Reviewed | 2026-01-31T10:45:00Z |
 | @bdd-writer | Tests Approved | 2026-01-31T11:00:00Z |

@@ -1,6 +1,6 @@
 ---
 id: ROAD-022
-title: shadcn/ui Components
+title: Monthly Billing
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -19,10 +19,10 @@ depends_on: []
 blocked_by: []
 ---
 
-# ROAD-022: shadcn/ui Components
+# ROAD-022: Monthly Billing
 
 ## Description
-Install and configure core shadcn/ui components to establish a consistent design system for the ClawMarket platform. These components will serve as the building blocks for all UI elements, ensuring accessibility, consistency, and rapid development.
+Install and configure core shadcn/ui components to establish a consistent design system for the AquaTrack platform. These components will serve as the building blocks for all UI elements, ensuring accessibility, consistency, and rapid development.
 
 ## Status
 🎯 **Proposed**
@@ -34,9 +34,9 @@ Install and configure core shadcn/ui components to establish a consistent design
 - [ ] Install and configure Dialog component with custom theme
 - [ ] Install and configure Form, Input, and Select components
 - [ ] Install and configure Table component
-- [ ] Install and configure Toast notifications
+- [ ] Install and configure Toast alerts
 - [ ] Install and configure Tabs component
-- [ ] Create custom theme that matches ClawMarket branding
+- [ ] Create custom theme that matches AquaTrack branding
 - [ ] Document component usage patterns
 - [ ] Ensure all components meet NFR-A11Y-001 accessibility requirements
 
@@ -45,14 +45,14 @@ Install and configure core shadcn/ui components to establish a consistent design
 ### Components to Install
 | Component | Purpose | Priority |
 |-----------|---------|----------|
-| Button | Primary CTAs, actions | Critical |
+| Button | Aquatrackry CTAs, actions | Critical |
 | Card | Content containers | Critical |
 | Dialog | Modals, confirmations | Critical |
 | Form | Input handling | High |
 | Input | Text entry | High |
 | Select | Dropdowns | High |
 | Table | Data display | High |
-| Toast | Notifications | Medium |
+| Toast | Alerts | Medium |
 | Tabs | Navigation | Medium |
 
 ### Dependencies
@@ -78,8 +78,8 @@ Components should follow the established design system documented in DDD documen
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

@@ -1,6 +1,6 @@
 ---
 id: ROAD-018
-title: Oracle Verification
+title: Proof Verification
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -23,22 +23,22 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-018: Oracle Verification
+# ROAD-018: Proof Verification
 
 ## Description
-Automated verification system that validates execution proofs submitted by providers. The oracle checks timestamps, cryptographic hashes, API logs, and other evidence to confirm promise fulfillment before settlement.
+Automated verification system that validates execution proofs submitted by providers. The oracle checks timestamps, cryptographic hashes, API logs, and other evidence to confirm commitment fulfillment before billing.
 
 ## Status
 🎯 **Proposed**
 
 ## Acceptance Criteria
 - [ ] Execution proof validation logic
-- [ ] Timestamp verification (execution within promised window)
+- [ ] Timestamp verification (execution within commitmentd window)
 - [ ] Hash verification (result integrity)
 - [ ] API log validation (external AI service calls)
 - [ ] Automated verification workflow
 - [ ] Verification result: Verified/Rejected/Needs Review
-- [ ] Verification audit trail
+- [ ] Verification usage trail
 - [ ] Oracle domain service implementation
 - [ ] Integration with execution submission
 - [ ] Verification timeout handling
@@ -46,10 +46,10 @@ Automated verification system that validates execution proofs submitted by provi
 - [ ] Dispute escalation on verification failure
 
 ## Dependencies
-- Promise Execution (ROAD-017) - requires execution proofs
-- Settlement Process (ROAD-019) - triggers settlement on verification
+- Commitment Execution (ROAD-017) - requires execution proofs
+- Billing Process (ROAD-019) - triggers billing on verification
 
 ## Related
-- [Oracle Domain Service](../src/settlement/domain/services/)
-- [Verification Domain Events](../src/settlement/domain/events/)
-- [Promise Market ADRs](../docs/decisions/)
+- [Oracle Domain Service](../src/billing/domain/services/)
+- [Verification Domain Events](../src/billing/domain/events/)
+- [Commitment Market ADRs](../docs/decisions/)

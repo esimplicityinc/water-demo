@@ -22,7 +22,7 @@ blocked_by: []
 # ROAD-027: E2E Tests
 
 ## Description
-Set up end-to-end testing with Playwright to validate critical user paths through the UI. Cover registration flows, promise creation, order book interactions, and other key user journeys to ensure the platform works correctly from the user's perspective.
+Set up end-to-end testing with Playwright to validate critical user paths through the UI. Cover enrollment flows, commitment creation, order book interactions, and other key user journeys to ensure the platform works correctly from the user's perspective.
 
 ## Status
 🎯 **Proposed**
@@ -30,11 +30,11 @@ Set up end-to-end testing with Playwright to validate critical user paths throug
 ## Acceptance Criteria
 - [ ] Playwright configured with TypeScript
 - [ ] E2E test environment setup (staging or local)
-- [ ] Registration flow E2E test
-- [ ] Promise creation E2E test
+- [ ] Enrollment flow E2E test
+- [ ] Commitment creation E2E test
 - [ ] Order book interaction E2E test
-- [ ] Promise acceptance and execution E2E test
-- [ ] Wallet operations E2E test
+- [ ] Commitment acceptance and execution E2E test
+- [ ] Account operations E2E test
 - [ ] Cross-browser testing (Chrome, Firefox, WebKit)
 - [ ] Mobile viewport E2E tests
 - [ ] Visual regression testing setup (optional)
@@ -45,10 +45,10 @@ Set up end-to-end testing with Playwright to validate critical user paths throug
 ### Critical Paths to Test
 | Path | Steps | Priority |
 |------|-------|----------|
-| Registration | Visit → Fill → Submit → Verify | Critical |
-| Promise Creation | Login → Create → Validate → List | Critical |
+| Enrollment | Visit → Fill → Submit → Verify | Critical |
+| Commitment Creation | Login → Create → Validate → List | Critical |
 | Order Book | Browse → Filter → View Details | High |
-| Promise Acceptance | View → Accept → Escrow Created | High |
+| Commitment Acceptance | View → Accept → Holdback Created | High |
 | Execution | Start → Submit Proof → Complete | High |
 
 ### Test Data Management
@@ -98,8 +98,8 @@ E2E tests should focus on user journeys, not implementation details. Use data-te
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

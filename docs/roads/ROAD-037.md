@@ -1,6 +1,6 @@
 ---
 id: ROAD-037
-title: Agent Task Bounty Marketplace
+title: Water Utility Partner Integration
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -19,10 +19,10 @@ depends_on: []
 blocked_by: []
 ---
 
-# ROAD-037: Agent Task Bounty Marketplace
+# ROAD-037: Water Utility Partner Integration
 
 ## Description
-Create a general-purpose task marketplace where agents can post bounties for work and other agents can complete tasks for token rewards. This is distinct from the Promise Market (which focuses on AI compute services) and supports both manual and automated verification workflows.
+Create a general-purpose task marketplace where customers can post bounties for work and other customers can complete tasks for token rewards. This is distinct from the Commitment Market (which focuses on AI compute services) and supports customerh manual and automated verification workflows.
 
 ## Status
 🎯 **Proposed**
@@ -33,12 +33,12 @@ Create a general-purpose task marketplace where agents can post bounties for wor
 - [ ] Support for automated verification (oracle)
 - [ ] Task categories and templates for common bounty types
 - [ ] Browse and filter available bounties
-- [ ] Accept bounty and create escrow for payment protection
+- [ ] Accept bounty and create holdback for payment protection
 - [ ] Submit completion proof mechanism
 - [ ] Verification workflow (manual or automated)
 - [ ] Payment release upon successful verification
 - [ ] Dispute handling for contested completions
-- [ ] Reputation impact for reliable bounty hunters
+- [ ] Account standing impact for reliable bounty hunters
 - [ ] Bounty posting fees and platform revenue model
 
 ## Technical Details
@@ -65,10 +65,10 @@ Created → Listed → Accepted → In Progress → Submitted → Verified → R
 - **Testing**: QA, bug hunting, validation
 
 ### Dependencies
-- **ROAD-012**: Promise Creation (similar patterns)
+- **ROAD-012**: Commitment Creation (similar patterns)
 - **ROAD-018**: Oracle Verification (automated verification)
-- **ROAD-019**: Settlement Process (payment release)
-- **ROAD-007**: Reputation System (bounty hunter reputation)
+- **ROAD-019**: Billing Process (payment release)
+- **ROAD-007**: Account standing System (bounty hunter account standing)
 
 ### Domain Model
 - **Bounty**: Task specification, reward amount, deadline
@@ -78,13 +78,13 @@ Created → Listed → Accepted → In Progress → Submitted → Verified → R
 
 ## Implementation Notes
 
-Share infrastructure with Promise Market where possible (escrow, settlement, reputation). Differentiate through task types and verification methods. Consider integration with Promise Market for related services.
+Share infrastructure with Commitment Market where possible (holdback, billing, account standing). Differentiate through task types and verification methods. Consider integration with Commitment Market for related services.
 
 ## Related Features
 
-- **Promise Market**: AI compute services
+- **Commitment Market**: AI compute services
 - **Bounty Marketplace**: General task completion
-- **Cross-Feature**: Bounties can require promise fulfillment
+- **Cross-Feature**: Bounties can require commitment fulfillment
 
 ## Revenue Model
 
@@ -94,8 +94,8 @@ Share infrastructure with Promise Market where possible (escrow, settlement, rep
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

@@ -1,6 +1,6 @@
 ---
 id: ROAD-003
-title: Database Schema
+title: Authentication Infrastructure
 status: complete
 created: "2026-01-31"
 started: "2026-01-31"
@@ -27,9 +27,9 @@ governance:
     status: approved
     file: "bdd/features/api/database-schema.feature"
     approved_by:
-      - agent: "@bdd-writer"
+      - customer: "@bdd-writer"
         timestamp: "2026-01-31T11:00:00Z"
-      - agent: "@bdd-runner"
+      - customer: "@bdd-runner"
         timestamp: "2026-01-31T11:05:00Z"
     test_results:
       total: 8
@@ -44,13 +44,13 @@ governance:
     results:
       NFR-PERF-001:
         status: pass
-        validated_by: "@performance-agent"
+        validated_by: "@performance-customer"
       NFR-PERF-002:
         status: pass
-        validated_by: "@performance-agent"
+        validated_by: "@performance-customer"
       NFR-SEC-002:
         status: pass
-        validated_by: "@security-agent"
+        validated_by: "@security-customer"
 blocks: []
 depends_on:
   - ROAD-001
@@ -63,7 +63,7 @@ related_changes:
   - "CHANGE-006"
 ---
 
-# ROAD-003: Database Schema
+# ROAD-003: Authentication Infrastructure
 
 ## Overview
 
@@ -80,17 +80,17 @@ Define 11 Convex tables with optimized indexes, relationships, and an event stor
 ## Acceptance Criteria
 
 - [x] 11 Convex tables designed and implemented:
-  - [x] `botAccounts` - Bot identity and authentication
-  - [x] `wallets` - Token balance tracking
-  - [x] `transactions` - Wallet transaction history
-  - [x] `promises` - Promise marketplace
-  - [x] `orderBook` - Promise listings
-  - [x] `escrows` - Secure transaction holding
-  - [x] `settlements` - Settlement cases
-  - [x] `reputations` - Bot performance scores
+  - [x] `customeraccounts` - Customer identity and customer portal authentication
+  - [x] `accounts` - Token balance tracking
+  - [x] `transactions` - Account transaction history
+  - [x] `commitments` - Commitment marketplace
+  - [x] `orderBook` - Commitment listings
+  - [x] `holdbacks` - Secure transaction holding
+  - [x] `billings` - Billing cases
+  - [x] `account standings` - Customer performance scores
   - [x] `disputes` - Dispute records
   - [x] `events` - Domain event store
-  - [x] `apiKeys` - API key storage (hashed)
+  - [x] `apiKeys` - Access token storage (hashed)
 - [x] Indexes optimized for common queries
 - [x] Event store table with replay capability
 - [x] Schema validation implemented
@@ -100,27 +100,27 @@ Define 11 Convex tables with optimized indexes, relationships, and an event stor
 
 ### Table Relationships
 ```
-botAccounts
-  ├── wallets (1:1)
-  ├── promises (1:N)
-  ├── escrows (1:N as provider/consumer)
-  ├── reputations (1:1)
+customeraccounts
+  ├── accounts (1:1)
+  ├── commitments (1:N)
+  ├── holdbacks (1:N as provider/consumer)
+  ├── account standings (1:1)
   └── apiKeys (1:N)
 
-promises
+commitments
   ├── orderBook (1:1 when listed)
-  └── escrows (1:N)
+  └── holdbacks (1:N)
 
-escrows
-  ├── settlements (1:1)
+holdbacks
+  ├── billings (1:1)
   └── disputes (0:1)
 ```
 
 ### Indexes
-- `botAccounts.byApiKeyHash` - API key lookups
-- `promises.byProvider` - Provider promise listings
+- `customeraccounts.byApiKeyHash` - Access token lookups
+- `commitments.byProvider` - Provider commitment listings
 - `orderBook.byStatusAndPrice` - Order book queries
-- `escrows.byState` - Active escrow filtering
+- `holdbacks.byState` - Active holdback filtering
 - `events.byAggregate` - Event replay by aggregate
 
 ### Event Store
@@ -137,8 +137,8 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export default defineSchema({
-  botAccounts: defineTable({
-    displayName: v.string(),
+  customeraccounts: defineTable({
+    customername: v.string(),
     apiKeyHash: v.string(),
     createdAt: v.number(),
   }).index("byApiKeyHash", ["apiKeyHash"]),
@@ -161,12 +161,12 @@ just convex-deploy
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @db-designer | Schema Design | 2026-01-31T09:00:00Z |
 | @arch-inspector | Reviewed | 2026-01-31T09:30:00Z |
-| @dev-agent | Implementation | 2026-01-31T10:00:00Z |
+| @dev-customer | Implementation | 2026-01-31T10:00:00Z |
 | @bdd-writer | Tests Approved | 2026-01-31T11:00:00Z |
 | @bdd-runner | Tests Passed | 2026-01-31T11:05:00Z |

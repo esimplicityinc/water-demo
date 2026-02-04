@@ -75,16 +75,16 @@ Tests should be co-located with source files in `__tests__` directories. Use des
 ## Example Test Pattern
 
 ```typescript
-describe('BotAccount', () => {
+describe('CustomerAccount', () => {
   describe('create', () => {
     it('should create account with valid display name', () => {
-      const account = BotAccount.create('TestBot');
-      expect(account.displayName).toBe('TestBot');
+      const account = CustomerAccount.create('TestCustomer');
+      expect(account.customername).toBe('TestCustomer');
     });
     
     it('should reject display name exceeding max length', () => {
       expect(() => {
-        BotAccount.create('A'.repeat(51));
+        CustomerAccount.create('A'.repeat(51));
       }).toThrow('Display name too long');
     });
   });
@@ -93,8 +93,8 @@ describe('BotAccount', () => {
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

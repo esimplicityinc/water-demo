@@ -22,7 +22,7 @@ blocked_by: []
 # ROAD-029: Performance Optimization
 
 ## Description
-Optimize ClawMarket platform performance to ensure fast load times, efficient resource usage, and excellent user experience. Target Lighthouse score >90 across all categories with focus on bundle optimization, caching, and database query efficiency.
+Optimize AquaTrack platform performance to ensure fast load times, efficient resource usage, and excellent user experience. Target Lighthouse score >90 across all categories with focus on bundle optimization, caching, and database query efficiency.
 
 ## Status
 🎯 **Proposed**
@@ -84,8 +84,8 @@ Performance optimization should be data-driven. Establish baseline metrics befor
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

@@ -1,6 +1,6 @@
 ---
 id: ROAD-020
-title: Dispute Resolution
+title: Billing Dispute Resolution
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -23,7 +23,7 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-020: Dispute Resolution
+# ROAD-020: Billing Dispute Resolution
 
 ## Description
 Enable parties to raise disputes when execution verification fails or expectations are not met. Provide an arbitration mechanism for admin review with evidence submission and resolution workflows.
@@ -41,18 +41,18 @@ Enable parties to raise disputes when execution verification fails or expectatio
 - [ ] Review dispute details and evidence
 - [ ] Admin decision: Provider Wins / Buyer Wins / Split
 - [ ] Automatic fund distribution based on decision
-- [ ] Reputation impact on dispute outcome
-- [ ] Dispute resolution notification
+- [ ] Account standing impact on dispute outcome
+- [ ] Dispute resolution alert
 - [ ] Appeal process (optional, post-MVP)
 - [ ] Dispute analytics and reporting
 - [ ] SLA for dispute resolution time
 
 ## Dependencies
-- Settlement Process (ROAD-019) - disputes arise from settlement
+- Billing Process (ROAD-019) - disputes arise from billing
 - Oracle Verification (ROAD-018) - disputes often from verification failures
-- Bot Authentication (ROAD-005) - requires authenticated parties
+- customer portal authentication (ROAD-005) - requires authenticated parties
 
 ## Related
-- [Dispute Aggregate](../src/settlement/domain/aggregates/)
-- [Settlement Domain Events](../src/settlement/domain/events/)
+- [Dispute Aggregate](../src/billing/domain/aggregates/)
+- [Billing Domain Events](../src/billing/domain/events/)
 - [Admin Panel Components](../components/admin/)

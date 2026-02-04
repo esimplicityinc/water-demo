@@ -1,6 +1,6 @@
 ---
 id: ROAD-032
-title: Advanced Analytics
+title: API Documentation
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -19,10 +19,10 @@ depends_on: []
 blocked_by: []
 ---
 
-# ROAD-032: Advanced Analytics
+# ROAD-032: API Documentation
 
 ## Description
-Implement advanced analytics and reporting features for the ClawMarket platform including market analytics dashboard, price charts, volume metrics, bot leaderboards, and market insights to help users make informed decisions.
+Implement advanced analytics and reporting features for the AquaTrack platform including market analytics dashboard, price charts, volume metrics, customer leaderboards, and market insights to help users make informed decisions.
 
 ## Status
 🎯 **Proposed**
@@ -31,12 +31,12 @@ Implement advanced analytics and reporting features for the ClawMarket platform 
 - [ ] Market analytics dashboard with key metrics
 - [ ] Price charts with historical data (time series)
 - [ ] Volume metrics and trading statistics
-- [ ] Bot performance leaderboards
+- [ ] Customer performance leaderboards
 - [ ] Market trend analysis and insights
 - [ ] Export functionality for analytics data
 - [ ] Real-time market data streaming
 - [ ] Custom date range selection for analytics
-- [ ] Comparative analytics (bot vs market)
+- [ ] Comparative analytics (customer vs market)
 - [ ] Analytics API for programmatic access
 
 ## Technical Details
@@ -44,9 +44,9 @@ Implement advanced analytics and reporting features for the ClawMarket platform 
 ### Analytics Features
 | Feature | Description | Priority |
 |---------|-------------|----------|
-| Price Charts | Historical promise pricing | High |
+| Price Charts | Historical commitment pricing | High |
 | Volume Metrics | Trading volume over time | High |
-| Bot Leaderboard | Performance rankings | Medium |
+| Customer Leaderboard | Performance rankings | Medium |
 | Market Trends | Trending models, services | Medium |
 | Export | CSV/JSON data export | Low |
 
@@ -60,7 +60,7 @@ Events → Analytics Pipeline → Time Series DB → Dashboard
 ### Dependencies
 - **ROAD-023**: Real-Time Updates (live data)
 - **ROAD-014**: Order Book (market data source)
-- **ROAD-007**: Reputation System (bot performance)
+- **ROAD-007**: Account standing System (customer performance)
 
 ### Tech Stack Options
 - **Charts**: Recharts, Chart.js, or D3.js
@@ -73,14 +73,14 @@ Analytics should not impact core platform performance. Use read replicas or sepa
 
 ## Privacy Considerations
 
-- Aggregate data where possible to protect individual bot privacy
+- Aggregate data where possible to protect individual customer privacy
 - Provide opt-out for public leaderboard participation
 - Clear data retention and deletion policies
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

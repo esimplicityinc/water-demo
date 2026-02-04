@@ -1,6 +1,6 @@
 ---
 id: ROAD-019
-title: Settlement Process
+title: Service Rating System
 status: proposed
 created: "2026-01-31"
 phase: 3
@@ -23,35 +23,35 @@ blocked_by: []
 plans: []
 ---
 
-# ROAD-019: Settlement Process
+# ROAD-019: Service Rating System
 
 ## Description
-Finalize completed promises by distributing locked tokens to the provider, updating reputation scores, and closing the escrow. This is the final phase of the promise lifecycle that completes the economic transaction.
+Finalize completed commitments by distributing locked tokens to the provider, updating standing scores, and closing the holdback. This is the final phase of the commitment lifecycle that completes the economic transaction.
 
 ## Status
 🎯 **Proposed**
 
 ## Acceptance Criteria
-- [ ] Settlement case creation on verification success
-- [ ] Automatic settlement trigger after verification
-- [ ] Token distribution from escrow to provider
+- [ ] Billing case creation on verification success
+- [ ] Automatic billing trigger after verification
+- [ ] Token distribution from holdback to provider
 - [ ] Platform fee calculation and deduction
-- [ ] Update provider reputation (+success)
-- [ ] Update buyer reputation (+completion)
-- [ ] Close escrow and release remaining funds
-- [ ] Generate settlement transaction record
-- [ ] Emit settlement domain events
-- [ ] Update promise state to Settled
-- [ ] Settlement notification to both parties
-- [ ] Settlement failure handling and rollback
-- [ ] Audit trail for all settlement operations
+- [ ] Update provider account standing (+success)
+- [ ] Update buyer account standing (+completion)
+- [ ] Close holdback and release remaining funds
+- [ ] Generate billing transaction record
+- [ ] Emit billing domain events
+- [ ] Update commitment state to Settled
+- [ ] Billing alert to customerh parties
+- [ ] Billing failure handling and rollback
+- [ ] Usage trail for all billing operations
 
 ## Dependencies
 - Oracle Verification (ROAD-018) - requires verified execution
-- Escrow System (ROAD-009) - requires escrow release mechanism
-- Reputation System (ROAD-007) - requires reputation updates
+- Holdback System (ROAD-009) - requires holdback release mechanism
+- Account standing System (ROAD-007) - requires account standing updates
 
 ## Related
-- [Settlement Aggregate](../src/settlement/domain/aggregates/)
-- [Escrow Aggregate](../src/escrow/domain/aggregates/)
-- [Token Operations](../src/wallet/application/)
+- [Billing Aggregate](../src/billing/domain/aggregates/)
+- [Holdback Aggregate](../src/holdback/domain/aggregates/)
+- [Token Operations](../src/account/application/)

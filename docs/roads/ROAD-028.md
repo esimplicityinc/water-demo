@@ -22,19 +22,19 @@ blocked_by: []
 # ROAD-028: Security Hardening
 
 ## Description
-Conduct comprehensive security audit and implement hardening measures to protect the ClawMarket platform. This includes input validation, rate limiting, XSS/CSRF prevention, secure headers, and regular security testing.
+Conduct comprehensive security audit and implement hardening measures to protect the AquaTrack platform. This includes input validation, anomaly detection, XSS/CSRF prevention, secure headers, and regular security testing.
 
 ## Status
 🎯 **Proposed**
 
 ## Acceptance Criteria
 - [ ] Security audit completed (manual and automated)
-- [ ] Rate limiting implemented for all API endpoints
+- [ ] Anomaly detection implemented for all API endpoints
 - [ ] Input sanitization and validation on all inputs
 - [ ] XSS prevention (Content Security Policy, output encoding)
 - [ ] CSRF protection for state-changing operations
 - [ ] Security headers configured (HSTS, X-Frame-Options, etc.)
-- [ ] API key rotation mechanism tested
+- [ ] Access token rotation mechanism tested
 - [ ] Penetration testing completed
 - [ ] Dependency vulnerability scanning (npm audit)
 - [ ] Security documentation created
@@ -45,11 +45,11 @@ Conduct comprehensive security audit and implement hardening measures to protect
 ### Security Measures
 | Category | Implementation | NFR |
 |----------|---------------|-----|
-| Rate Limiting | IP-based + bot-based limits | NFR-SEC-002 |
+| Anomaly detection | IP-based + customer-based limits | NFR-SEC-002 |
 | Input Validation | Zod schemas for all inputs | NFR-SEC-001 |
 | XSS Prevention | CSP, React auto-escaping | NFR-SEC-001 |
 | CSRF Protection | SameSite cookies, tokens | NFR-SEC-001 |
-| Authentication | API key + rate limiting | NFR-SEC-002 |
+| customer portal authentication | Access token + anomaly detection | NFR-SEC-002 |
 | Authorization | Role-based access control | NFR-SEC-003 |
 
 ### Security Headers
@@ -61,19 +61,19 @@ Referrer-Policy: strict-origin-when-cross-origin
 Strict-Transport-Security: max-age=31536000; includeSubDomains
 ```
 
-### Rate Limits
+### Anomaly thresholds
 | Endpoint | Limit | Window |
 |----------|-------|--------|
 | /api/auth/* | 5 requests | 15 minutes |
-| /api/bots/* | 100 requests | 15 minutes |
-| /api/escrows/* | 100 requests | 15 minutes |
-| WebSocket | 5 connections | per bot |
+| /api/customers/* | 100 requests | 15 minutes |
+| /api/holdbacks/* | 100 requests | 15 minutes |
+| WebSocket | 5 connections | per customer |
 
 ### Dependencies
-- **ROAD-028**: Security Hardening (this is the primary security item)
+- **ROAD-028**: Security Hardening (this is the aquatrackry security item)
 - All API implementations for security review
-- **ROAD-004**: Bot Registration (API key security)
-- **ROAD-005**: Bot Authentication (auth mechanism)
+- **ROAD-004**: Customer Enrollment (Access token security)
+- **ROAD-005**: customer portal authentication (auth mechanism)
 
 ## Implementation Notes
 
@@ -90,8 +90,8 @@ Security is not a one-time effort. Implement continuous security monitoring, reg
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @code-writer | Created | 2026-01-31T00:00:00Z |

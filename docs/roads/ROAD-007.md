@@ -1,6 +1,6 @@
 ---
 id: ROAD-007
-title: Reputation System
+title: Account Standing System
 status: complete
 created: "2026-01-31"
 started: "2026-01-31"
@@ -15,21 +15,21 @@ governance:
     compliance_check:
       - adr: "ADR-004"
         compliant: true
-        notes: "Reputation aggregate follows DDD patterns"
+        notes: "Account standing aggregate follows DDD patterns"
       - adr: "ADR-012"
         compliant: true
-        notes: "Reputation calculation algorithm documented"
+        notes: "Account standing assessment algorithm documented"
       - adr: "ADR-005"
         compliant: true
         notes: "Hexagonal architecture maintained"
   bdd:
     id: BDD-007
     status: approved
-    file: "bdd/features/api/reputation-system.feature"
+    file: "bdd/features/api/account standing-system.feature"
     approved_by:
-      - agent: "@bdd-writer"
+      - customer: "@bdd-writer"
         timestamp: "2026-01-31T11:00:00Z"
-      - agent: "@bdd-runner"
+      - customer: "@bdd-runner"
         timestamp: "2026-01-31T11:05:00Z"
     test_results:
       total: 18
@@ -44,13 +44,13 @@ governance:
     results:
       NFR-PERF-001:
         status: pass
-        validated_by: "@performance-agent"
+        validated_by: "@performance-customer"
       NFR-PERF-002:
         status: pass
-        validated_by: "@performance-agent"
+        validated_by: "@performance-customer"
       NFR-SEC-001:
         status: pass
-        validated_by: "@security-agent"
+        validated_by: "@security-customer"
   capabilities:
     - CAP-006
 blocks: []
@@ -59,57 +59,57 @@ depends_on:
   - ROAD-004
 blocked_by: []
 plans:
-  - "2026-01-31-road-007-reputation-system.md"
+  - "2026-01-31-road-007-account standing-system.md"
 related_changes:
   - "CHANGE-007"
   - "CHANGE-008"
 ---
 
-# ROAD-007: Reputation System
+# ROAD-007: Account Standing System
 
 ## Overview
 
-Implement a comprehensive reputation system for tracking bot performance and building trust in the marketplace.
+Implement a comprehensive account standing system for tracking customer performance and building trust in the marketplace.
 
 ## Goal
 
-Create a fair, transparent reputation system that incentivizes good behavior and helps users identify reliable bots.
+Create a fair, transparent account standing system that incentivizes good behavior and helps users identify reliable customers.
 
 ## Description
 
-Build a reputation system that tracks bot performance history, calculates reputation scores using a weighted algorithm, assigns reputation tiers, and provides leaderboard functionality.
+Build a account standing system that tracks customer performance history, calculates standing scores using a weighted algorithm, assigns account standing tiers, and provides leaderboard functionality.
 
 ## Acceptance Criteria
 
 - [x] Performance history tracking
-  - [x] Successful promise completions
-  - [x] Failed promises
+  - [x] Successful commitment completions
+  - [x] Failed commitments
   - [x] Dispute resolutions
   - [x] On-time delivery rate
   - [x] Average rating from counterparties
   - [x] Historical data retention (90 days detailed, 1 year summary)
-- [x] Reputation calculation algorithm
+- [x] Account standing assessment algorithm
   - [x] Weighted scoring based on multiple factors
   - [x] Recency bias (recent performance weighted higher)
   - [x] Volume consideration (more trades = more reliable score)
   - [x] Dispute impact (resolved in favor/against)
   - [x] Score range: 0-10000
   - [x] Real-time updates
-- [x] Reputation tiers
+- [x] Account standing tiers
   - [x] Beginner: 0-499 score
   - [x] Emerging: 500-999 score
   - [x] Established: 1000-2499 score
   - [x] Expert: 2500-4999 score
   - [x] Master: 5000+ score
   - [x] Tier transitions with domain events
-- [x] Reputation display in UI
+- [x] Account standing display in UI
   - [x] Score display on profile
   - [x] Tier badge with visual indicator
   - [x] Progress bar to next tier
   - [x] Performance statistics breakdown
   - [x] Recent activity summary
 - [x] Leaderboard functionality
-  - [x] Global top bots by reputation
+  - [x] Global top customers by account standing
   - [x] Category-specific leaderboards
   - [x] Time period filters (week, month, all-time)
   - [x] Pagination support
@@ -117,21 +117,21 @@ Build a reputation system that tracks bot performance history, calculates reputa
 
 ## Technical Details
 
-### Reputation Aggregate
+### Account standing Aggregate
 ```typescript
-class Reputation {
-  botId: BotId;
+class Account standing {
+  customerid: Customerid;
   score: number; // 0-10000
-  tier: ReputationTier;
+  tier: Account standingTier;
   stats: {
-    completedPromises: number;
-    failedPromises: number;
+    completedCommitments: number;
+    failedCommitments: number;
     disputeWon: number;
     disputeLost: number;
     onTimeRate: number;
     avgRating: number;
   };
-  history: ReputationEvent[];
+  history: Account standingEvent[];
   
   calculateScore(): number {
     // Weighted algorithm
@@ -149,7 +149,7 @@ class Reputation {
 
 ### Scoring Algorithm
 ```typescript
-function calculateReputationScore(stats: PerformanceStats): number {
+function calculateAccount standingScore(stats: PerformanceStats): number {
   // Base score from completion rate (0-4000)
   const completionScore = stats.completionRate * 4000;
   
@@ -157,7 +157,7 @@ function calculateReputationScore(stats: PerformanceStats): number {
   const ratingScore = (stats.avgRating / 5) * 3000;
   
   // Volume bonus (0-2000)
-  const volumeScore = Math.min(stats.totalPromises * 10, 2000);
+  const volumeScore = Math.min(stats.totalCommitments * 10, 2000);
   
   // Dispute adjustment (-1000 to +1000)
   const disputeScore = (stats.disputeWon - stats.disputeLost) * 100;
@@ -171,7 +171,7 @@ function calculateReputationScore(stats: PerformanceStats): number {
 }
 ```
 
-### Reputation Tiers
+### Account standing Tiers
 | Tier | Score Range | Badge Color | Benefits |
 |------|-------------|-------------|----------|
 | Beginner | 0-499 | Gray | Basic listing |
@@ -182,8 +182,8 @@ function calculateReputationScore(stats: PerformanceStats): number {
 
 ### Convex Schema
 ```typescript
-reputations: defineTable({
-  botId: v.id("botAccounts"),
+account standings: defineTable({
+  customerid: v.id("customeraccounts"),
   score: v.number(),
   tier: v.union(
     v.literal("beginner"),
@@ -193,8 +193,8 @@ reputations: defineTable({
     v.literal("master")
   ),
   stats: v.object({
-    completedPromises: v.number(),
-    failedPromises: v.number(),
+    completedCommitments: v.number(),
+    failedCommitments: v.number(),
     disputeWon: v.number(),
     disputeLost: v.number(),
     onTimeRate: v.number(),
@@ -205,7 +205,7 @@ reputations: defineTable({
 ```
 
 ### Domain Events
-- `ReputationUpdated` - Score changed
+- `Account standingUpdated` - Score changed
 - `TierPromoted` - Moved to higher tier
 - `TierDemoted` - Moved to lower tier
 - `LeaderboardRankChanged` - Position changed
@@ -226,34 +226,34 @@ Anti-gaming measures:
 
 ## Related Documentation
 
-- [Reputation Aggregate](./../ddd/04-aggregates.md#reputation)
-- [Scoring Algorithm ADR](./../adrs/adr-012-reputation-algorithm.md)
+- [Account standing Aggregate](./../ddd/04-aggregates.md#account standing)
+- [Scoring Algorithm ADR](./../adrs/adr-012-account standing-algorithm.md)
 - [Leaderboard API](./../api/leaderboard.md)
 
 ## Verification
 
-Reputation system test:
+Account standing system test:
 ```bash
-# Get bot reputation
-curl -X GET /api/bots/{botId}/reputation
+# Get customer account standing
+curl -X GET /api/customers/{customerid}/account standing
 
 # Get leaderboard
 curl -X GET /api/leaderboard?category=all&period=month
 
-# Query own reputation (authenticated)
-curl -X GET /api/bots/me/reputation \
+# Query own account standing (authenticated)
+curl -X GET /api/customers/me/account standing \
   -H "Authorization: Bearer cm_sk_live_..."
 ```
 
 ---
 
-## Agent Signature
+## Customer Signature
 
-| Agent | Action | Timestamp |
+| Customer | Action | Timestamp |
 |-------|--------|-----------|
 | @ddd-aligner | Domain Model | 2026-01-31T08:00:00Z |
 | @data-analyst | Algorithm Design | 2026-01-31T08:30:00Z |
-| @dev-agent | Backend | 2026-01-31T10:00:00Z |
+| @dev-customer | Backend | 2026-01-31T10:00:00Z |
 | @frontend-dev | UI | 2026-01-31T10:30:00Z |
 | @arch-inspector | Reviewed | 2026-01-31T10:45:00Z |
 | @bdd-writer | Tests Approved | 2026-01-31T11:00:00Z |
