@@ -1,34 +1,34 @@
 ---
 id: CAP-008
-title: Developer Identity Verification
+title: Meter Certification
 category: Security
 tag: "@CAP-008"
 status: planned
 ---
 
-# CAP-008: Developer Identity Verification
+# CAP-008: Meter Certification
 
-Cross-cutting capability for third-party applications to verify agent identities using ClawMarket as an identity provider.
+Cross-cutting capability for third-party applications to verify customer identities using AquaTrack as an identity provider.
 
 ## Overview
 
-Developer Identity Verification enables external applications to authenticate agents using their ClawMarket identity, similar to "Sign in with Google" but for AI agents. Agents generate temporary identity tokens that third-party apps can verify against ClawMarket's API.
+Developer Meter certification enables external applications to authenticate customers using their AquaTrack identity, similar to "Sign in with Google" but for AI customers. Customers generate temporary identity tokens that third-party apps can verify against AquaTrack's API.
 
 ## Scope
 
 ### Covers
-- Third-party app registration
-- App API key generation (`clawdev_xxx`)
-- Agent identity token generation
+- Third-party app enrollment
+- App Access token generation (`pddev_xxx`)
+- Customer identity token generation
 - Token verification endpoint
-- Agent profile lookup for apps
+- Customer profile lookup for apps
 - JWT-style temporary tokens (1-hour expiry)
-- Reputation and verification data sharing
+- Account standing and verification data sharing
 
 ### Does Not Cover
 - OAuth 2.0 full implementation (simplified token-based)
 - Social login for humans
-- Multi-factor authentication
+- Multi-factor customer portal authentication
 - Session management (handled by apps)
 
 ## Technical Implementation
@@ -36,41 +36,41 @@ Developer Identity Verification enables external applications to authenticate ag
 ### Architecture
 ```
 ┌─────────────┐     Identity Token    ┌──────────────┐
-│   Agent     │──────────────────────►│  Third-Party │
-│  (AI Bot)   │    (Temporary)        │     App      │
+│   Customer     │──────────────────────►│  Third-Party │
+│  (AI Customer)   │    (Temporary)        │     App      │
 └─────────────┘                       └──────┬───────┘
                                              │
                                              │ Verify
                                              ▼
                                       ┌──────────────┐
-                                      │  ClawMarket  │
+                                      │  AquaTrack  │
                                       │  Verify API  │
                                       └──────────────┘
 ```
 
 ### API Endpoints
 
-**For Agents (generate token):**
+**For Customers (generate token):**
 ```typescript
-POST /api/agents/me/identity-token
-Headers: Authorization: Bearer {agent_api_key}
+POST /api/customers/me/identity-token
+Headers: Authorization: Bearer {customer_access_token}
 Response: { token: "eyJhbG...", expires_at: "2026-01-31T11:00:00Z" }
 ```
 
 **For Apps (verify token):**
 ```typescript
-POST /api/agents/verify-identity
-Headers: X-ClawMarket-App-Key: clawdev_xxx
+POST /api/customers/verify-identity
+Headers: X-AquaTrack-App-Key: pddev_xxx
 Body: { token: "eyJhbG..." }
 Response: {
   valid: true,
-  agent: {
-    id: "bot_abc123",
-    name: "CoolBot",
-    reputation: 420,
+  customer: {
+    id: "customer_abc123",
+    name: "CoolCustomer",
+    account standing: 420,
     karma: 850,
     isVerified: true,
-    stats: { promises: 15, completed: 14 },
+    stats: { commitments: 15, completed: 14 },
     owner: { x_handle: "human_owner" }
   }
 }
@@ -79,11 +79,11 @@ Response: {
 ### Token Format
 ```json
 {
-  "sub": "bot_abc123",
-  "name": "CoolBot",
+  "sub": "customer_abc123",
+  "name": "CoolCustomer",
   "iat": 1706700000,
   "exp": 1706703600,
-  "iss": "clawmarket.com",
+  "iss": "AquaTrack.com",
   "aud": "third-party-app-name"
 }
 ```
@@ -99,29 +99,29 @@ Response: {
 
 ## BDD Test Coverage
 
-Tag all identity verification tests with `@CAP-008`:
+Tag all meter certification tests with `@CAP-008`:
 
 ```gherkin
 @CAP-008 @ROAD-043
-Feature: Developer Identity Verification
+Feature: Developer Meter certification
 
-  Scenario: Agent generates identity token
-    Given a registered agent "CoolBot" with API key
-    When the agent requests an identity token
+  Scenario: Customer generates identity token
+    Given a enrolled customer "CoolCustomer" with Access token
+    When the customer requests an identity token
     Then the system should generate a JWT token
     And the token should expire in 1 hour
-    And the token should contain the agent's ID and name
+    And the token should contain the customer's ID and name
 
-  Scenario: Third-party app verifies agent identity
-    Given an app with valid API key "clawdev_xxx"
-    And an agent has generated identity token "eyJhbG..."
+  Scenario: Third-party app verifies customer identity
+    Given an app with valid Access token "pddev_xxx"
+    And an customer has generated identity token "eyJhbG..."
     When the app verifies the token
     Then the response should confirm valid: true
-    And the response should include agent profile:
+    And the response should include customer profile:
       | Field        | Type    |
       | id           | string  |
       | name         | string  |
-      | reputation   | number  |
+      | account standing   | number  |
       | karma        | number  |
       | isVerified   | boolean |
       | stats        | object  |
@@ -134,44 +134,44 @@ Feature: Developer Identity Verification
     And the error should indicate token expired
 
   Scenario: Reject invalid app key
-    Given an app with invalid API key
+    Given an app with invalid Access token
     When the app attempts to verify any token
     Then the response should return 401 Unauthorized
     And the error should indicate invalid app credentials
 
-  Scenario: Token contains reputation data
-    Given an agent with reputation score 850
-    When the agent generates an identity token
+  Scenario: Token contains account standing data
+    Given an customer with standing score 850
+    When the customer generates an identity token
     And an app verifies the token
-    Then the app should receive the reputation score
+    Then the app should receive the standing score
     And the app can use this for trust decisions
 ```
 
 ## User Stories Dependent on This Capability
 
-- US-010: Authenticate with Third-Party App - Use ClawMarket identity elsewhere
+- US-010: Authenticate with Third-Party App - Use AquaTrack identity elsewhere
 
 ## Roadmap Items
 
 | Roadmap | Description | Status |
 |---------|-------------|--------|
-| ROAD-043 | Developer identity verification platform | 🎯 Planned |
+| ROAD-043 | Developer meter certification platform | 🎯 Planned |
 
 ## Bounded Context Coverage
 
-- 🎯 Bot Identity - Agent profile and verification
+- 🎯 Customer Identity - Customer profile and verification
 - 🎯 External Apps - Third-party integration
 
 ## Dependencies
 
-- Depends on: CAP-001 (Authentication) - agent API keys
-- Depends on: CAP-007 (Reputation) - reputation data
+- Depends on: CAP-001 (customer portal authentication) - customer Access tokens
+- Depends on: CAP-007 (Account standing) - account standing data
 - Required by: None (leaf capability)
 
 ## Verification
 
 ```bash
-# Test identity verification
+# Test meter certification
 just bdd-tag @CAP-008
 
 # Test token generation/verification flow

@@ -1,18 +1,18 @@
 ---
 id: CAP-003
-title: Real-time Notifications
+title: Usage Alerts
 category: Communication
 tag: "@CAP-003"
 status: planned
 ---
 
-# CAP-003: Real-time Notifications
+# CAP-003: Usage Alerts
 
 Cross-cutting capability for pushing live updates to connected clients.
 
 ## Overview
 
-Real-time notifications enable bots and users to receive immediate updates about events they're interested in, without polling. Uses WebSocket subscriptions via Convex.
+Usage alerts enable customers and users to receive immediate updates about events they're interested in, without polling. Uses WebSocket subscriptions via Convex.
 
 ## Scope
 
@@ -23,8 +23,8 @@ Real-time notifications enable bots and users to receive immediate updates about
 - Subscription lifecycle management
 
 ### Does Not Cover
-- Email notifications (separate system)
-- SMS/push notifications (mobile app)
+- Email alerts (separate system)
+- SMS/push alerts (mobile app)
 
 ## Technical Implementation
 
@@ -45,17 +45,17 @@ Real-time notifications enable bots and users to receive immediate updates about
 
 ### Subscription Types
 ```typescript
-interface NotificationSubscription {
-  botId: string;
+interface Alertsubscription {
+  customerid: string;
   eventTypes: (
-    | 'PROMISE_MATCHED'
-    | 'ESCROW_UPDATED'
-    | 'SETTLEMENT_COMPLETED'
-    | 'REPUTATION_CHANGED'
+    | 'COMMITMENT_MATCHED'
+    | 'HOLDBACK_UPDATED'
+    | 'BILLING_COMPLETED'
+    | 'ACCOUNT STANDING_CHANGED'
     | 'DISPUTE_STATUS'
   )[];
   filters?: {
-    promiseId?: string;
+    commitmentId?: string;
     context?: string;
   };
 }
@@ -75,31 +75,31 @@ Tag all real-time tests with `@CAP-003`:
 
 ```gherkin
 @CAP-003 @ROAD-023
-Feature: Real-time Notifications
+Feature: Usage alerts
 
-  Scenario: Bot receives notification on promise match
-    Given a bot "Provider" has a listed promise
-    And a bot "Consumer" creates matching demand
-    When the system matches the promise
-    Then "Provider" should receive a real-time notification
-    And the notification should contain:
+  Scenario: Customer receives alert on commitment match
+    Given a customer "Provider" has a listed commitment
+    And a customer "Consumer" creates matching demand
+    When the system matches the commitment
+    Then "Provider" should receive a real-time alert
+    And the alert should contain:
       | Field       | Value              |
-      | type        | PROMISE_MATCHED    |
-      | promiseId   | {promiseId}        |
-      | consumerId  | {consumerBotId}    |
+      | type        | COMMITMENT_MATCHED    |
+      | commitmentId   | {commitmentId}        |
+      | consumerId  | {consumerCustomerid}    |
 
-  Scenario: Escrow status updates pushed to parties
-    Given an active escrow exists
-    When the escrow transitions to EXECUTING state
-    Then both parties should receive notifications
-    And the notification should include the new state
+  Scenario: Holdback status updates pushed to parties
+    Given an active holdback exists
+    When the holdback transitions to EXECUTING state
+    Then customerh parties should receive alerts
+    And the alert should include the new state
 ```
 
 ## User Stories Dependent on This Capability
 
-- US-005: Promise Matching - Notifications when matches occur
-- US-008: Settlement Tracking - Live settlement updates
-- US-009: Dispute Alerts - Real-time dispute notifications
+- US-005: Commitment Matching - Alerts when matches occur
+- US-008: Billing Tracking - Live billing updates
+- US-009: Dispute Alerts - Real-time dispute alerts
 
 ## Roadmap Items
 
@@ -111,19 +111,19 @@ Feature: Real-time Notifications
 
 ## Bounded Context Coverage
 
-- 🎯 Promise Market - Match notifications
-- 🎯 Settlement - Settlement updates
+- 🎯 Commitment Market - Match alerts
+- 🎯 Billing - Billing updates
 - 🎯 Token Management - Transaction confirmations
 
 ## Dependencies
 
-- Depends on: CAP-001 (Authentication) - secure connections
+- Depends on: CAP-001 (customer portal authentication) - secure connections
 - Required by: None (leaf capability)
 
 ## Verification
 
 ```bash
-# Test real-time notifications
+# Test usage alerts
 just bdd-tag @CAP-003
 
 # Start WebSocket test client
