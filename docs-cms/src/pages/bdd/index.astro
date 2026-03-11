@@ -1,0 +1,37 @@
+---
+import { rawReadAll } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const items = rawReadAll('bdd');
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All BDD Docs', href: '/bdd' }] },
+  {
+    title: 'BDD Documentation',
+    links: items
+      .sort((a, b) => (a.frontmatter.sidebar_position ?? 99) - (b.frontmatter.sidebar_position ?? 99))
+      .map((i) => ({
+        label: i.frontmatter.title ?? i.slug,
+        href: `/bdd/${i.slug}`,
+      })),
+  },
+];
+---
+
+<DocLayout title="BDD Documentation" sidebar={sidebar}>
+  <h1>Behavior-Driven Development</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    BDD methodology, Gherkin syntax, and testing guides.
+  </p>
+  <div class="card-grid">
+    {items
+      .sort((a, b) => (a.frontmatter.sidebar_position ?? 99) - (b.frontmatter.sidebar_position ?? 99))
+      .map((item) => (
+        <div class="card">
+          <a href={`/bdd/${item.slug}`}>
+            <div class="card__title">{item.frontmatter.title ?? item.slug}</div>
+          </a>
+        </div>
+      ))}
+  </div>
+</DocLayout>

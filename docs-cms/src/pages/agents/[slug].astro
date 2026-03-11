@@ -1,0 +1,45 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const items = rawReadAll('agents');
+  return items.map((i) => ({
+    params: { slug: i.slug },
+    props: { slug: i.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('agents', slug);
+const title = entry?.frontmatter.title ?? slug;
+
+const allItems = rawReadAll('agents');
+const sorted = [...allItems].sort(
+  (a, b) => (a.frontmatter.sidebar_position ?? 99) - (b.frontmatter.sidebar_position ?? 99)
+);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Agents', href: '/agents' }] },
+  {
+    title: 'Agent Docs',
+    links: sorted.map((i) => ({
+      label: i.frontmatter.title ?? i.slug,
+      href: `/agents/${i.slug}`,
+    })),
+  },
+];
+
+const htmlContent = renderMarkdown(entry?.content ?? '');
+const breadcrumbs = [
+  { label: 'Agent Docs', href: '/agents' },
+  { label: title },
+];
+const { prev, next } = getPrevNext(sorted, slug, '/agents', (e) => e.frontmatter.title ?? e.slug);
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/agents/${slug}.md`;
+---
+
+<DocLayout title={title} sidebar={sidebar} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{title}</h1>
+  <article set:html={htmlContent} />
+</DocLayout>

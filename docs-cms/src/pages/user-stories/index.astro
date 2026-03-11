@@ -1,0 +1,40 @@
+---
+import { rawReadAll } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const items = rawReadAll('userStories').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All User Stories', href: '/user-stories' }] },
+  {
+    title: 'User Stories',
+    links: items.map((i) => ({
+      label: `${i.frontmatter.id}: ${i.frontmatter.title ?? i.slug}`,
+      href: `/user-stories/${i.slug}`,
+    })),
+  },
+];
+---
+
+<DocLayout title="User Stories" sidebar={sidebar}>
+  <h1>User Stories</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    User-facing requirements tied to personas and capabilities.
+  </p>
+  <div class="card-grid">
+    {items.map((item) => {
+      const statusColor = item.frontmatter.status === 'implemented' ? 'green' : 'yellow';
+      return (
+        <div class="card">
+          <a href={`/user-stories/${item.slug}`}>
+            <div class="card__title">{item.frontmatter.id}: {item.frontmatter.title ?? item.slug}</div>
+            <div class="card__meta">
+              <span class={`badge badge--${statusColor}`}>{item.frontmatter.status}</span>
+              {item.frontmatter.persona && <span>Persona: {item.frontmatter.persona}</span>}
+            </div>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+</DocLayout>

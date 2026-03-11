@@ -77,6 +77,22 @@ docs-build:
 docs-serve:
     cd docs && ~/.bun/bin/bun run serve
 
+# Start Keystatic CMS + Astro docs site (dev)
+cms-dev:
+    cd docs-cms && ~/.bun/bin/bun run dev
+
+# Build Keystatic CMS + Astro docs site
+cms-build:
+    cd docs-cms && ~/.bun/bin/bun run build
+
+# Preview built CMS site
+cms-preview:
+    cd docs-cms && ~/.bun/bin/bun run preview
+
+# Install CMS site dependencies
+cms-install:
+    cd docs-cms && ~/.bun/bin/bun install
+
 # ==============================================================================
 # 🧪 Testing
 # ==============================================================================

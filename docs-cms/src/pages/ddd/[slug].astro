@@ -1,0 +1,45 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const formatSlug = (slug: string) =>
+  slug.replace(/^\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+export function getStaticPaths() {
+  const items = rawReadAll('ddd');
+  return items.map((i) => ({
+    params: { slug: i.slug },
+    props: { slug: i.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('ddd', slug);
+const title = formatSlug(slug);
+
+const allItems = rawReadAll('ddd');
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All DDD Docs', href: '/ddd' }] },
+  {
+    title: 'DDD Documentation',
+    links: allItems.map((i) => ({
+      label: formatSlug(i.slug),
+      href: `/ddd/${i.slug}`,
+    })),
+  },
+];
+
+const htmlContent = renderMarkdown(entry?.content ?? '');
+const breadcrumbs = [
+  { label: 'DDD Docs', href: '/ddd' },
+  { label: title },
+];
+const { prev, next } = getPrevNext(allItems, slug, '/ddd', (e) => formatSlug(e.slug));
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/ddd/${slug}.md`;
+---
+
+<DocLayout title={title} sidebar={sidebar} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{title}</h1>
+  <article set:html={htmlContent} />
+</DocLayout>

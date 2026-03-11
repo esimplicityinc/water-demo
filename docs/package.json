@@ -20,6 +20,7 @@
     "@mdx-js/react": "^3.0.0",
     "@xyflow/react": "^12.10.0",
     "clsx": "^2.0.0",
+    "glob": "^13.0.6",
     "gray-matter": "^4.0.3",
     "lru-cache": "^11",
     "prism-react-renderer": "^2.3.0",

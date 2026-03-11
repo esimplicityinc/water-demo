@@ -1,0 +1,46 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const items = rawReadAll('bdd');
+  return items.map((i) => ({
+    params: { slug: i.slug },
+    props: { slug: i.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('bdd', slug);
+if (!entry) return Astro.redirect('/bdd');
+
+const fm = entry.frontmatter;
+const allItems = rawReadAll('bdd');
+const sortedItems = [...allItems].sort(
+  (a, b) => (a.frontmatter.sidebar_position ?? 99) - (b.frontmatter.sidebar_position ?? 99)
+);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All BDD Docs', href: '/bdd' }] },
+  {
+    title: 'BDD Documentation',
+    links: sortedItems.map((i) => ({
+        label: i.frontmatter.title ?? i.slug,
+        href: `/bdd/${i.slug}`,
+      })),
+  },
+];
+
+const htmlContent = renderMarkdown(entry?.content ?? '');
+const breadcrumbs = [
+  { label: 'BDD Docs', href: '/bdd' },
+  { label: fm.title ?? slug },
+];
+const { prev, next } = getPrevNext(sortedItems, slug, '/bdd', (e) => e.frontmatter.title ?? e.slug);
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/bdd/${slug}.md`;
+---
+
+<DocLayout title={fm.title ?? slug} sidebar={sidebar} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{fm.title ?? slug}</h1>
+  <article set:html={htmlContent} />
+</DocLayout>

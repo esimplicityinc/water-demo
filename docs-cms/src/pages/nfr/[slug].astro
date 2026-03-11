@@ -1,0 +1,54 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, formatDate, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const nfrs = rawReadAll('nfrs').filter((r) => r.frontmatter.id);
+  return nfrs.map((nfr) => ({
+    params: { slug: nfr.slug },
+    props: { slug: nfr.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('nfrs', slug);
+if (!entry) return Astro.redirect('/nfr');
+
+const fm = entry.frontmatter;
+const allNfrs = rawReadAll('nfrs').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All NFRs', href: '/nfr' }] },
+  {
+    title: 'NFRs',
+    links: allNfrs.map((n) => ({
+      label: `${n.frontmatter.id}: ${n.frontmatter.title ?? n.slug}`,
+      href: `/nfr/${n.slug}`,
+    })),
+  },
+];
+
+const meta: Record<string, string> = {
+  Status: fm.status,
+  Category: fm.category,
+  Priority: fm.priority,
+};
+
+const htmlContent = renderMarkdown(entry.content);
+const breadcrumbs = [
+  { label: 'NFRs', href: '/nfr' },
+  { label: `${fm.id}: ${fm.title ?? slug}` },
+];
+const { prev, next } = getPrevNext(allNfrs, slug, '/nfr', (e) => e.frontmatter.id + ': ' + (e.frontmatter.title ?? e.slug));
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/nfr/${slug}.md`;
+---
+
+<DocLayout title={`${fm.id}: ${fm.title ?? slug}`} sidebar={sidebar} meta={meta} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{fm.id}: {fm.title ?? slug}</h1>
+  {fm.created && (
+    <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+      Created: {formatDate(fm.created)}
+    </p>
+  )}
+  <article set:html={htmlContent} />
+</DocLayout>

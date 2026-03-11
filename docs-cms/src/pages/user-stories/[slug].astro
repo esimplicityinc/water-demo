@@ -1,0 +1,60 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const items = rawReadAll('userStories').filter((r) => r.frontmatter.id);
+  return items.map((i) => ({
+    params: { slug: i.slug },
+    props: { slug: i.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('userStories', slug);
+if (!entry) return Astro.redirect('/user-stories');
+
+const fm = entry.frontmatter;
+const allItems = rawReadAll('userStories').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All User Stories', href: '/user-stories' }] },
+  {
+    title: 'Stories',
+    links: allItems.map((i) => ({
+      label: `${i.frontmatter.id}: ${i.frontmatter.title ?? i.slug}`,
+      href: `/user-stories/${i.slug}`,
+    })),
+  },
+];
+
+const meta: Record<string, string> = {
+  Status: fm.status,
+};
+if (fm.persona) meta.Persona = fm.persona;
+
+const htmlContent = renderMarkdown(entry.content);
+const breadcrumbs = [
+  { label: 'User Stories', href: '/user-stories' },
+  { label: `${fm.id}: ${fm.title ?? slug}` },
+];
+const { prev, next } = getPrevNext(allItems, slug, '/user-stories', (e) => e.frontmatter.id + ': ' + (e.frontmatter.title ?? e.slug));
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/user-stories/${slug}.md`;
+---
+
+<DocLayout title={`${fm.id}: ${fm.title ?? slug}`} sidebar={sidebar} meta={meta} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{fm.id}: {fm.title ?? slug}</h1>
+
+  {fm.capabilities && fm.capabilities.length > 0 && (
+    <p style="color: var(--color-text-muted); font-size: 0.85rem;">
+      Capabilities: {fm.capabilities.join(', ')}
+    </p>
+  )}
+  {fm.roadmap && fm.roadmap.length > 0 && (
+    <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+      Roadmap: {fm.roadmap.join(', ')}
+    </p>
+  )}
+
+  <article set:html={htmlContent} />
+</DocLayout>

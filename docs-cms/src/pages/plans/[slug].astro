@@ -1,0 +1,45 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const formatSlug = (slug: string) =>
+  slug.replace(/^\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+export function getStaticPaths() {
+  const items = rawReadAll('plans');
+  return items.map((i) => ({
+    params: { slug: i.slug },
+    props: { slug: i.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('plans', slug);
+const title = entry?.frontmatter.title ?? formatSlug(slug);
+
+const allItems = rawReadAll('plans');
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Plans', href: '/plans' }] },
+  {
+    title: 'Plans',
+    links: allItems.map((i) => ({
+      label: i.frontmatter.title ?? formatSlug(i.slug),
+      href: `/plans/${i.slug}`,
+    })),
+  },
+];
+
+const htmlContent = renderMarkdown(entry?.content ?? '');
+const breadcrumbs = [
+  { label: 'Plans', href: '/plans' },
+  { label: title },
+];
+const { prev, next } = getPrevNext(allItems, slug, '/plans', (e) => e.frontmatter.title ?? formatSlug(e.slug));
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/plans/${slug}.md`;
+---
+
+<DocLayout title={title} sidebar={sidebar} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{title}</h1>
+  <article set:html={htmlContent} />
+</DocLayout>

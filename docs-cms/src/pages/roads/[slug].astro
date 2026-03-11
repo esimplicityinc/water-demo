@@ -1,0 +1,95 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, formatDate, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const roads = rawReadAll('roads').filter((r) => r.frontmatter.id);
+  return roads.map((road) => ({
+    params: { slug: road.slug },
+    props: { slug: road.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('roads', slug);
+if (!entry) return Astro.redirect('/roads');
+
+const fm = entry.frontmatter;
+const allRoads = rawReadAll('roads').filter((r) => r.frontmatter.id);
+
+const phaseNames: Record<number, string> = {
+  0: 'Foundation', 1: 'Bot Identity', 2: 'Token & Promise', 3: 'Settlement',
+};
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Roadmap Items', href: '/roads' }] },
+  {
+    title: 'Roadmap',
+    links: allRoads.map((r) => ({
+      label: `${r.frontmatter.id}: ${r.frontmatter.title}`,
+      href: `/roads/${r.slug}`,
+    })),
+  },
+];
+
+const meta: Record<string, string> = {};
+if (fm.status) meta.Status = fm.status;
+if (fm.priority) meta.Priority = fm.priority;
+if (fm.phase != null) meta.Phase = phaseNames[fm.phase] ?? `Phase ${fm.phase}`;
+
+const htmlContent = renderMarkdown(entry.content);
+const breadcrumbs = [
+  { label: 'Roadmap', href: '/roads' },
+  { label: `${fm.id}: ${fm.title}` },
+];
+const { prev, next } = getPrevNext(allRoads, slug, '/roads', (e) => e.frontmatter.id + ': ' + e.frontmatter.title);
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/roads/${slug}.md`;
+---
+
+<DocLayout title={`${fm.id}: ${fm.title}`} sidebar={sidebar} meta={meta} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{fm.id}: {fm.title}</h1>
+  <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">
+    Created: {formatDate(fm.created)}
+    {fm.started && <> &bull; Started: {formatDate(fm.started)}</>}
+    {fm.completed && <> &bull; Completed: {formatDate(fm.completed)}</>}
+  </p>
+
+  {fm.governance && (
+    <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+      <h3 style="margin-top: 0; font-size: 0.95rem;">Governance Summary</h3>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem;">
+        {fm.governance.adrs?.validated && (
+          <span class="badge badge--green">ADRs Validated</span>
+        )}
+        {fm.governance.bdd?.status && (
+          <span class={`badge badge--${fm.governance.bdd.status === 'approved' ? 'green' : 'yellow'}`}>
+            BDD: {fm.governance.bdd.status}
+          </span>
+        )}
+        {fm.governance.nfrs?.status && (
+          <span class={`badge badge--${fm.governance.nfrs.status === 'pass' ? 'green' : 'yellow'}`}>
+            NFRs: {fm.governance.nfrs.status}
+          </span>
+        )}
+      </div>
+      {fm.governance.bdd?.test_results && (
+        <p style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--color-text-muted);">
+          Tests: {fm.governance.bdd.test_results.passed}/{fm.governance.bdd.test_results.total} passed
+        </p>
+      )}
+    </div>
+  )}
+
+  {(fm.depends_on?.length > 0 || fm.blocks?.length > 0) && (
+    <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 1rem;">
+      {fm.depends_on?.length > 0 && (
+        <p>Depends on: {fm.depends_on.join(', ')}</p>
+      )}
+      {fm.blocks?.length > 0 && (
+        <p>Blocks: {fm.blocks.join(', ')}</p>
+      )}
+    </div>
+  )}
+
+  <article set:html={htmlContent} />
+</DocLayout>

@@ -1,0 +1,41 @@
+---
+import { rawReadAll } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const items = rawReadAll('personas').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Personas', href: '/personas' }] },
+  {
+    title: 'Personas',
+    links: items.map((i) => ({
+      label: `${i.frontmatter.id}: ${i.frontmatter.name ?? i.slug}`,
+      href: `/personas/${i.slug}`,
+    })),
+  },
+];
+---
+
+<DocLayout title="Personas" sidebar={sidebar}>
+  <h1>Personas</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    User and bot personas that interact with the system.
+  </p>
+  <div class="card-grid">
+    {items.map((item) => {
+      const typeColor = item.frontmatter.type === 'human' ? 'blue' : 'purple';
+      return (
+        <div class="card">
+          <a href={`/personas/${item.slug}`}>
+            <div class="card__title">{item.frontmatter.id}: {item.frontmatter.name ?? item.slug}</div>
+            <div class="card__meta">
+              <span class={`badge badge--${typeColor}`}>{item.frontmatter.type}</span>
+              <span class="badge badge--green">{item.frontmatter.archetype}</span>
+              <span class={`badge badge--${item.frontmatter.status === 'approved' ? 'green' : 'yellow'}`}>{item.frontmatter.status}</span>
+            </div>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+</DocLayout>

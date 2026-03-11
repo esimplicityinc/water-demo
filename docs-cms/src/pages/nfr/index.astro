@@ -1,0 +1,50 @@
+---
+import { rawReadAll } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const nfrs = rawReadAll('nfrs').filter((r) => r.frontmatter.id);
+
+const categories = ['performance', 'security', 'reliability', 'scalability', 'maintainability', 'accessibility'];
+const byCategory = new Map<string, typeof nfrs>();
+for (const nfr of nfrs) {
+  const cat = nfr.frontmatter.category;
+  if (!byCategory.has(cat)) byCategory.set(cat, []);
+  byCategory.get(cat)!.push(nfr);
+}
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All NFRs', href: '/nfr' }] },
+  ...categories
+    .filter((c) => byCategory.has(c))
+    .map((cat) => ({
+      title: cat.charAt(0).toUpperCase() + cat.slice(1),
+      links: (byCategory.get(cat) ?? []).map((n) => ({
+        label: `${n.frontmatter.id}: ${n.frontmatter.title ?? n.slug}`,
+        href: `/nfr/${n.slug}`,
+      })),
+    })),
+];
+---
+
+<DocLayout title="Non-Functional Requirements" sidebar={sidebar}>
+  <h1>Non-Functional Requirements</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    Performance, security, reliability, and accessibility standards.
+  </p>
+  <div class="card-grid">
+    {nfrs.map((nfr) => {
+      const prioColor = nfr.frontmatter.priority === 'must' ? 'red' : nfr.frontmatter.priority === 'should' ? 'yellow' : 'blue';
+      return (
+        <div class="card">
+          <a href={`/nfr/${nfr.slug}`}>
+            <div class="card__title">{nfr.frontmatter.id}: {nfr.frontmatter.title ?? nfr.slug}</div>
+            <div class="card__meta">
+              <span class={`badge badge--green`}>{nfr.frontmatter.category}</span>
+              <span class={`badge badge--${prioColor}`}>{nfr.frontmatter.priority}</span>
+            </div>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+</DocLayout>

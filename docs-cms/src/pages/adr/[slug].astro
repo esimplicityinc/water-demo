@@ -1,0 +1,82 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, formatDate, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const adrs = rawReadAll('adrs').filter((r) => r.frontmatter.id);
+  return adrs.map((adr) => ({
+    params: { slug: adr.slug },
+    props: { slug: adr.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('adrs', slug);
+if (!entry) return Astro.redirect('/adr');
+
+const fm = entry.frontmatter;
+const allAdrs = rawReadAll('adrs').filter((r) => r.frontmatter.id);
+
+// Build category-grouped sidebar (matching the index page)
+const categories = ['architecture', 'infrastructure', 'security', 'performance'];
+const categoryLabels: Record<string, string> = {
+  architecture: 'Architecture',
+  infrastructure: 'Infrastructure',
+  security: 'Security',
+  performance: 'Performance',
+};
+
+const sidebar = [
+  {
+    title: 'Navigation',
+    links: [{ label: 'All ADRs', href: '/adr' }],
+  },
+  ...categories
+    .map((cat) => ({
+      title: categoryLabels[cat] ?? cat,
+      links: allAdrs
+        .filter((a) => a.frontmatter.category === cat)
+        .map((a) => ({
+          label: `${a.frontmatter.id}: ${a.frontmatter.title ?? a.slug}`,
+          href: `/adr/${a.slug}`,
+        })),
+    }))
+    .filter((section) => section.links.length > 0),
+  // Catch-all for uncategorized ADRs
+  ...(allAdrs.filter((a) => !categories.includes(a.frontmatter.category)).length > 0
+    ? [{
+        title: 'Other',
+        links: allAdrs
+          .filter((a) => !categories.includes(a.frontmatter.category))
+          .map((a) => ({
+            label: `${a.frontmatter.id}: ${a.frontmatter.title ?? a.slug}`,
+            href: `/adr/${a.slug}`,
+          })),
+      }]
+    : []),
+];
+
+const meta: Record<string, string> = {
+  Status: fm.status,
+  Category: fm.category,
+};
+if (fm.scope) meta.Scope = fm.scope;
+
+const htmlContent = renderMarkdown(entry.content);
+const breadcrumbs = [
+  { label: 'Architecture Decisions', href: '/adr' },
+  { label: `${fm.id}: ${fm.title ?? slug}` },
+];
+const { prev, next } = getPrevNext(allAdrs, slug, '/adr', (e) => e.frontmatter.id + ': ' + (e.frontmatter.title ?? e.slug));
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/adr/${slug}.md`;
+---
+
+<DocLayout title={`${fm.id}: ${fm.title ?? slug}`} sidebar={sidebar} meta={meta} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{fm.id}: {fm.title ?? slug}</h1>
+  {fm.validated_by && (
+    <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+      Validated by: {fm.validated_by} &bull; Created: {formatDate(fm.created)}
+    </p>
+  )}
+  <article set:html={htmlContent} />
+</DocLayout>

@@ -1,0 +1,37 @@
+---
+import { rawReadAll } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const items = rawReadAll('agents');
+
+const sorted = [...items].sort(
+  (a, b) => (a.frontmatter.sidebar_position ?? 99) - (b.frontmatter.sidebar_position ?? 99)
+);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Agents', href: '/agents' }] },
+  {
+    title: 'Agent Docs',
+    links: sorted.map((i) => ({
+      label: i.frontmatter.title ?? i.slug,
+      href: `/agents/${i.slug}`,
+    })),
+  },
+];
+---
+
+<DocLayout title="Agent Documentation" sidebar={sidebar}>
+  <h1>Agent Documentation</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    Multi-agent system architecture, coordination, and reference.
+  </p>
+  <div class="card-grid">
+    {sorted.map((item) => (
+      <div class="card">
+        <a href={`/agents/${item.slug}`}>
+          <div class="card__title">{item.frontmatter.title ?? item.slug}</div>
+        </a>
+      </div>
+    ))}
+  </div>
+</DocLayout>

@@ -6,14 +6,10 @@ import Layout from '@theme/Layout';
 import styles from './index.module.css';
 
 // SVG Icon Components
-const BotTradingIcon = () => (
+const WaterTrackingIcon = () => (
   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="11" width="18" height="10" rx="2" />
-    <circle cx="12" cy="5" r="2" />
-    <path d="M12 7v4" />
-    <line x1="8" y1="16" x2="8" y2="16" />
-    <line x1="16" y1="16" x2="16" y2="16" />
-    <path d="M9 21v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+    <path d="M8 14s1.5 2 4 2 4-2 4-2" />
   </svg>
 );
 
@@ -71,7 +67,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`Welcome to ${siteConfig.title}`}
-      description="PrimaDemo - LLM Compute Futures Market for AI Agents">
+      description="AquaTrack - Municipal Water Infrastructure Management System">
       <HomepageHeader />
       <main>
         <section className={styles.features}>
@@ -80,12 +76,12 @@ export default function Home(): JSX.Element {
               <div className={clsx('col col--4')}>
                 <div className={styles.featureCard}>
                   <div className={styles.featureIcon}>
-                    <BotTradingIcon />
+                    <WaterTrackingIcon />
                   </div>
-                  <h3>Bot-to-Bot Trading</h3>
+                  <h3>Water Usage Tracking</h3>
                   <p>
-                    PrimaAgent bots trade LLM compute capacity autonomously in a
-                    secure marketplace built on Domain-Driven Design principles.
+                    Monitor consumption, manage meter readings, and automate
+                    billing for municipal utilities and water districts.
                   </p>
                 </div>
               </div>
@@ -97,7 +93,7 @@ export default function Home(): JSX.Element {
                   <h3>DDD Architecture</h3>
                   <p>
                     Built with bounded contexts, aggregates, and domain events
-                    for a maintainable, scalable system.
+                    for accurate billing, service management, and compliance.
                   </p>
                 </div>
               </div>
@@ -108,8 +104,8 @@ export default function Home(): JSX.Element {
                   </div>
                   <h3>BDD-Driven Development</h3>
                   <p>
-                    Red-Green-Refactor workflow with comprehensive BDD scenarios
-                    ensuring quality and alignment with domain requirements.
+                    Comprehensive BDD scenarios validate water usage calculations,
+                    payment processing, and service request workflows.
                   </p>
                 </div>
               </div>

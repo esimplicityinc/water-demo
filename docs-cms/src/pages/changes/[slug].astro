@@ -1,0 +1,67 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, formatDate, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const changes = rawReadAll('changes').filter((r) => r.frontmatter.id);
+  return changes.map((c) => ({
+    params: { slug: c.slug },
+    props: { slug: c.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('changes', slug);
+if (!entry) return Astro.redirect('/changes');
+
+const fm = entry.frontmatter;
+const allChanges = rawReadAll('changes').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Changes', href: '/changes' }] },
+  {
+    title: 'Changes',
+    links: allChanges.map((c) => ({
+      label: `${c.frontmatter.id}: ${c.frontmatter.title ?? c.slug}`,
+      href: `/changes/${c.slug}`,
+    })),
+  },
+];
+
+const meta: Record<string, string> = {
+  Status: fm.status,
+};
+if (fm.version) meta.Version = fm.version;
+if (fm.road_id) meta['Road ID'] = fm.road_id;
+
+const htmlContent = renderMarkdown(entry.content);
+const breadcrumbs = [
+  { label: 'Changes', href: '/changes' },
+  { label: `${fm.id}: ${fm.title ?? slug}` },
+];
+const { prev, next } = getPrevNext(allChanges, slug, '/changes', (e) => e.frontmatter.id + ': ' + (e.frontmatter.title ?? e.slug));
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/changes/${slug}.md`;
+---
+
+<DocLayout title={`${fm.id}: ${fm.title ?? slug}`} sidebar={sidebar} meta={meta} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{fm.id}: {fm.title ?? slug}</h1>
+  <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">
+    Date: {formatDate(fm.date)}
+  </p>
+
+  {/* Signatures */}
+  {fm.signatures && fm.signatures.length > 0 && (
+    <div style="background: var(--color-bg-secondary); border: 1px solid var(--color-border); border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+      <h3 style="margin-top: 0; font-size: 0.95rem;">Signatures</h3>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        {fm.signatures.map((sig) => (
+          <span class={`badge badge--${sig.status === 'approved' ? 'green' : 'yellow'}`}>
+            {sig.agent} ({sig.role})
+          </span>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <article set:html={htmlContent} />
+</DocLayout>

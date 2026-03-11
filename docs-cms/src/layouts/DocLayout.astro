@@ -1,0 +1,395 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface SidebarLink {
+  label: string;
+  href: string;
+}
+
+interface SidebarSection {
+  title: string;
+  links: SidebarLink[];
+}
+
+interface Breadcrumb {
+  label: string;
+  href?: string;
+}
+
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  sidebar?: SidebarSection[];
+  meta?: Record<string, string>;
+  breadcrumbs?: Breadcrumb[];
+  prev?: NavLink;
+  next?: NavLink;
+  editUrl?: string;
+  /** Raw HTML content — used to extract TOC headings */
+  htmlContent?: string;
+}
+
+const {
+  title,
+  description,
+  sidebar = [],
+  meta = {},
+  breadcrumbs = [],
+  prev,
+  next,
+  editUrl,
+  htmlContent = '',
+} = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+
+const colorMap: Record<string, string> = {
+  accepted: 'green', complete: 'green', published: 'green', active: 'green',
+  stable: 'green', approved: 'green', implemented: 'green', pass: 'green',
+  proposed: 'yellow', 'in-progress': 'yellow', draft: 'yellow', pending: 'yellow',
+  planned: 'yellow',
+  deprecated: 'red', superseded: 'red', fail: 'red',
+  High: 'red', Medium: 'yellow', Low: 'blue',
+  must: 'red', should: 'yellow', could: 'blue',
+};
+
+function getBadgeColor(value: string): string {
+  return colorMap[value] || 'gray';
+}
+
+const metaEntries = Object.entries(meta);
+
+// Extract TOC headings (h2, h3) from rendered HTML
+interface TocItem {
+  level: number;
+  text: string;
+  id: string;
+}
+
+function extractToc(html: string): TocItem[] {
+  const items: TocItem[] = [];
+  const regex = /<h([23])[^>]*id="([^"]*)"[^>]*>(.*?)<\/h[23]>/gi;
+  let match;
+  while ((match = regex.exec(html)) !== null) {
+    items.push({
+      level: parseInt(match[1]),
+      text: match[3].replace(/<[^>]+>/g, ''), // strip inner HTML tags
+      id: match[2],
+    });
+  }
+  return items;
+}
+
+const toc = extractToc(htmlContent);
+const hasToc = toc.length > 0;
+---
+
+<BaseLayout title={title} description={description}>
+  {sidebar.length > 0 && (
+    <aside class="site-sidebar">
+      {sidebar.map((section, sectionIdx) => (
+        <div class="site-sidebar__section" data-sidebar-section>
+          <button
+            class="site-sidebar__title"
+            type="button"
+            aria-expanded="true"
+            data-sidebar-toggle
+          >
+            <span>{section.title}</span>
+            <svg class="site-sidebar__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <ul class="site-sidebar__links" data-sidebar-list>
+            {section.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[{ active: currentPath === link.href || currentPath === link.href.replace(/\/$/, '') }]}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </aside>
+  )}
+  <main class:list={['site-main', { 'has-toc': hasToc }]}>
+    {/* Breadcrumbs */}
+    {breadcrumbs.length > 0 && (
+      <nav class="breadcrumbs" aria-label="Breadcrumbs">
+        <ol>
+          <li><a href="/">Home</a></li>
+          {breadcrumbs.map((crumb, i) => (
+            <li>
+              {crumb.href && i < breadcrumbs.length - 1
+                ? <a href={crumb.href}>{crumb.label}</a>
+                : <span aria-current={i === breadcrumbs.length - 1 ? 'page' : undefined}>{crumb.label}</span>
+              }
+            </li>
+          ))}
+        </ol>
+      </nav>
+    )}
+
+    {/* Meta badges */}
+    {metaEntries.length > 0 && (
+      <div style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        {metaEntries.map(([key, value]) => (
+          <span class={`badge badge--${getBadgeColor(value)}`}>{key}: {value}</span>
+        ))}
+      </div>
+    )}
+
+    <article>
+      <slot />
+    </article>
+
+    {/* Edit this page link */}
+    {editUrl && (
+      <div class="edit-link">
+        <a href={editUrl} target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+          Edit this page
+        </a>
+      </div>
+    )}
+
+    {/* Previous / Next navigation */}
+    {(prev || next) && (
+      <nav class="prev-next" aria-label="Page navigation">
+        {prev ? (
+          <a href={prev.href} class="prev-next__link prev-next__link--prev">
+            <span class="prev-next__label">Previous</span>
+            <span class="prev-next__title">{prev.label}</span>
+          </a>
+        ) : <div />}
+        {next ? (
+          <a href={next.href} class="prev-next__link prev-next__link--next">
+            <span class="prev-next__label">Next</span>
+            <span class="prev-next__title">{next.label}</span>
+          </a>
+        ) : <div />}
+      </nav>
+    )}
+  </main>
+
+  {/* Table of Contents - right sidebar */}
+  {hasToc && (
+    <aside class="toc-sidebar">
+      <div class="toc-sidebar__inner">
+        <h4 class="toc-sidebar__heading">On this page</h4>
+        <ul class="toc-sidebar__list">
+          {toc.map((item) => (
+            <li class:list={[`toc-level-${item.level}`]}>
+              <a href={`#${item.id}`}>{item.text}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  )}
+</BaseLayout>
+
+<style>
+  /* Breadcrumbs */
+  .breadcrumbs {
+    margin-bottom: 1rem;
+  }
+
+  .breadcrumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0;
+    font-size: 0.8rem;
+  }
+
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .breadcrumbs li + li::before {
+    content: '›';
+    margin: 0 0.5rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumbs a {
+    color: var(--color-text-muted);
+    transition: color 0.15s;
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .breadcrumbs span {
+    color: var(--color-text);
+  }
+
+  /* Edit link */
+  .edit-link {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .edit-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    transition: color 0.15s;
+  }
+
+  .edit-link a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  /* Previous / Next */
+  .prev-next {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .prev-next__link {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    transition: border-color 0.15s;
+    text-decoration: none;
+  }
+
+  .prev-next__link:hover {
+    border-color: var(--color-primary-dim);
+    text-decoration: none;
+  }
+
+  .prev-next__link--next {
+    text-align: right;
+  }
+
+  .prev-next__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .prev-next__link--prev .prev-next__label::before {
+    content: '← ';
+  }
+
+  .prev-next__link--next .prev-next__label::after {
+    content: ' →';
+  }
+
+  .prev-next__title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  /* Table of Contents sidebar */
+  .toc-sidebar {
+    width: 220px;
+    min-width: 220px;
+    padding: 1.5rem 1rem 1rem 0;
+    height: calc(100vh - var(--header-height));
+    position: sticky;
+    top: var(--header-height);
+    overflow-y: auto;
+  }
+
+  .toc-sidebar__inner {
+    border-left: 1px solid var(--color-border);
+    padding-left: 1rem;
+  }
+
+  .toc-sidebar__heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+  }
+
+  .toc-sidebar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc-sidebar__list li {
+    margin: 0;
+  }
+
+  .toc-sidebar__list a {
+    display: block;
+    padding: 0.2rem 0;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    line-height: 1.4;
+    transition: color 0.15s;
+  }
+
+  .toc-sidebar__list a:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .toc-level-3 {
+    padding-left: 0.75rem;
+  }
+
+  .toc-level-3 a {
+    font-size: 0.75rem;
+  }
+
+  /* Adjust main when TOC is present */
+  :global(.site-main.has-toc) {
+    max-width: 700px;
+  }
+
+  @media (max-width: 1100px) {
+    .toc-sidebar {
+      display: none;
+    }
+    :global(.site-main.has-toc) {
+      max-width: 900px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .prev-next {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

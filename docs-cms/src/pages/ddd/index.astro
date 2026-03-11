@@ -1,0 +1,36 @@
+---
+import { rawReadAll } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const formatSlug = (slug: string) =>
+  slug.replace(/^\d+-/, '').replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+const items = rawReadAll('ddd');
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All DDD Docs', href: '/ddd' }] },
+  {
+    title: 'DDD Documentation',
+    links: items.map((i) => ({
+      label: formatSlug(i.slug),
+      href: `/ddd/${i.slug}`,
+    })),
+  },
+];
+---
+
+<DocLayout title="DDD Documentation" sidebar={sidebar}>
+  <h1>Domain-Driven Design</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    Domain model, bounded contexts, ubiquitous language, and design patterns.
+  </p>
+  <div class="card-grid">
+    {items.map((item) => (
+      <div class="card">
+        <a href={`/ddd/${item.slug}`}>
+          <div class="card__title">{formatSlug(item.slug)}</div>
+        </a>
+      </div>
+    ))}
+  </div>
+</DocLayout>

@@ -1,0 +1,41 @@
+---
+import { rawReadAll } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const changes = rawReadAll('changes').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Changes', href: '/changes' }] },
+  {
+    title: 'Change Records',
+    links: changes.map((c) => ({
+      label: `${c.frontmatter.id}: ${c.frontmatter.title ?? c.slug}`,
+      href: `/changes/${c.slug}`,
+    })),
+  },
+];
+---
+
+<DocLayout title="Change Records" sidebar={sidebar}>
+  <h1>Change Records</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    Auditable change history with compliance signatures.
+  </p>
+  <div class="card-grid">
+    {changes.map((change) => {
+      const statusColor = change.frontmatter.status === 'published' ? 'green' : change.frontmatter.status === 'draft' ? 'yellow' : 'gray';
+      return (
+        <div class="card">
+          <a href={`/changes/${change.slug}`}>
+            <div class="card__title">{change.frontmatter.id}: {change.frontmatter.title ?? change.slug}</div>
+            <div class="card__meta">
+              <span class={`badge badge--${statusColor}`}>{change.frontmatter.status}</span>
+              {change.frontmatter.version && <span>v{change.frontmatter.version}</span>}
+              {change.frontmatter.road_id && <span>{change.frontmatter.road_id}</span>}
+            </div>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+</DocLayout>

@@ -1,0 +1,63 @@
+---
+import { rawReadAll, formatDate } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const adrs = rawReadAll('adrs').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  {
+    title: 'By Category',
+    links: [
+      { label: 'All ADRs', href: '/adr' },
+    ],
+  },
+  {
+    title: 'Architecture',
+    links: adrs
+      .filter((a) => a.frontmatter.category === 'architecture')
+      .map((a) => ({ label: `${a.frontmatter.id}: ${a.frontmatter.title ?? a.slug}`, href: `/adr/${a.slug}` })),
+  },
+  {
+    title: 'Infrastructure',
+    links: adrs
+      .filter((a) => a.frontmatter.category === 'infrastructure')
+      .map((a) => ({ label: `${a.frontmatter.id}: ${a.frontmatter.title ?? a.slug}`, href: `/adr/${a.slug}` })),
+  },
+  {
+    title: 'Security',
+    links: adrs
+      .filter((a) => a.frontmatter.category === 'security')
+      .map((a) => ({ label: `${a.frontmatter.id}: ${a.frontmatter.title ?? a.slug}`, href: `/adr/${a.slug}` })),
+  },
+  {
+    title: 'Performance',
+    links: adrs
+      .filter((a) => a.frontmatter.category === 'performance')
+      .map((a) => ({ label: `${a.frontmatter.id}: ${a.frontmatter.title ?? a.slug}`, href: `/adr/${a.slug}` })),
+  },
+];
+---
+
+<DocLayout title="Architecture Decision Records" sidebar={sidebar}>
+  <h1>Architecture Decision Records</h1>
+  <p style="color: var(--color-text-muted); margin-bottom: 1.5rem;">
+    Key architectural decisions and their rationale, organized by category.
+  </p>
+  <div class="card-grid">
+    {adrs.map((adr) => {
+      const statusColor = adr.frontmatter.status === 'accepted' ? 'green' : adr.frontmatter.status === 'proposed' ? 'yellow' : 'red';
+      return (
+        <div class="card">
+          <a href={`/adr/${adr.slug}`}>
+            <div class="card__title">{adr.frontmatter.id}: {adr.frontmatter.title ?? adr.slug}</div>
+            <div class="card__meta">
+              <span class={`badge badge--${statusColor}`}>{adr.frontmatter.status}</span>
+              <span class={`badge badge--blue`}>{adr.frontmatter.category}</span>
+              {adr.frontmatter.created && <span>{formatDate(adr.frontmatter.created)}</span>}
+            </div>
+          </a>
+        </div>
+      );
+    })}
+  </div>
+</DocLayout>

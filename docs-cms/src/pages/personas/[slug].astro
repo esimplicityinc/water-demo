@@ -1,0 +1,68 @@
+---
+import { rawReadAll, rawRead, renderMarkdown, getPrevNext } from '../../lib/reader';
+import DocLayout from '../../layouts/DocLayout.astro';
+
+export function getStaticPaths() {
+  const items = rawReadAll('personas').filter((r) => r.frontmatter.id);
+  return items.map((i) => ({
+    params: { slug: i.slug },
+    props: { slug: i.slug },
+  }));
+}
+
+const { slug } = Astro.props;
+const entry = rawRead('personas', slug);
+const fm = entry?.frontmatter ?? {};
+
+const allItems = rawReadAll('personas').filter((r) => r.frontmatter.id);
+
+const sidebar = [
+  { title: 'Navigation', links: [{ label: 'All Personas', href: '/personas' }] },
+  {
+    title: 'Personas',
+    links: allItems.map((i) => ({
+      label: `${i.frontmatter.id}: ${i.frontmatter.name ?? i.slug}`,
+      href: `/personas/${i.slug}`,
+    })),
+  },
+];
+
+const meta: Record<string, string> = {
+  Type: fm.type,
+  Archetype: fm.archetype,
+  Status: fm.status,
+};
+
+const htmlContent = renderMarkdown(entry?.content ?? '');
+const breadcrumbs = [
+  { label: 'Personas', href: '/personas' },
+  { label: `${fm.id}: ${fm.name ?? slug}` },
+];
+const { prev, next } = getPrevNext(allItems, slug, '/personas', (e) => e.frontmatter.id + ': ' + (e.frontmatter.name ?? e.slug));
+const editUrl = `https://github.com/anomalyco/aquatrack/edit/main/docs/personas/${slug}.md`;
+---
+
+<DocLayout title={`${fm.id}: ${fm.name ?? slug}`} sidebar={sidebar} meta={meta} breadcrumbs={breadcrumbs} prev={prev} next={next} editUrl={editUrl} htmlContent={htmlContent}>
+  <h1>{fm.id}: {fm.name ?? slug}</h1>
+  {fm.description && (
+    <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1rem; font-style: italic;">
+      {fm.description}
+    </p>
+  )}
+
+  {fm.goals && fm.goals.length > 0 && (
+    <div style="margin-bottom: 1rem;">
+      <h3 style="font-size: 0.95rem;">Goals</h3>
+      <ul>{fm.goals.map((g: string) => <li>{g}</li>)}</ul>
+    </div>
+  )}
+
+  {fm.pain_points && fm.pain_points.length > 0 && (
+    <div style="margin-bottom: 1rem;">
+      <h3 style="font-size: 0.95rem;">Pain Points</h3>
+      <ul>{fm.pain_points.map((p: string) => <li>{p}</li>)}</ul>
+    </div>
+  )}
+
+  <article set:html={htmlContent} />
+</DocLayout>
