@@ -30,7 +30,7 @@ const config: Config = {
           routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/aquatrack/aquatrack/tree/main/docs/',
-          include: ['ddd/**/*.md', 'ddd/**/*.mdx', 'bdd/**/*.md', 'bdd/**/*.mdx', 'plans/**/*.md', 'plans/**/*.mdx', 'roads/**/*.md', 'roads/**/*.mdx', 'changes/**/*.md', 'changes/**/*.mdx', 'agents/**/*.md', 'agents/**/*.mdx', 'adr/**/*.md', 'adr/**/*.mdx', 'nfr/**/*.md', 'nfr/**/*.mdx', 'ROADMAP.mdx', 'CHANGELOG.md', 'index.md', 'index.mdx'],
+          include: ['ddd/**/*.md', 'ddd/**/*.mdx', 'bdd/**/*.md', 'bdd/**/*.mdx', 'plans/**/*.md', 'plans/**/*.mdx', 'roads/**/*.md', 'roads/**/*.mdx', 'changes/**/*.md', 'changes/**/*.mdx', 'agents/**/*.md', 'agents/**/*.mdx', 'adr/**/*.md', 'adr/**/*.mdx', 'nfr/**/*.md', 'nfr/**/*.mdx', 'personas/**/*.md', 'personas/**/*.mdx', 'user-stories/**/*.md', 'user-stories/**/*.mdx', 'capabilities/**/*.md', 'capabilities/**/*.mdx', 'users-overview.md', 'system-overview.md', 'teams-overview.md', 'ROADMAP.mdx', 'CHANGELOG.md', 'index.md', 'index.mdx'],
         },
         blog: false,
         theme: {
@@ -68,6 +68,24 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
+          sidebarId: 'usersSidebar',
+          position: 'left',
+          label: 'Users',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'systemSidebar',
+          position: 'left',
+          label: 'System',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'teamsSidebar',
+          position: 'left',
+          label: 'Teams',
+        },
+        {
+          type: 'docSidebar',
           sidebarId: 'planningSidebar',
           position: 'left',
           label: 'Planning',
@@ -88,17 +106,6 @@ const config: Config = {
           sidebarId: 'agentsSidebar',
           position: 'right',
           label: 'Agents',
-        },
-        {
-          type: 'docSidebar',
-          sidebarId: 'roadsSidebar',
-          position: 'left',
-          label: 'Roadmap',
-        },
-        {
-          to: '/docs/roadmap',
-          label: 'Roadmap Dashboard',
-          position: 'left',
         },
         {
           type: 'docSidebar',

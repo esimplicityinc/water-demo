@@ -1,5 +1,4 @@
 ---
-id: US-004
 title: Accept Promise
 persona: PER-003
 status: planned

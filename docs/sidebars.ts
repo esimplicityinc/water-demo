@@ -1,12 +1,76 @@
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
 const sidebars: SidebarsConfig = {
-  planningSidebar: [
+  teamsSidebar: [
     {
       type: 'doc',
-      id: 'roadmap',
-      label: '🗺️ Project Roadmap',
+      id: 'teams-overview',
+      label: 'Teams & Ownership',
     },
+  ],
+  usersSidebar: [
+    {
+      type: 'doc',
+      id: 'users-overview',
+      label: 'Users & Personas',
+    },
+    {
+      type: 'category',
+      label: 'Personas',
+      items: [
+        'personas/PER-001-utility-administrator',
+        'personas/PER-002-treatment-operator',
+        'personas/PER-003-residential-customer',
+        'personas/PER-004-commercial-customer',
+        'personas/PER-005-meter-technician',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'User Stories',
+      link: {
+        type: 'doc',
+        id: 'user-stories/index',
+      },
+      items: [
+        'user-stories/US-001-customer-enrollment',
+        'user-stories/US-002-service-activation',
+        'user-stories/US-004-meter-reading',
+        'user-stories/US-005-view-usage-history',
+        'user-stories/US-006-service-area-lookup',
+        'user-stories/US-007-submit-service-request',
+        'user-stories/US-008-technician-dispatch',
+        'user-stories/US-009-customer-communication',
+        'user-stories/US-010-smart-meter-integration',
+      ],
+    },
+  ],
+  systemSidebar: [
+    {
+      type: 'doc',
+      id: 'system-overview',
+      label: 'System Architecture',
+    },
+    {
+      type: 'category',
+      label: 'Capabilities',
+      link: {
+        type: 'doc',
+        id: 'capabilities/index',
+      },
+      items: [
+        'capabilities/CAP-001',
+        'capabilities/CAP-002',
+        'capabilities/CAP-003',
+        'capabilities/CAP-004',
+        'capabilities/CAP-005',
+        'capabilities/CAP-006',
+        'capabilities/CAP-007',
+        'capabilities/CAP-008',
+      ],
+    },
+  ],
+  planningSidebar: [
     {
       type: 'category',
       label: '📋 Implementation Plans',
@@ -74,6 +138,11 @@ const sidebars: SidebarsConfig = {
   bddSidebar: [
     {
       type: 'doc',
+      id: 'bdd/feature-index',
+      label: 'Feature Index',
+    },
+    {
+      type: 'doc',
       id: 'bdd/bdd-overview',
       label: 'BDD Overview',
     },
@@ -81,11 +150,6 @@ const sidebars: SidebarsConfig = {
       type: 'doc',
       id: 'bdd/gherkin-syntax',
       label: 'Gherkin Syntax',
-    },
-    {
-      type: 'doc',
-      id: 'bdd/feature-index',
-      label: 'Feature Index',
     },
     {
       type: 'doc',

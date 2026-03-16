@@ -1,11 +1,414 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
 title: Feature File Index
 ---
 
 # Feature File Index
 
 Complete index of all BDD feature files organized by domain area. Each feature file represents a specific business capability with comprehensive test coverage.
+
+---
+
+## System Specs At a Glance
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '16px',
+  marginBottom: '32px'
+}}>
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    textAlign: 'center'
+  }}>
+    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#0f172a', marginBottom: '8px' }}>18</div>
+    <div style={{ fontSize: '14px', color: '#64748b', fontWeight: '500' }}>Total Features</div>
+    <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>Across all domains</div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    textAlign: 'center'
+  }}>
+    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#0f172a', marginBottom: '8px' }}>160</div>
+    <div style={{ fontSize: '14px', color: '#64748b', fontWeight: '500' }}>Test Scenarios</div>
+    <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>Comprehensive coverage</div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    textAlign: 'center'
+  }}>
+    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#0f172a', marginBottom: '8px' }}>100%</div>
+    <div style={{ fontSize: '14px', color: '#64748b', fontWeight: '500' }}>Test Coverage</div>
+    <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>All features covered</div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    textAlign: 'center'
+  }}>
+    <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#0f172a', marginBottom: '8px' }}>6</div>
+    <div style={{ fontSize: '14px', color: '#64748b', fontWeight: '500' }}>Test Categories</div>
+    <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>API, UI, E2E + more</div>
+  </div>
+</div>
+
+---
+
+## Quick Navigation
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+  gap: '12px',
+  marginBottom: '28px'
+}}>
+  <a href="#meter-management-context" style={{
+    padding: '12px 16px',
+    borderRadius: '6px',
+    backgroundColor: '#f1f5f9',
+    border: '1px solid #cbd5e1',
+    textDecoration: 'none',
+    color: '#334155',
+    fontWeight: '500',
+    fontSize: '13px',
+    textAlign: 'center'
+  }}>Meter Management</a>
+  
+  <a href="#water-supply-context" style={{
+    padding: '12px 16px',
+    borderRadius: '6px',
+    backgroundColor: '#f1f5f9',
+    border: '1px solid #cbd5e1',
+    textDecoration: 'none',
+    color: '#3b82f6',
+    fontWeight: '500',
+    fontSize: '13px',
+    textAlign: 'center'
+  }}>Water Supply</a>
+  
+  <a href="#customer-management-context" style={{
+    padding: '12px 16px',
+    borderRadius: '6px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    textDecoration: 'none',
+    color: '#0f172a',
+    fontWeight: '500',
+    fontSize: '13px',
+    textAlign: 'center'
+  }}>Customer Management</a>
+  
+  <a href="#billing-settlement-context" style={{
+    padding: '12px 16px',
+    borderRadius: '6px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #cbd5e1',
+    textDecoration: 'none',
+    color: '#475569',
+    fontWeight: '500',
+    fontSize: '13px',
+    textAlign: 'center'
+  }}>Billing Settlement</a>
+  
+  <a href="#ui-features" style={{
+    padding: '12px 16px',
+    borderRadius: '6px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    textDecoration: 'none',
+    color: '#0f172a',
+    fontWeight: '500',
+    fontSize: '13px',
+    textAlign: 'center'
+  }}>UI Features</a>
+  
+  <a href="#hybrid-e2e-features" style={{
+    padding: '12px 16px',
+    borderRadius: '6px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0',
+    textDecoration: 'none',
+    color: '#475569',
+    fontWeight: '500',
+    fontSize: '13px',
+    textAlign: 'center'
+  }}>E2E Workflows</a>
+</div>
+
+---
+
+## Feature Organization
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+  gap: '20px',
+  marginBottom: '32px'
+}}>
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+  }}>
+    <div style={{ fontSize: '16px', fontWeight: '700', color: '#0f172a', marginBottom: '12px' }}>Meter Management</div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Features:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>3</span>
+    </div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Scenarios:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>23</span>
+    </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Coverage:</span>
+      <span style={{ fontWeight: '600', color: '#0f172a' }}>✓ 100%</span>
+    </div>
+    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
+      <div>• Registration</div>
+      <div>• Reading Collection</div>
+      <div>• Maintenance</div>
+    </div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+  }}>
+    <div style={{ fontSize: '16px', fontWeight: '700', color: '#0f172a', marginBottom: '12px' }}>Water Supply</div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Features:</span>
+      <span style={{ fontWeight: '600', color: '#475569' }}>5</span>
+    </div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Scenarios:</span>
+      <span style={{ fontWeight: '600', color: '#475569' }}>50</span>
+    </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Coverage:</span>
+      <span style={{ fontWeight: '600', color: '#0f172a' }}>✓ 100%</span>
+    </div>
+    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
+      <div>• Scheduling</div>
+      <div>• Delivery</div>
+      <div>• Pressure Management</div>
+    </div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+  }}>
+    <div style={{ fontSize: '16px', fontWeight: '700', color: '#0f172a', marginBottom: '12px' }}>Customer Management</div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Features:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>3</span>
+    </div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Scenarios:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>30</span>
+    </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Coverage:</span>
+      <span style={{ fontWeight: '600', color: '#0f172a' }}>✓ 100%</span>
+    </div>
+    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
+      <div>• Enrollment</div>
+      <div>• Account Management</div>
+      <div>• Service Agreements</div>
+    </div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+  }}>
+    <div style={{ fontSize: '16px', fontWeight: '700', color: '#475569', marginBottom: '12px' }}>Billing Settlement</div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Features:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>3</span>
+    </div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Scenarios:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>28</span>
+    </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Coverage:</span>
+      <span style={{ fontWeight: '600', color: '#0f172a' }}>✓ 100%</span>
+    </div>
+    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
+      <div>• Reading Verification</div>
+      <div>• Billing Disputes</div>
+      <div>• Settlement</div>
+    </div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+  }}>
+    <div style={{ fontSize: '16px', fontWeight: '700', color: '#0f172a', marginBottom: '12px' }}>UI Tests</div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Features:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>3</span>
+    </div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Scenarios:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>24</span>
+    </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Coverage:</span>
+      <span style={{ fontWeight: '600', color: '#0f172a' }}>✓ 100%</span>
+    </div>
+    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
+      <div>• Registration UI</div>
+      <div>• Dashboard</div>
+      <div>• Billing UI</div>
+    </div>
+  </div>
+  
+  <div style={{
+    padding: '20px',
+    borderRadius: '8px',
+    backgroundColor: '#f8fafc',
+    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+  }}>
+    <div style={{ fontSize: '16px', fontWeight: '700', color: '#475569', marginBottom: '12px' }}>E2E Workflows</div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Features:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>1</span>
+    </div>
+    <div style={{ marginBottom: '8px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Scenarios:</span>
+      <span style={{ fontWeight: '600', color: '#334155' }}>5</span>
+    </div>
+    <div style={{ marginBottom: '12px' }}>
+      <span style={{ display: 'inline-block', fontSize: '12px', color: '#64748b', marginRight: '8px' }}>Coverage:</span>
+      <span style={{ fontWeight: '600', color: '#0f172a' }}>✓ 100%</span>
+    </div>
+    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
+      <div>• Customer Journey</div>
+      <div>• Full Workflows</div>
+      <div>• Integration Tests</div>
+    </div>
+  </div>
+</div>
+
+---
+
+## Test Distribution & Priorities
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr',
+  gap: '28px',
+  marginBottom: '32px'
+}}>
+  <div>
+    <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600' }}>Scenarios by Type</h3>
+    
+```mermaid
+pie title Scenarios by Test Type
+    "API Tests" : 131
+    "UI Tests" : 24
+    "E2E Tests" : 5
+```
+  </div>
+  
+  <div>
+    <h3 style={{ marginBottom: '16px', fontSize: '16px', fontWeight: '600' }}>Priority Distribution</h3>
+    
+    <div style={{ marginBottom: '16px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+        <span style={{ fontSize: '14px', fontWeight: '500', color: '#475569' }}>Critical</span>
+        <span style={{ fontSize: '14px', fontWeight: '600', color: '#0f172a' }}>45 (28%)</span>
+      </div>
+      <div style={{
+        width: '100%',
+        height: '8px',
+        backgroundColor: '#e2e8f0',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          width: '28%',
+          height: '100%',
+          backgroundColor: '#3b82f6'
+        }}></div>
+      </div>
+    </div>
+    
+    <div style={{ marginBottom: '16px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+        <span style={{ fontSize: '14px', fontWeight: '500', color: '#475569' }}>Smoke Tests</span>
+        <span style={{ fontSize: '14px', fontWeight: '600', color: '#64748b' }}>32 (20%)</span>
+      </div>
+      <div style={{
+        width: '100%',
+        height: '8px',
+        backgroundColor: '#e2e8f0',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          width: '20%',
+          height: '100%',
+          backgroundColor: '#64748b'
+        }}></div>
+      </div>
+    </div>
+    
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+        <span style={{ fontSize: '14px', fontWeight: '500', color: '#475569' }}>Regression</span>
+        <span style={{ fontSize: '14px', fontWeight: '600', color: '#0f172a' }}>83 (52%)</span>
+      </div>
+      <div style={{
+        width: '100%',
+        height: '8px',
+        backgroundColor: '#e2e8f0',
+        borderRadius: '4px',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          width: '52%',
+          height: '100%',
+          backgroundColor: '#3b82f6'
+        }}></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+---
 
 ## Overview
 
@@ -40,7 +443,7 @@ mindmap
 
 ## API Features
 
-### Meter Management Context
+### Meter Management Context {#meter-management-context}
 
 | Feature | File | Scenarios | Tags | Status |
 |---------|------|-----------|------|--------|
@@ -56,9 +459,9 @@ graph TD
         E[Maintenance] --> F[Reliability]
     end
 
-    style A fill:#ccffcc
-    style C fill:#ccffcc
-    style E fill:#ccffcc
+    style A fill:#f8fafc
+    style C fill:#f8fafc
+    style E fill:#f8fafc
 ```
 
 #### Meter Registration
@@ -92,7 +495,7 @@ Scenario: Prevent duplicate meter numbers
 
 ---
 
-### Water Supply Context
+### Water Supply Context {#water-supply-context}
 
 | Feature | File | Scenarios | Tags | Status |
 |---------|------|-----------|------|--------|
@@ -109,11 +512,11 @@ graph LR
     C --> D[Supply Acceptance]
     D --> E[Delivery Completion]
 
-    style A fill:#ccffcc
-    style B fill:#ccffcc
-    style C fill:#ccffcc
-    style D fill:#ccffcc
-    style E fill:#ccffcc
+    style A fill:#f8fafc
+    style B fill:#f8fafc
+    style C fill:#f8fafc
+    style D fill:#f8fafc
+    style E fill:#f8fafc
 ```
 
 #### Supply Scheduling
@@ -139,7 +542,7 @@ graph LR
 
 ---
 
-### Customer Management Context
+### Customer Management Context {#customer-management-context}
 
 | Feature | File | Scenarios | Tags | Status |
 |---------|------|-----------|------|--------|
@@ -163,14 +566,14 @@ graph TD
         C --> C3[Special conditions]
     end
 
-    style A fill:#ccffcc
-    style B fill:#ccffcc
-    style C fill:#ccffcc
+    style A fill:#f8fafc
+    style B fill:#f8fafc
+    style C fill:#f8fafc
 ```
 
 ---
 
-### Billing Settlement Context
+### Billing Settlement Context {#billing-settlement-context}
 
 | Feature | File | Scenarios | Tags | Status |
 |---------|------|-----------|------|--------|
@@ -180,7 +583,7 @@ graph TD
 
 ---
 
-## UI Features
+## UI Features {#ui-features}
 
 ### Frontend Testing
 
@@ -200,14 +603,14 @@ graph LR
         E --> F[View Billing]
     end
 
-    style A fill:#ccffcc
-    style C fill:#ccffcc
-    style E fill:#ccffcc
+    style A fill:#f8fafc
+    style C fill:#f8fafc
+    style E fill:#f8fafc
 ```
 
 ---
 
-## Hybrid (E2E) Features
+## Hybrid (E2E) Features {#hybrid-e2e-features}
 
 ### End-to-End Workflows
 
@@ -239,40 +642,6 @@ sequenceDiagram
 
 ---
 
-## Feature Statistics
-
-### By Context
-
-| Context | Features | Scenarios | Coverage |
-|---------|----------|-----------|----------|
-| Meter Management | 3 | 23 | 100% |
-| Water Supply | 5 | 50 | 100% |
-| Customer Management | 3 | 30 | 100% |
-| Billing Settlement | 3 | 28 | 100% |
-| UI | 3 | 24 | 100% |
-| Hybrid | 1 | 5 | 100% |
-| **Total** | **18** | **160** | **100%** |
-
-### By Type
-
-```mermaid
-pie
-    title Scenarios by Test Type
-    "API Tests" : 131
-    "UI Tests" : 24
-    "E2E Tests" : 5
-```
-
-### By Priority
-
-| Priority | Count | Percentage |
-|----------|-------|------------|
-| @critical | 45 | 28% |
-| @smoke | 32 | 20% |
-| @regression | 83 | 52% |
-
----
-
 ## Running Feature Tests
 
 ### Run by Domain
@@ -294,12 +663,12 @@ just bdd-tag "@billing-settlement"
 ### Run by Roadmap Item
 
 ```bash
-just bdd-roadmap ROAD-001  # Bot Identity
-just bdd-roadmap ROAD-002  # Token Management
-just bdd-roadmap ROAD-003  # Promise Market
-just bdd-roadmap ROAD-004  # Settlement
-just bdd-roadmap ROAD-005  # Authentication
-just bdd-roadmap ROAD-007  # Reputation
+just bdd-roadmap ROAD-001  # Meter Registration
+just bdd-roadmap ROAD-002  # Customer Enrollment
+just bdd-roadmap ROAD-003  # Usage Tracking & Supply
+just bdd-roadmap ROAD-004  # Billing & Settlement
+just bdd-roadmap ROAD-005  # Reading Collection
+just bdd-roadmap ROAD-007  # Maintenance Management
 ```
 
 ### Run by Priority
@@ -313,31 +682,150 @@ just bdd-tag "@smoke"
 
 ## Feature-to-Domain Mapping
 
-| Feature File | Bounded Context | Aggregates | Domain Events |
-|--------------|-----------------|------------|---------------|
-| `01_meter_registration.feature` | Meter Management | Meter | MeterRegistered |
-| `02_reading_collection.feature` | Meter Management | Meter | ReadingRecorded |
-| `03_maintenance_management.feature` | Meter Management | Meter | MaintenanceScheduled |
-| `01_supply_scheduling.feature` | Water Supply | Supply | SupplyScheduled |
-| `02_delivery_management.feature` | Water Supply | Supply | DeliveryStarted |
-| `03_pressure_management.feature` | Water Supply | PressureControl | PressureAdjusted |
-| `04_supply_acceptance.feature` | Water Supply | Supply | SupplyAccepted |
-| `05_delivery_completion.feature` | Water Supply | Supply | DeliveryCompleted |
-| `01_customer_enrollment.feature` | Customer Management | Customer | CustomerEnrolled |
-| `02_account_management.feature` | Customer Management | Account | AccountUpdated |
-| `03_service_agreements.feature` | Customer Management | Agreement | AgreementSigned |
-| `01_reading_verification.feature` | Billing Settlement | Verification | ReadingVerified |
-| `02_billing_disputes.feature` | Billing Settlement | Dispute | DisputeFiled |
-| `03_settlement_finalization.feature` | Billing Settlement | Settlement | BillFinalized |
+| Feature File | Bounded Context | Aggregates | Domain Events | Owning Team |
+|:-------------|:----------------|:-----------|:--------------|:------------|
+| `01_meter_registration.feature` | Meter Operations | Meter | MeterRegistered | Field Services |
+| `02_reading_collection.feature` | Usage Tracking | MeterReading | ReadingRecorded | Operations |
+| `03_maintenance_management.feature` | Meter Operations | MaintenanceSchedule | MaintenanceScheduled | Field Services |
+| `01_supply_scheduling.feature` | Usage Tracking | UsagePeriod | SupplyScheduled | Operations |
+| `02_delivery_management.feature` | Usage Tracking | UsagePeriod | DeliveryStarted | Operations |
+| `03_pressure_management.feature` | Usage Tracking | ConsumptionRecord | PressureAdjusted | Operations |
+| `04_supply_acceptance.feature` | Usage Tracking | UsagePeriod | SupplyAccepted | Operations |
+| `05_delivery_completion.feature` | Usage Tracking | UsagePeriod | DeliveryCompleted | Operations |
+| `01_customer_enrollment.feature` | Customer Account Mgmt | CustomerAccount | AccountCreated | Customer Services |
+| `02_account_management.feature` | Customer Account Mgmt | AccountStatus | StatusChanged | Customer Services |
+| `03_service_agreements.feature` | Customer Account Mgmt | ServiceDeposit | DepositReleased | Customer Services |
+| `01_reading_verification.feature` | Billing & Payments | Invoice | ReadingVerified | Finance |
+| `02_billing_disputes.feature` | Billing & Payments | Invoice | DisputeFiled | Finance |
+| `03_settlement_finalization.feature` | Billing & Payments | Payment | BillFinalized | Finance |
+
+---
+
+## Persona Coverage {#persona-coverage}
+
+Which personas are tested by which feature domains:
+
+| Persona | Meter Operations | Usage Tracking | Customer Account Mgmt | Billing & Payments | UI | E2E |
+|:--------|:---:|:---:|:---:|:---:|:---:|:---:|
+| [PER-001 Utility Admin](/docs/personas/PER-001-utility-administrator) | -- | Reviews | Manages | Oversees | Dashboard | -- |
+| [PER-002 Treatment Operator](/docs/personas/PER-002-treatment-operator) | Coordinates | Monitors | -- | -- | Dashboard | -- |
+| [PER-003 Residential Customer](/docs/personas/PER-003-residential-customer) | Requests service | Views usage | Enrolls | Pays bills | Registration, Billing | Full journey |
+| [PER-004 Commercial Customer](/docs/personas/PER-004-commercial-customer) | Requests service | Monitors usage | Manages accounts | Manages payments | Dashboard, Billing | -- |
+| [PER-005 Meter Technician](/docs/personas/PER-005-meter-technician) | Installs, calibrates | Records readings | -- | -- | Registration | -- |
+
+---
+
+## Capability Coverage {#capability-coverage}
+
+Which capabilities are exercised by which BDD feature domains:
+
+| Capability | Meter Operations | Usage Tracking | Customer Account Mgmt | Billing & Payments | UI | E2E |
+|:-----------|:---:|:---:|:---:|:---:|:---:|:---:|
+| [CAP-001 Portal Auth](/docs/capabilities/CAP-001) | Auth required | Auth required | Auth required | Auth required | Login flows | Full auth |
+| [CAP-002 Usage Logging](/docs/capabilities/CAP-002) | Meter events | Reading events | Account events | Billing events | Audit trail | Full audit |
+| [CAP-003 Usage Alerts](/docs/capabilities/CAP-003) | -- | Threshold alerts | -- | Payment alerts | Alert display | Alert flow |
+| [CAP-004 Anomaly Detection](/docs/capabilities/CAP-004) | Tamper detection | Usage anomalies | -- | -- | -- | -- |
+| [CAP-005 Self-Service Portal](/docs/capabilities/CAP-005) | -- | Usage dashboard | Account portal | Billing portal | All UI tests | Portal journey |
+| [CAP-006 Service Coverage](/docs/capabilities/CAP-006) | -- | -- | Address validation | -- | Registration UI | Enrollment |
+| [CAP-007 System Integration](/docs/capabilities/CAP-007) | SCADA feeds | -- | -- | Payment gateway | -- | -- |
+| [CAP-008 Meter Certification](/docs/capabilities/CAP-008) | Calibration | Reading validation | -- | -- | -- | -- |
+
+---
+
+## Compliance Validation {#compliance-validation}
+
+### ADR Validation
+
+BDD features validate that architecture decisions are correctly implemented:
+
+| ADR | Decision | Validated By Features | Status |
+|:----|:---------|:---------------------|:-------|
+| ADR-001 | Domain-Driven Design | All API features (aggregate boundaries, domain events) | Covered |
+| ADR-002 | Modular Monolith | Feature isolation per bounded context | Covered |
+| ADR-003 | Convex Backend | All API features (Convex function calls) | Covered |
+| ADR-004 | Next.js Frontend | All UI features | Covered |
+| ADR-005 | Event-Driven Communication | Domain event publishing in all API features | Covered |
+| ADR-006 | Aggregate Consistency | Validation rules in registration, enrollment, billing | Covered |
+| ADR-009 | API Key Authentication | Auth-gated scenarios across all features | Covered |
+| ADR-015 | Eventual Consistency | Cross-context data flow in E2E journey | Partial |
+| ADR-021 | Clerk Authentication | Login/session scenarios in UI features | Covered |
+
+### NFR Validation
+
+BDD features assert NFR compliance:
+
+| NFR | Requirement | Validated By | How |
+|:----|:-----------|:-------------|:----|
+| NFR-PERF-001 | API response < 200ms | API features | Response time assertions |
+| NFR-SEC-001 | Token on every request | All API features | Auth-required scenarios |
+| NFR-SEC-003 | Immutable audit log | Usage logging scenarios | Log verification steps |
+| NFR-SEC-004 | Rate limiting | Anomaly detection features | Rate limit assertions |
+| NFR-REL-001 | 99.9% delivery rate | Alert features | Delivery confirmation steps |
+| NFR-A11Y-001 | WCAG 2.1 AA | UI features | Accessibility checks |
+
+---
+
+## Team Ownership {#team-ownership}
+
+Feature files are owned by the team that owns the corresponding bounded context:
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+  gap: '16px',
+  marginBottom: '24px'
+}}>
+  <div style={{ padding: '16px 20px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6', backgroundColor: '#f8fafc' }}>
+    <div style={{ fontSize: '14px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Customer Services</div>
+    <div style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.8' }}>
+      &#x2022; Customer enrollment (10 scenarios)<br/>
+      &#x2022; Account management (8 scenarios)<br/>
+      &#x2022; Service agreements (12 scenarios)
+    </div>
+    <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e2e8f0' }}>30 scenarios | 3 feature files</div>
+  </div>
+
+  <div style={{ padding: '16px 20px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6', backgroundColor: '#f8fafc' }}>
+    <div style={{ fontSize: '14px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Operations</div>
+    <div style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.8' }}>
+      &#x2022; Supply scheduling (12 scenarios)<br/>
+      &#x2022; Delivery management (8 scenarios)<br/>
+      &#x2022; Pressure management (10 scenarios)<br/>
+      &#x2022; Supply acceptance (9 scenarios)<br/>
+      &#x2022; Delivery completion (11 scenarios)
+    </div>
+    <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e2e8f0' }}>50 scenarios | 5 feature files</div>
+  </div>
+
+  <div style={{ padding: '16px 20px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6', backgroundColor: '#f8fafc' }}>
+    <div style={{ fontSize: '14px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Finance</div>
+    <div style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.8' }}>
+      &#x2022; Reading verification (9 scenarios)<br/>
+      &#x2022; Billing disputes (11 scenarios)<br/>
+      &#x2022; Settlement finalization (8 scenarios)
+    </div>
+    <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e2e8f0' }}>28 scenarios | 3 feature files</div>
+  </div>
+
+  <div style={{ padding: '16px 20px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6', backgroundColor: '#f8fafc' }}>
+    <div style={{ fontSize: '14px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Field Services</div>
+    <div style={{ fontSize: '12px', color: '#64748b', lineHeight: '1.8' }}>
+      &#x2022; Meter registration (8 scenarios)<br/>
+      &#x2022; Reading collection (6 scenarios)<br/>
+      &#x2022; Maintenance management (9 scenarios)
+    </div>
+    <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #e2e8f0' }}>23 scenarios | 3 feature files</div>
+  </div>
+</div>
 
 ---
 
 ## Next Steps
 
-- [Gherkin Syntax Guide](./gherkin-syntax) - Learn how to read scenarios
-- [DDD-BDD Mapping](./ddd-bdd-mapping) - See domain connections
-- [BDD Overview](./bdd-overview) - Understand our BDD approach
+- [Gherkin Syntax Guide](./gherkin-syntax) -- Learn how to read scenarios
+- [DDD-BDD Mapping](./ddd-bdd-mapping) -- See domain connections
+- [BDD Overview](./bdd-overview) -- Understand our BDD approach
 
 ---
 
-**Related**: [Bounded Contexts](../ddd/bounded-contexts) • [Use Cases](../ddd/use-cases) • [BDD Loop Workflow](../agents/bdd-loop) • [Water Infrastructure Domain](../ddd/water-infrastructure-domain)
+**Related**: [Domain Overview](/docs/ddd/domain-overview) | [Capabilities](/docs/capabilities/) | [Teams & Ownership](/docs/teams-overview) | [Users & Personas](/docs/users-overview) | [ADR Catalog](/docs/adr/README) | [NFR Index](/docs/nfr/)

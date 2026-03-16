@@ -1,5 +1,4 @@
 ---
-id: US-005
 title: Read Skill Documentation
 persona: PER-002
 status: planned

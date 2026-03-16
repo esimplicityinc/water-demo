@@ -1,5 +1,4 @@
 ---
-id: US-002
 title: Create Promise
 persona: PER-002
 status: planned

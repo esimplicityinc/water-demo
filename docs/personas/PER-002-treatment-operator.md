@@ -1,5 +1,4 @@
 ---
-id: PER-002
 name: "Treatment Operator"
 tag: "@PER-002"
 type: human

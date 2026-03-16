@@ -1,5 +1,4 @@
 ---
-id: US-010
 title: Authenticate with Third-Party App
 persona: PER-002
 status: planned

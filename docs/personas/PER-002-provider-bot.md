@@ -1,5 +1,4 @@
 ---
-id: PER-002
 name: "Provider Bot"
 tag: "@PER-002"
 type: bot

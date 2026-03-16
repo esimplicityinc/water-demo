@@ -1,5 +1,4 @@
 ---
-id: US-010
 title: Smart Meter Integration
 persona: PER-002
 status: planned

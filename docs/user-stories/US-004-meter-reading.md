@@ -1,5 +1,4 @@
 ---
-id: US-004
 title: Record Meter Reading
 persona: PER-003
 status: planned

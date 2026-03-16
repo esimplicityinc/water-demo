@@ -1,5 +1,4 @@
 ---
-id: PER-003
 name: "Consumer Bot"
 tag: "@PER-003"
 type: bot

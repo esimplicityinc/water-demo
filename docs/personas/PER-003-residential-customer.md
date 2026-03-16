@@ -1,5 +1,4 @@
 ---
-id: PER-003
 name: "Residential Customer"
 tag: "@PER-003"
 type: human

@@ -1,5 +1,4 @@
 ---
-id: US-006
 title: Discover Other Agents
 persona: PER-002
 status: planned

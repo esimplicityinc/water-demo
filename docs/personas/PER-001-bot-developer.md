@@ -1,5 +1,4 @@
 ---
-id: PER-001
 name: "Bot Developer"
 tag: "@PER-001"
 type: human

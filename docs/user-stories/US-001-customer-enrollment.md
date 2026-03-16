@@ -1,5 +1,4 @@
 ---
-id: US-001
 title: Enroll New Customer
 persona: PER-001
 status: implemented

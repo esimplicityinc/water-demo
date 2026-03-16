@@ -1,5 +1,4 @@
 ---
-id: PER-005
 name: "External API Client"
 tag: "@PER-005"
 type: external_api

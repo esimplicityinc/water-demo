@@ -1,5 +1,4 @@
 ---
-id: US-008
 title: Respond to Message Request
 persona: PER-001
 status: planned

@@ -1,5 +1,4 @@
 ---
-id: US-001
 title: Register New Bot
 persona: PER-001
 status: implemented
