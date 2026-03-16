@@ -222,25 +222,41 @@ graph TD
   <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a', marginBottom: '10px' }}>Team Members</div>
   <div style={{
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '10px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '14px',
     marginBottom: '16px'
   }}>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Sarah Chen</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Team Lead / Senior Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/sarah-chen.jpg" alt="Sarah Chen" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Sarah Chen</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Team Lead / Senior Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>8 years in customer platforms. Previously led account systems at Pacific Gas. Drives the enrollment and account management domain.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Marcus Rivera</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Full-Stack Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/marcus-rivera.jpg" alt="Marcus Rivera" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Marcus Rivera</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Full-Stack Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Convex + Next.js specialist. Owns the self-service portal frontend and real-time account status sync.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Aisha Patel</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Frontend Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/aisha-patel.jpg" alt="Aisha Patel" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Aisha Patel</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Frontend Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Accessibility advocate. Built the customer dashboard and notification center. WCAG 2.1 AA compliance lead.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>James Kowalski</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>QA / BDD Specialist</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/james-kowalski.jpg" alt="James Kowalski" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>James Kowalski</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>QA / BDD Specialist</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Authors Gherkin scenarios for enrollment, activation, and account management. Maintains the customer services test suite.</div>
+      </div>
     </div>
   </div>
 
@@ -306,25 +322,41 @@ graph TD
   <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a', marginBottom: '10px' }}>Team Members</div>
   <div style={{
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '10px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '14px',
     marginBottom: '16px'
   }}>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>David Okonkwo</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Team Lead / Backend Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/david-okonkwo.jpg" alt="David Okonkwo" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>David Okonkwo</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Team Lead / Backend Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>12 years in data systems. Ex-AWS. Designed the meter reading pipeline and real-time consumption engine.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Emily Zhang</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Data Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/emily-zhang.jpg" alt="Emily Zhang" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Emily Zhang</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Data Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Owns the usage data pipeline, ETL workflows, and data quality validation. Background in IoT telemetry at Siemens.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Raj Gupta</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Full-Stack Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/raj-gupta.jpg" alt="Raj Gupta" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Raj Gupta</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Full-Stack Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Builds the operator dashboards and usage history views. Handles the Convex real-time subscriptions for live usage feeds.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Lisa Nakamura</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>ML / Analytics Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/lisa-nakamura.jpg" alt="Lisa Nakamura" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Lisa Nakamura</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>ML / Analytics Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Built the anomaly detection system (CAP-004). Maintains usage alert thresholds and predictive consumption models.</div>
+      </div>
     </div>
   </div>
 
@@ -391,25 +423,41 @@ graph TD
   <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a', marginBottom: '10px' }}>Team Members</div>
   <div style={{
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '10px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '14px',
     marginBottom: '16px'
   }}>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Priya Sharma</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Team Lead / Backend Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/priya-sharma.jpg" alt="Priya Sharma" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Priya Sharma</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Team Lead / Backend Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>10 years in fintech. Previously built payment systems at Stripe. Architects the billing cycle engine and invoice pipeline.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Carlos Mendez</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Payment Systems Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/carlos-mendez.jpg" alt="Carlos Mendez" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Carlos Mendez</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Payment Systems Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Payment gateway integrations, PCI compliance, and dispute resolution workflows. Previously at Square.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Anna Bergstrom</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Full-Stack Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/anna-bergstrom.jpg" alt="Anna Bergstrom" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Anna Bergstrom</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Full-Stack Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Builds billing dashboards and payment history views. Owns the shared kernel integration with Operations for usage-to-invoice flow.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Tom Ikeda</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Compliance / Security Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/tom-ikeda.jpg" alt="Tom Ikeda" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Tom Ikeda</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Compliance / Security Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Financial audit trails, regulatory compliance, and SOC 2 readiness. Ensures all billing data meets utility commission standards.</div>
+      </div>
     </div>
   </div>
 
@@ -474,25 +522,41 @@ graph TD
   <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a', marginBottom: '10px' }}>Team Members</div>
   <div style={{
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '10px',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gap: '14px',
     marginBottom: '16px'
   }}>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Olga Petrov</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Team Lead / IoT Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/olga-petrov.jpg" alt="Olga Petrov" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Olga Petrov</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Team Lead / IoT Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Former SCADA systems architect at Honeywell. Designed the smart meter protocol layer and hardware integration framework.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Kevin Brooks</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Embedded Systems Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/kevin-brooks.jpg" alt="Kevin Brooks" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Kevin Brooks</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Embedded Systems Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Firmware and device communication protocols. Maintains meter certification workflows (CAP-008) and calibration scheduling.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Maria Gonzalez</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>Full-Stack Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/maria-gonzalez.jpg" alt="Maria Gonzalez" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Maria Gonzalez</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>Full-Stack Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Builds the technician dispatch UI and service request management portal. Owns the mobile-first field worker experience.</div>
+      </div>
     </div>
-    <div style={{ padding: '10px 14px', borderRadius: '6px', backgroundColor: '#fff', border: '1px solid #e2e8f0' }}>
-      <div style={{ fontSize: '13px', fontWeight: '600', color: '#0f172a' }}>Yusuf Ali</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>GIS / Integration Engineer</div>
+    <div style={{ padding: '16px', borderRadius: '8px', backgroundColor: '#fff', border: '1px solid #e2e8f0', display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+      <img src="/img/team/yusuf-ali.jpg" alt="Yusuf Ali" style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e2e8f0', flexShrink: 0 }} />
+      <div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#0f172a', marginBottom: '2px' }}>Yusuf Ali</div>
+        <div style={{ fontSize: '11px', color: '#3b82f6', fontWeight: '600', marginBottom: '6px' }}>GIS / Integration Engineer</div>
+        <div style={{ fontSize: '11px', color: '#64748b', lineHeight: '1.5' }}>Geospatial data, service area mapping, and third-party system integrations (CAP-007). Built the asset location tracking system.</div>
+      </div>
     </div>
   </div>
 
