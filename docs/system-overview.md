@@ -158,115 +158,59 @@ AquaTrack is decomposed into four bounded contexts, each owning its own domain m
 <div style={{
   display: 'grid',
   gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-  gap: '20px',
+  gap: '16px',
   marginBottom: '32px'
 }}>
-  <div style={{
-    padding: '24px',
-    borderRadius: '8px',
-    backgroundColor: '#f8fafc',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-  }}>
-    <div style={{ fontSize: '17px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Customer Account Management</div>
-    <div style={{ fontSize: '13px', color: '#475569', lineHeight: '1.6', marginBottom: '14px' }}>
-      Manages the full lifecycle of customer water service accounts -- enrollment, profiles, account standing, and service deposits.
+  <div style={{ padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6', backgroundColor: '#f8fafc' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Customer Account Management</div>
+      <span style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#dbeafe', color: '#1e40af', fontWeight: '600' }}>Supporting Subdomain</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '6px' }}><strong>Key Aggregates</strong></div>
-    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.8' }}>
-      <div>&#x2022; CustomerAccount</div>
-      <div>&#x2022; AccountStatus</div>
-      <div>&#x2022; ServiceDeposit</div>
+    <div style={{ fontSize: '12px', color: '#475569', marginBottom: '8px' }}>Complete customer lifecycle -- enrollment, profiles, account standing. Owned by Customer Services.</div>
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '8px' }}>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-001</span>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-005</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginTop: '10px', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
-      <strong>Events:</strong> AccountCreated, StatusChanged, DepositReleased
-    </div>
-    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #e2e8f0' }}>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#3b82f6', fontWeight: '600' }}>Team: Customer Services</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#334155' }}>PER-001, PER-003, PER-004</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>~35 BDD scenarios</span>
-    </div>
+    <a href="/docs/systems/customer-account-mgmt" style={{ fontSize: '12px', fontWeight: '600', color: '#3b82f6', textDecoration: 'none' }}>View system detail →</a>
   </div>
 
-  <div style={{
-    padding: '24px',
-    borderRadius: '8px',
-    backgroundColor: '#f8fafc',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-  }}>
-    <div style={{ fontSize: '17px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Usage Tracking</div>
-    <div style={{ fontSize: '13px', color: '#475569', lineHeight: '1.6', marginBottom: '14px' }}>
-      Collects and validates meter readings, calculates consumption, and provides real-time usage data to customers and operators.
+  <div style={{ padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #2563eb', backgroundColor: '#f8fafc' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Usage Tracking</div>
+      <span style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#dcfce7', color: '#166534', fontWeight: '600' }}>Core Domain</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '6px' }}><strong>Key Aggregates</strong></div>
-    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.8' }}>
-      <div>&#x2022; MeterReading</div>
-      <div>&#x2022; UsagePeriod</div>
-      <div>&#x2022; ConsumptionRecord</div>
+    <div style={{ fontSize: '12px', color: '#475569', marginBottom: '8px' }}>Collects meter readings, calculates consumption, provides real-time usage data. Owned by Operations.</div>
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '8px' }}>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-002</span>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-003</span>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-004</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginTop: '10px', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
-      <strong>Events:</strong> ReadingRecorded, UsageCalculated, AnomalyDetected
-    </div>
-    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #e2e8f0' }}>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569', fontWeight: '600' }}>Team: Operations</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#334155' }}>PER-002, PER-003, PER-004</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>~45 BDD scenarios</span>
-    </div>
+    <a href="/docs/systems/usage-tracking" style={{ fontSize: '12px', fontWeight: '600', color: '#3b82f6', textDecoration: 'none' }}>View system detail →</a>
   </div>
 
-  <div style={{
-    padding: '24px',
-    borderRadius: '8px',
-    backgroundColor: '#f8fafc',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-  }}>
-    <div style={{ fontSize: '17px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Billing & Payments</div>
-    <div style={{ fontSize: '13px', color: '#475569', lineHeight: '1.6', marginBottom: '14px' }}>
-      Generates invoices from usage data, manages billing cycles, processes payments, and handles settlement and disputes.
+  <div style={{ padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #1d4ed8', backgroundColor: '#f8fafc' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Billing & Payments</div>
+      <span style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#dcfce7', color: '#166534', fontWeight: '600' }}>Core Domain</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '6px' }}><strong>Key Aggregates</strong></div>
-    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.8' }}>
-      <div>&#x2022; Invoice</div>
-      <div>&#x2022; BillingCycle</div>
-      <div>&#x2022; Payment</div>
+    <div style={{ fontSize: '12px', color: '#475569', marginBottom: '8px' }}>Generates invoices, manages billing cycles, processes payments and settlement. Owned by Finance.</div>
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '8px' }}>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-006</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginTop: '10px', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
-      <strong>Events:</strong> InvoiceGenerated, PaymentReceived, BillFinalized
-    </div>
-    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #e2e8f0' }}>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f8fafc', color: '#475569', fontWeight: '600' }}>Team: Finance</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#334155' }}>PER-001, PER-003, PER-004</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>~40 BDD scenarios</span>
-    </div>
+    <a href="/docs/systems/billing-payments" style={{ fontSize: '12px', fontWeight: '600', color: '#3b82f6', textDecoration: 'none' }}>View system detail →</a>
   </div>
 
-  <div style={{
-    padding: '24px',
-    borderRadius: '8px',
-    backgroundColor: '#f8fafc',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-  }}>
-    <div style={{ fontSize: '17px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Meter Operations</div>
-    <div style={{ fontSize: '13px', color: '#475569', lineHeight: '1.6', marginBottom: '14px' }}>
-      Manages the physical meter lifecycle -- installation, calibration, maintenance scheduling, service requests, and hardware integration.
+  <div style={{ padding: '16px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #1e40af', backgroundColor: '#f8fafc' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Meter Operations</div>
+      <span style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#dbeafe', color: '#1e40af', fontWeight: '600' }}>Supporting Subdomain</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '6px' }}><strong>Key Aggregates</strong></div>
-    <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.8' }}>
-      <div>&#x2022; Meter</div>
-      <div>&#x2022; ServiceRequest</div>
-      <div>&#x2022; MaintenanceSchedule</div>
+    <div style={{ fontSize: '12px', color: '#475569', marginBottom: '8px' }}>Physical meter lifecycle -- installation, calibration, maintenance, service requests. Owned by Field Services.</div>
+    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '8px' }}>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-007</span>
+      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>CAP-008</span>
     </div>
-    <div style={{ fontSize: '12px', color: '#64748b', marginTop: '10px', borderTop: '1px solid #e2e8f0', paddingTop: '10px' }}>
-      <strong>Events:</strong> MeterRegistered, MaintenanceScheduled, ServiceCompleted
-    </div>
-    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '10px', paddingTop: '10px', borderTop: '1px solid #e2e8f0' }}>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f8fafc', color: '#0f172a', fontWeight: '600' }}>Team: Field Services</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#334155' }}>PER-002, PER-005</span>
-      <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#475569' }}>~40 BDD scenarios</span>
-    </div>
+    <a href="/docs/systems/meter-operations" style={{ fontSize: '12px', fontWeight: '600', color: '#3b82f6', textDecoration: 'none' }}>View system detail →</a>
   </div>
 </div>
 
@@ -444,119 +388,18 @@ graph TD
 
 ## Technology Stack {#technology-stack}
 
-<div style={{
-  display: 'grid',
-  gridTemplateColumns: '1fr',
-  gap: '12px',
-  marginBottom: '32px'
-}}>
-  <div style={{
-    padding: '16px 24px',
-    borderRadius: '8px',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    backgroundColor: '#f8fafc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <div>
-      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Frontend</div>
-      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>Client-side application layer</div>
-    </div>
-    <div style={{ fontSize: '13px', color: '#334155', textAlign: 'right' }}>
-      <strong>Next.js</strong> &middot; React &middot; TypeScript &middot; Tailwind CSS &middot; shadcn/ui
-    </div>
+<div style={{ padding: '20px', borderRadius: '8px', border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6', backgroundColor: '#f8fafc', marginBottom: '24px' }}>
+  <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a', marginBottom: '8px' }}>Technology Stack</div>
+  <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6', marginBottom: '12px' }}>AquaTrack is built on a modern TypeScript-first stack: Convex (backend), Next.js (frontend), Clerk (auth), Vercel (deployment), Vitest (testing).</div>
+  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
+    <a href="/docs/tools/convex" style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#3b82f6', fontWeight: '600', textDecoration: 'none', border: '1px solid #e2e8f0' }}>Convex</a>
+    <a href="/docs/tools/nextjs" style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#3b82f6', fontWeight: '600', textDecoration: 'none', border: '1px solid #e2e8f0' }}>Next.js</a>
+    <a href="/docs/tools/clerk" style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#3b82f6', fontWeight: '600', textDecoration: 'none', border: '1px solid #e2e8f0' }}>Clerk</a>
+    <a href="/docs/tools/vercel" style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#3b82f6', fontWeight: '600', textDecoration: 'none', border: '1px solid #e2e8f0' }}>Vercel</a>
+    <a href="/docs/tools/vitest" style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#3b82f6', fontWeight: '600', textDecoration: 'none', border: '1px solid #e2e8f0' }}>Vitest</a>
+    <a href="/docs/tools/typescript" style={{ fontSize: '10px', padding: '3px 10px', borderRadius: '9999px', backgroundColor: '#f1f5f9', color: '#3b82f6', fontWeight: '600', textDecoration: 'none', border: '1px solid #e2e8f0' }}>TypeScript</a>
   </div>
-
-  <div style={{
-    padding: '16px 24px',
-    borderRadius: '8px',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    backgroundColor: '#f8fafc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <div>
-      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Backend</div>
-      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>Server-side logic and API</div>
-    </div>
-    <div style={{ fontSize: '13px', color: '#334155', textAlign: 'right' }}>
-      <strong>Convex</strong> &middot; Server Functions &middot; Real-time Subscriptions
-    </div>
-  </div>
-
-  <div style={{
-    padding: '16px 24px',
-    borderRadius: '8px',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    backgroundColor: '#f8fafc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <div>
-      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Database</div>
-      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>Persistent storage layer</div>
-    </div>
-    <div style={{ fontSize: '13px', color: '#334155', textAlign: 'right' }}>
-      <strong>Convex DB</strong> &middot; Document Model &middot; ACID Transactions
-    </div>
-  </div>
-
-  <div style={{
-    padding: '16px 24px',
-    borderRadius: '8px',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    backgroundColor: '#f8fafc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <div>
-      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Authentication</div>
-      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>Identity and access control</div>
-    </div>
-    <div style={{ fontSize: '13px', color: '#334155', textAlign: 'right' }}>
-      <strong>Clerk</strong> &middot; API Key Auth &middot; Session Management
-    </div>
-  </div>
-
-  <div style={{
-    padding: '16px 24px',
-    borderRadius: '8px',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    backgroundColor: '#f8fafc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <div>
-      <div style={{ fontSize: '15px', fontWeight: '700', color: '#0f172a' }}>Deployment</div>
-      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>Hosting and CI/CD</div>
-    </div>
-    <div style={{ fontSize: '13px', color: '#334155', textAlign: 'right' }}>
-      <strong>Vercel</strong> &middot; Edge Functions &middot; Preview Deployments
-    </div>
-  </div>
-
-  <div style={{
-    padding: '16px 24px',
-    borderRadius: '8px',
-    border: '1px solid #e2e8f0', borderLeft: '4px solid #3b82f6',
-    backgroundColor: '#f8fafc',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }}>
-    <div>
-      <div style={{ fontSize: '15px', fontWeight: '700', color: '#475569' }}>Runtime & Tooling</div>
-      <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>Developer experience</div>
-    </div>
-    <div style={{ fontSize: '13px', color: '#334155', textAlign: 'right' }}>
-      <strong>Bun</strong> &middot; TypeScript &middot; ESLint &middot; Prettier
-    </div>
-  </div>
+  <a href="/docs/tools/" style={{ fontSize: '13px', fontWeight: '600', color: '#3b82f6', textDecoration: 'none' }}>View full technology stack →</a>
 </div>
 
 ---
@@ -700,66 +543,11 @@ graph LR
 
 ---
 
-## User Story Mapping {#user-story-mapping}
-
-How user stories flow through the system architecture:
-
-| User Story | Primary Subsystem | Capabilities Used | Personas | Team |
-|:-----------|:-----------------|:------------------|:---------|:-----|
-| [US-001](/docs/user-stories/US-001-customer-enrollment) Customer Enrollment | Customer Account Mgmt | CAP-001, CAP-002, CAP-006 | PER-003, PER-004 | Customer Services |
-| [US-002](/docs/user-stories/US-002-service-activation) Service Activation | Customer Account Mgmt | CAP-001, CAP-002, CAP-006 | PER-001, PER-003 | Customer Services |
-| [US-004](/docs/user-stories/US-004-meter-reading) Meter Reading | Usage Tracking | CAP-002, CAP-007, CAP-008 | PER-002, PER-005 | Operations |
-| [US-005](/docs/user-stories/US-005-view-usage-history) View Usage History | Usage Tracking | CAP-001, CAP-002, CAP-005 | PER-003, PER-004 | Operations |
-| [US-006](/docs/user-stories/US-006-service-area-lookup) Service Area Lookup | Customer Account Mgmt | CAP-006 | PER-003, PER-004 | Customer Services |
-| [US-007](/docs/user-stories/US-007-submit-service-request) Service Request | Meter Operations | CAP-001, CAP-002, CAP-005 | PER-003, PER-004 | Field Services |
-| [US-008](/docs/user-stories/US-008-technician-dispatch) Technician Dispatch | Meter Operations | CAP-002, CAP-007 | PER-002, PER-005 | Field Services |
-| [US-009](/docs/user-stories/US-009-customer-communication) Customer Comms | Customer Account Mgmt | CAP-001, CAP-003, CAP-005 | PER-001, PER-003 | Customer Services |
-| [US-010](/docs/user-stories/US-010-smart-meter-integration) Smart Meter | Meter Operations | CAP-007, CAP-008 | PER-005, PER-002 | Field Services |
-
----
-
-## Compliance Coverage {#compliance-coverage}
-
-### ADR-to-Subsystem Matrix
-
-| ADR | Decision | Customer Acct | Usage Tracking | Billing | Meter Ops |
-|:----|:---------|:---:|:---:|:---:|:---:|
-| ADR-001 | Domain-Driven Design | Applies | Applies | Applies | Applies |
-| ADR-002 | Modular Monolith | Applies | Applies | Applies | Applies |
-| ADR-003 | Convex Backend | Applies | Applies | Applies | Applies |
-| ADR-005 | Event-Driven Comms | Publishes | Publishes | Subscribes | Publishes |
-| ADR-006 | Aggregate Boundaries | 3 aggregates | 3 aggregates | 3 aggregates | 3 aggregates |
-| ADR-009 | API Key Auth | Auth gate | Auth gate | Auth gate | Auth gate |
-| ADR-015 | Eventual Consistency | -- | Consumer | Consumer | Producer |
-| ADR-016 | Convex Functions | App services | App services | App services | App services |
-| ADR-021 | Clerk Auth | User sessions | -- | -- | -- |
-
-### NFR-to-Capability Matrix
-
-| NFR | Target | Capabilities Constrained |
-|:----|:-------|:------------------------|
-| NFR-PERF-001 | API response < 200ms (p95) | CAP-001, CAP-003 |
-| NFR-PERF-002 | Dashboard load < 2s | CAP-002, CAP-005, CAP-006 |
-| NFR-SEC-001 | Token validation on every request | CAP-001 |
-| NFR-SEC-003 | Immutable audit log | CAP-002 |
-| NFR-REL-001 | 99.9% alert delivery | CAP-003 |
-| NFR-REL-003 | Retry with exponential backoff | CAP-007 |
-| NFR-A11Y-001 | WCAG 2.1 AA | CAP-005 |
-
-### BDD Spec Coverage
-
-| Subsystem | Est. Scenarios | Feature Files | Owning Team | Pass Rate |
-|:----------|:---:|:---:|:------------|:---:|
-| Customer Account Mgmt | ~35 | 4 | Customer Services | ~85% |
-| Usage Tracking | ~45 | 5 | Operations | ~90% |
-| Billing & Payments | ~40 | 4 | Finance | ~75% |
-| Meter Operations | ~40 | 5 | Field Services | ~80% |
-| **Total** | **~160** | **18** | | **~83%** |
-
----
-
 ## Next Steps
 
+- [Bounded Contexts](/docs/systems/) -- System detail pages for each subsystem
+- [Practice Areas](/docs/practice-areas/) -- Team ownership and delivery practices
+- [Tools](/docs/tools/) -- Full technology stack details
 - [Domain Overview](./ddd/domain-overview) -- Full DDD domain model
 - [Bounded Contexts](./ddd/bounded-contexts) -- Detailed context boundaries
 - [Architecture Decisions](./adr/README) -- Complete ADR catalog

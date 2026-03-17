@@ -7,6 +7,16 @@ const sidebars: SidebarsConfig = {
       id: 'teams-overview',
       label: 'Teams & Ownership',
     },
+    {
+      type: 'category',
+      label: 'Team Detail',
+      items: [
+        'teams/customer-services',
+        'teams/operations',
+        'teams/finance',
+        'teams/field-services',
+      ],
+    },
   ],
   usersSidebar: [
     {
@@ -53,6 +63,20 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
+      label: 'Bounded Contexts',
+      link: {
+        type: 'doc',
+        id: 'systems/index',
+      },
+      items: [
+        'systems/customer-account-mgmt',
+        'systems/usage-tracking',
+        'systems/billing-payments',
+        'systems/meter-operations',
+      ],
+    },
+    {
+      type: 'category',
       label: 'Capabilities',
       link: {
         type: 'doc',
@@ -69,6 +93,32 @@ const sidebars: SidebarsConfig = {
         'capabilities/CAP-008',
       ],
     },
+  ],
+  practiceAreasSidebar: [
+    {
+      type: 'doc',
+      id: 'practice-areas/index',
+      label: 'Practice Areas Overview',
+    },
+    'practice-areas/PA-001-ddd',
+    'practice-areas/PA-002-bdd',
+    'practice-areas/PA-003-cloud',
+    'practice-areas/PA-004-api',
+    'practice-areas/PA-005-security',
+    'practice-areas/PA-006-data',
+  ],
+  toolsSidebar: [
+    {
+      type: 'doc',
+      id: 'tools/index',
+      label: 'Technology Stack',
+    },
+    'tools/convex',
+    'tools/nextjs',
+    'tools/clerk',
+    'tools/vercel',
+    'tools/vitest',
+    'tools/typescript',
   ],
   planningSidebar: [
     {
