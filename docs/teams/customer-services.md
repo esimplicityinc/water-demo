@@ -30,7 +30,7 @@ sidebar_label: "Customer Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/sarah-chen.jpg" alt="Sarah Chen" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Sarah Chen</div>
+        <a href="/docs/persons/sarah-chen" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Sarah Chen</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Team Lead / Senior Engineer</div>
       </div>
     </div>
@@ -43,7 +43,7 @@ sidebar_label: "Customer Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/marcus-rivera.jpg" alt="Marcus Rivera" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Marcus Rivera</div>
+        <a href="/docs/persons/marcus-rivera" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Marcus Rivera</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Full-Stack Engineer</div>
       </div>
     </div>
@@ -56,7 +56,7 @@ sidebar_label: "Customer Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/aisha-patel.jpg" alt="Aisha Patel" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Aisha Patel</div>
+        <a href="/docs/persons/aisha-patel" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Aisha Patel</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Frontend Engineer</div>
       </div>
     </div>
@@ -69,7 +69,7 @@ sidebar_label: "Customer Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/james-kowalski.jpg" alt="James Kowalski" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>James Kowalski</div>
+        <a href="/docs/persons/james-kowalski" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>James Kowalski</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>QA / BDD Specialist</div>
       </div>
     </div>

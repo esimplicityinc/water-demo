@@ -30,7 +30,7 @@ sidebar_label: "Operations"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/david-okonkwo.jpg" alt="David Okonkwo" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>David Okonkwo</div>
+        <a href="/docs/persons/david-okonkwo" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>David Okonkwo</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Team Lead / Backend Engineer</div>
       </div>
     </div>
@@ -43,7 +43,7 @@ sidebar_label: "Operations"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/emily-zhang.jpg" alt="Emily Zhang" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Emily Zhang</div>
+        <a href="/docs/persons/emily-zhang" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Emily Zhang</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Data Engineer</div>
       </div>
     </div>
@@ -56,7 +56,7 @@ sidebar_label: "Operations"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/raj-gupta.jpg" alt="Raj Gupta" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Raj Gupta</div>
+        <a href="/docs/persons/raj-gupta" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Raj Gupta</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Full-Stack Engineer</div>
       </div>
     </div>
@@ -69,7 +69,7 @@ sidebar_label: "Operations"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/lisa-nakamura.jpg" alt="Lisa Nakamura" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Lisa Nakamura</div>
+        <a href="/docs/persons/lisa-nakamura" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Lisa Nakamura</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>ML / Analytics Engineer</div>
       </div>
     </div>

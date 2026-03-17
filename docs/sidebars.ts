@@ -17,6 +17,46 @@ const sidebars: SidebarsConfig = {
         'teams/field-services',
       ],
     },
+    {
+      type: 'category',
+      label: 'Customer Services',
+      items: [
+        'persons/sarah-chen',
+        'persons/marcus-rivera',
+        'persons/aisha-patel',
+        'persons/james-kowalski',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Operations',
+      items: [
+        'persons/david-okonkwo',
+        'persons/emily-zhang',
+        'persons/raj-gupta',
+        'persons/lisa-nakamura',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Finance',
+      items: [
+        'persons/priya-sharma',
+        'persons/carlos-mendez',
+        'persons/anna-bergstrom',
+        'persons/tom-ikeda',
+      ],
+    },
+    {
+      type: 'category',
+      label: 'Field Services',
+      items: [
+        'persons/olga-petrov',
+        'persons/kevin-brooks',
+        'persons/maria-gonzalez',
+        'persons/yusuf-ali',
+      ],
+    },
   ],
   usersSidebar: [
     {

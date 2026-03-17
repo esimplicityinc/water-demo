@@ -30,7 +30,7 @@ sidebar_label: "Finance"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/priya-sharma.jpg" alt="Priya Sharma" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Priya Sharma</div>
+        <a href="/docs/persons/priya-sharma" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Priya Sharma</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Team Lead / Backend Engineer</div>
       </div>
     </div>
@@ -43,7 +43,7 @@ sidebar_label: "Finance"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/carlos-mendez.jpg" alt="Carlos Mendez" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Carlos Mendez</div>
+        <a href="/docs/persons/carlos-mendez" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Carlos Mendez</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Payment Systems Engineer</div>
       </div>
     </div>
@@ -56,7 +56,7 @@ sidebar_label: "Finance"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/anna-bergstrom.jpg" alt="Anna Bergstrom" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Anna Bergstrom</div>
+        <a href="/docs/persons/anna-bergstrom" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Anna Bergstrom</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Full-Stack Engineer</div>
       </div>
     </div>
@@ -69,7 +69,7 @@ sidebar_label: "Finance"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/tom-ikeda.jpg" alt="Tom Ikeda" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Tom Ikeda</div>
+        <a href="/docs/persons/tom-ikeda" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Tom Ikeda</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Compliance / Security Engineer</div>
       </div>
     </div>

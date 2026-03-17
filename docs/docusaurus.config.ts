@@ -30,7 +30,7 @@ const config: Config = {
           routeBasePath: 'docs',
           sidebarPath: './sidebars.ts',
           editUrl: 'https://github.com/aquatrack/aquatrack/tree/main/docs/',
-          include: ['ddd/**/*.md', 'ddd/**/*.mdx', 'bdd/**/*.md', 'bdd/**/*.mdx', 'plans/**/*.md', 'plans/**/*.mdx', 'roads/**/*.md', 'roads/**/*.mdx', 'changes/**/*.md', 'changes/**/*.mdx', 'agents/**/*.md', 'agents/**/*.mdx', 'adr/**/*.md', 'adr/**/*.mdx', 'nfr/**/*.md', 'nfr/**/*.mdx', 'personas/**/*.md', 'personas/**/*.mdx', 'user-stories/**/*.md', 'user-stories/**/*.mdx', 'capabilities/**/*.md', 'capabilities/**/*.mdx', 'teams/**/*.md', 'teams/**/*.mdx', 'systems/**/*.md', 'systems/**/*.mdx', 'practice-areas/**/*.md', 'practice-areas/**/*.mdx', 'tools/**/*.md', 'tools/**/*.mdx', 'users-overview.md', 'system-overview.md', 'teams-overview.md', 'ROADMAP.mdx', 'CHANGELOG.md', 'index.md', 'index.mdx'],
+          include: ['ddd/**/*.md', 'ddd/**/*.mdx', 'bdd/**/*.md', 'bdd/**/*.mdx', 'plans/**/*.md', 'plans/**/*.mdx', 'roads/**/*.md', 'roads/**/*.mdx', 'changes/**/*.md', 'changes/**/*.mdx', 'agents/**/*.md', 'agents/**/*.mdx', 'adr/**/*.md', 'adr/**/*.mdx', 'nfr/**/*.md', 'nfr/**/*.mdx', 'personas/**/*.md', 'personas/**/*.mdx', 'persons/**/*.md', 'persons/**/*.mdx', 'user-stories/**/*.md', 'user-stories/**/*.mdx', 'capabilities/**/*.md', 'capabilities/**/*.mdx', 'teams/**/*.md', 'teams/**/*.mdx', 'systems/**/*.md', 'systems/**/*.mdx', 'practice-areas/**/*.md', 'practice-areas/**/*.mdx', 'tools/**/*.md', 'tools/**/*.mdx', 'users-overview.md', 'system-overview.md', 'teams-overview.md', 'ROADMAP.mdx', 'CHANGELOG.md', 'index.md', 'index.mdx'],
         },
         blog: false,
         theme: {

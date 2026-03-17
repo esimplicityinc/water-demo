@@ -30,7 +30,7 @@ sidebar_label: "Field Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/olga-petrov.jpg" alt="Olga Petrov" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Olga Petrov</div>
+        <a href="/docs/persons/olga-petrov" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Olga Petrov</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Team Lead / IoT Engineer</div>
       </div>
     </div>
@@ -43,7 +43,7 @@ sidebar_label: "Field Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/kevin-brooks.jpg" alt="Kevin Brooks" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Kevin Brooks</div>
+        <a href="/docs/persons/kevin-brooks" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Kevin Brooks</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Embedded Systems Engineer</div>
       </div>
     </div>
@@ -56,7 +56,7 @@ sidebar_label: "Field Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/maria-gonzalez.jpg" alt="Maria Gonzalez" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Maria Gonzalez</div>
+        <a href="/docs/persons/maria-gonzalez" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Maria Gonzalez</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>Full-Stack Engineer</div>
       </div>
     </div>
@@ -69,7 +69,7 @@ sidebar_label: "Field Services"
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
       <img src="/img/team/yusuf-ali.jpg" alt="Yusuf Ali" style={{ width: '48px', height: '48px', borderRadius: '9999px', objectFit: 'cover', border: '2px solid #e2e8f0' }} />
       <div>
-        <div style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px' }}>Yusuf Ali</div>
+        <a href="/docs/persons/yusuf-ali" style={{ fontWeight: '600', color: '#0f172a', fontSize: '15px', textDecoration: 'none' }}>Yusuf Ali</a>
         <div style={{ color: '#64748b', fontSize: '13px' }}>GIS / Integration Engineer</div>
       </div>
     </div>
