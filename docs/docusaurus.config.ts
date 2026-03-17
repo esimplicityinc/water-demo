@@ -7,11 +7,12 @@ const config: Config = {
   tagline: 'Municipal Water Infrastructure Management System',
   favicon: 'img/favicon.ico',
 
-  url: 'https://aquatrack.dev',
-  baseUrl: '/',
+  url: 'https://esimplicityinc.github.io',
+  baseUrl: '/water-demo/',
 
-  organizationName: 'aquatrack',
-  projectName: 'aquatrack',
+  organizationName: 'esimplicityinc',
+  projectName: 'water-demo',
+  trailingSlash: false,
 
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
